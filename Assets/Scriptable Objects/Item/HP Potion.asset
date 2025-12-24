@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8720ac11de46ed54a884ba20026c1487, type: 3}
+  m_Name: HP Potion
+  m_EditorClassIdentifier: 
+  itemName: "B\xECnh m\xE1u nh\u1ECF"
+  description: "Lo\u1EA1i thu\u1ED1c ph\u1ED5 bi\u1EBFn \u0111\u1EC3 ph\u1EE5c h\u1ED3i
+    1 ph\u1EA7n nh\u1ECF sinh l\u1EF1c."
+  price: 25000
+  icon: {fileID: 21300000, guid: 2ad9b54594aae3147b60620a562f543d, type: 3}
+  type: 16
+  colorGrade: 0
+  stackable: 1
+  repairable: 0
+  maxStack: 999999
+  weight: 0.1
+  data:
+    ID: 0
+    ItemName: 
+    Attributes: []
+    Effects:
+    - effect: 4
+      Value: 50
+      isPercent: 0
+      isSecond: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f28a9094c6b846478d3c60d52e01c14, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  health: 500
+  stamina: 100
+  mana: 300
+  atk: 10
+  def: 10
+  evasion: 50
+  damageReduction: 30
+  walkSpeed: 3
+  runSpeed: 7
+  holdingItemWalkSpeed: 2
+  level: 1
