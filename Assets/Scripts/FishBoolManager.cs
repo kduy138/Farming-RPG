@@ -7,8 +7,6 @@ public class FishBoolManager : MonoBehaviour
     [System.Serializable]
     public class FishDrop
     {
-        [SerializeField]
-        private string name;
         public ItemScriptableObject itemSO;
         [Range(0f, 100f)]
         public float dropRate;

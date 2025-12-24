@@ -46,9 +46,6 @@ public class FishingMiniGame : MonoBehaviour
 
     public void BeginMinigame(FishBoolManager fbm)
     {
-        GameUI.Instance.castBtnText.text = "CÁ ĐÃ CẮN CÂU\nNHẤN SPACE ĐỂ KÉO";
-        GameUI.Instance.castBtnText.enabled = true;
-
         currentFishBoolManager = fbm;
 
         if (currentFishBoolManager == null) return;
@@ -145,8 +142,13 @@ public class FishingMiniGame : MonoBehaviour
 
         if (fishSO != null)
         {
+            int quantity = 1;
+            StartCoroutine(GameUI.Instance.ToggleFishingPopUp());
             Item item = new Item(fishSO);
-            inventory.AddItem(item, 1);
+            GameUI.Instance.fishingPopUpTxt.text = "Đã bắt được " + item.ItemName + " x" + quantity;
+            GameUI.Instance.fishingPopUpIcon.transform.Find("Icon").GetComponent<Image>().sprite = fishSO.Icon;
+            GameUI.Instance.fishingPopUpIcon.transform.Find("Outline").GetComponent<Outline>().effectColor = ExtensionMethods.GetColorByGrade(fishSO.ColorGrade);
+            inventory.AddItem(item, quantity);
             inventory.Save();
         }
     }
@@ -160,7 +162,7 @@ public class FishingMiniGame : MonoBehaviour
         keySequenceList.Clear();
         DestroyAllChildren(KeySequenceContainer.transform);
         GameUI.Instance.minigameScreen.SetActive(false);
-        GameUI.Instance.castBtnText.text = "NHẤN ĐỂ THẢ MỒI";
+        StopAllCoroutines();
     }
 
     private void DestroyAllChildren(Transform parent)

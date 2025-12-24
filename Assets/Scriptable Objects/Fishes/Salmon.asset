@@ -16,7 +16,7 @@ MonoBehaviour:
   description: "Lo\xE0i c\xE1 \u0111\u01B0\u1EE3c \u0111\xE1nh b\u1EAFt ph\u1ED5
     bi\u1EBFn b\u1EDFi c\xE1c ng\u01B0 d\xE2n."
   price: 45000
-  icon: {fileID: 21300000, guid: 6a6c00aa7435fe64a9167bb16893fb8d, type: 3}
+  icon: {fileID: 2020348373, guid: f89b3ae83cdef504b81d1c7934df3e25, type: 3}
   type: 18
   colorGrade: 3
   stackable: 0
