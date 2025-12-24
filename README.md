@@ -1,2 +1,2 @@
 # Farming-RPG
-My game project.
+This is a game project that I am building myself.
