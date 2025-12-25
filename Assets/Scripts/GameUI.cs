@@ -28,6 +28,7 @@ public class GameUI : MonoBehaviour
     public Image weightBar;
     public Image slotBar;
     public GameObject fishingPopUpIcon;
+    public Image miniGameTimeBar;
 
     [Header("Screens")]
     [SerializeField]
@@ -54,6 +55,8 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI weightText;
     public TextMeshProUGUI slotText;
     public TextMeshProUGUI fishingPopUpTxt;
+    public TextMeshProUGUI miniGameTimeTxt;
+    public TextMeshProUGUI miniGameTxt;
 
     public static GameUI Instance;
 

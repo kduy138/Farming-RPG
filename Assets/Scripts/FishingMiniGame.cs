@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class FishingMiniGame : MonoBehaviour
@@ -37,6 +37,16 @@ public class FishingMiniGame : MonoBehaviour
     private int currentInputActionID;
     [SerializeField]
     private int currentKeyIndex = 0;
+
+    private const float MiniGameTime = 7.0f;
+    private float currentMiniGameTime;
+    private bool isStarted = false;
+    private bool isResetting = false;
+
+    private void Awake()
+    {
+        currentMiniGameTime = MiniGameTime;
+    }
 
     private void Update()
     {
@@ -98,14 +108,39 @@ public class FishingMiniGame : MonoBehaviour
 
     private void HandleMinigame()
     {
+        if (keySequenceList.Count <= 0) return;
+
+        if (currentMiniGameTime <= 0f)
+        {
+            GameUI.Instance.miniGameTxt.text = "Hết thời gian, cá đã trốn thoát!";
+            GameUI.Instance.miniGameTxt.color = Color.red;
+            StartCoroutine(ResetMinigame());
+            return;
+        }
+
+        if (isStarted)
+        {
+            currentMiniGameTime -= Time.deltaTime;
+            currentMiniGameTime = Mathf.Max(currentMiniGameTime, 0f);
+
+            GameUI.Instance.miniGameTimeBar.fillAmount =
+                currentMiniGameTime / MiniGameTime;
+
+            GameUI.Instance.miniGameTimeTxt.text =
+                "Còn lại " + Mathf.CeilToInt(currentMiniGameTime) + " giây";
+        }
+
         int maxKeyIndex = keySequenceLength - 1;
 
         if (GameInput.Instance.isArrowActions()) {
+            isStarted = true;
             var currentKey = keySequenceList[currentKeyIndex];
             if (currentKey.ID != currentInputActionID)
             {
-                Debug.Log("Minigame Failed");
-                ResetMinigame();
+                GameUI.Instance.miniGameTxt.text = "Nhấn sai phím, cá đã trốn thoát!";
+                GameUI.Instance.miniGameTxt.color = Color.red;
+                currentKey.spawnedKey.GetComponent<Image>().color = Color.red;
+                StartCoroutine(ResetMinigame());
                 return;
             }
             currentKey.spawnedKey.GetComponent<Image>().color = Color.white;
@@ -113,7 +148,7 @@ public class FishingMiniGame : MonoBehaviour
 
             if (currentKeyIndex > maxKeyIndex)
             {
-                Debug.Log("Minigame Finished");
+                GameUI.Instance.miniGameTxt.text = "Đã bắt được cá!";
                 OnFishingSuccess();
                 return;
             }
@@ -138,7 +173,7 @@ public class FishingMiniGame : MonoBehaviour
 
     private void OnFishingSuccess()
     {
-        ResetMinigame();
+        StartCoroutine(ResetMinigame());
 
         if (fishSO != null)
         {
@@ -153,16 +188,31 @@ public class FishingMiniGame : MonoBehaviour
         }
     }
 
-    private void ResetMinigame()
+    private IEnumerator ResetMinigame()
     {
+        if (isResetting) yield break;
+        isResetting = true;
+        isStarted = false;
+        int timeBeforeReset = 2;
+        yield return new WaitForSeconds(timeBeforeReset);
+        isResetting = false;
         fm.CancelCastAnimation();
         fm.CancelCastOnTerrain();
         fm.ResetIsPlayingMinigame();
         currentKeyIndex = 0;
         keySequenceList.Clear();
         DestroyAllChildren(KeySequenceContainer.transform);
+        currentMiniGameTime = MiniGameTime;
+        ResetUI();
+    }
+
+    private void ResetUI()
+    {
         GameUI.Instance.minigameScreen.SetActive(false);
-        StopAllCoroutines();
+        GameUI.Instance.miniGameTimeTxt.text = "Nhấn để bắt đầu";
+        GameUI.Instance.miniGameTxt.text = "Nhấn lần lượt đúng theo các phím bên dưới trước khi cá kịp trốn thoát";
+        GameUI.Instance.miniGameTxt.color = new Color32(255, 255, 0, 255);
+        GameUI.Instance.miniGameTimeBar.fillAmount = currentMiniGameTime / MiniGameTime;
     }
 
     private void DestroyAllChildren(Transform parent)
