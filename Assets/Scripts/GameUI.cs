@@ -27,6 +27,8 @@ public class GameUI : MonoBehaviour
     public Sprite discardIcon;
     public Image weightBar;
     public Image slotBar;
+    public GameObject fishingPopUpIcon;
+    public Image miniGameTimeBar;
 
     [Header("Screens")]
     [SerializeField]
@@ -39,6 +41,7 @@ public class GameUI : MonoBehaviour
     private GameObject itemToolTipScreen;
     public GameObject discardOptionHolder;
     public GameObject weightAndSlotCountHolder;
+    public GameObject fishingPopUp;
 
     [Header("Buttons")]
     public GameObject removeItemBtn;
@@ -51,6 +54,9 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI castBtnText;
     public TextMeshProUGUI weightText;
     public TextMeshProUGUI slotText;
+    public TextMeshProUGUI fishingPopUpTxt;
+    public TextMeshProUGUI miniGameTimeTxt;
+    public TextMeshProUGUI miniGameTxt;
 
     public static GameUI Instance;
 
@@ -58,6 +64,8 @@ public class GameUI : MonoBehaviour
     {
         Instance = this;
         DisableScreens();
+        if (fishingScreen) fishingScreen.SetActive(false);
+        if (minigameScreen) minigameScreen.SetActive(false);
     }
 
     private void Update()
@@ -67,20 +75,14 @@ public class GameUI : MonoBehaviour
         ToggleFishingScreen();
         ToggleCastButton();
         ToggleMinigameScreen();
-
-        if(fm.IsPlayingMinigame())
-        {
-            castBtnText.enabled = false;
-        }
     }
 
     private void DisableScreens()
     {
         if (inventoryScreen) inventoryScreen.SetActive(false);
         if (confirmRemoveScreen) confirmRemoveScreen.SetActive(false);
-        if (fishingScreen) fishingScreen.SetActive(false);
-        if (minigameScreen) minigameScreen.SetActive(false);
         if (discardOptionHolder) discardOptionHolder.SetActive(false);
+        if (fishingPopUp) fishingPopUp.SetActive(false);
     }
 
     private void ToggleInventoryScreen()
@@ -116,9 +118,15 @@ public class GameUI : MonoBehaviour
 
     private void ToggleCastButton()
     {
-        if(fm.IsWaitingToCatch() == false || !minigameScreen.activeInHierarchy)
+        if(!fm.IsWaitingToCatch() && !fm.IsPlayingMinigame())
         {
             castBtnText.enabled = true;
+            castBtnText.text = "NHẤN SPACE ĐỂ THẢ MỒI";
+        }
+        else if (fm.IsPlayingMinigame() && !minigameScreen.activeInHierarchy)
+        {
+            castBtnText.enabled = true;
+            castBtnText.text = "NHẤN SPACE ĐỂ BẮT CÁ";
         }
         else
         {
@@ -168,5 +176,14 @@ public class GameUI : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    public IEnumerator ToggleFishingPopUp()
+    {
+        int popUpTime = 3;
+        fishingPopUp.SetActive(true);
+
+        yield return new WaitForSeconds(popUpTime);
+        fishingPopUp.SetActive(false);
     }
 }

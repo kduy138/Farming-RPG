@@ -135,7 +135,6 @@ public class FishingManager : MonoBehaviour
         yield return new WaitForSeconds(waitingTime);
         isWaitingToCatch = false;
         EnterFishingMinigame();
-        Debug.Log("Playing minigame: " + isPlayingMinigame);
     }
 
     private void EnterFishingMinigame() {
