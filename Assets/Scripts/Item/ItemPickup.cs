@@ -25,7 +25,7 @@ public class ItemPickup : MonoBehaviour
         if (item != null)
         {
             Item _item = new Item(item.itemData);
-            if (inventory.AddItem(_item, item.quantity))
+            if (inventory.AddItem(_item, item.quantity) == AddItemReturnCode.Success)
             {
                 Destroy(gameObject);
             }

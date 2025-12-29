@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class FishingMiniGame : MonoBehaviour
 {
@@ -123,8 +124,7 @@ public class FishingMiniGame : MonoBehaviour
             currentMiniGameTime -= Time.deltaTime;
             currentMiniGameTime = Mathf.Max(currentMiniGameTime, 0f);
 
-            GameUI.Instance.miniGameTimeBar.fillAmount =
-                currentMiniGameTime / MiniGameTime;
+            GameUI.Instance.miniGameTimeBar.fillAmount = currentMiniGameTime / MiniGameTime;
 
             GameUI.Instance.miniGameTimeTxt.text =
                 "Còn lại " + Mathf.CeilToInt(currentMiniGameTime) + " giây";
@@ -178,14 +178,29 @@ public class FishingMiniGame : MonoBehaviour
         if (fishSO != null)
         {
             int quantity = 1;
-            StartCoroutine(GameUI.Instance.ToggleFishingPopUp());
             Item item = new Item(fishSO);
-            GameUI.Instance.fishingPopUpTxt.text = "Đã bắt được " + item.ItemName + " x" + quantity;
-            GameUI.Instance.fishingPopUpIcon.transform.Find("Icon").GetComponent<Image>().sprite = fishSO.Icon;
-            GameUI.Instance.fishingPopUpIcon.transform.Find("Outline").GetComponent<Outline>().effectColor = ExtensionMethods.GetColorByGrade(fishSO.ColorGrade);
-            inventory.AddItem(item, quantity);
+            SetUI(item, quantity);
+            if (inventory.AddItem(item, quantity) == AddItemReturnCode.NoEmptySlot)
+            {
+                Debug.Log("Kho đồ đã đầy!");
+                return;
+            }
+            else if(inventory.AddItem(item, quantity) == AddItemReturnCode.TooHeavy)
+            {
+                Debug.Log("Kho đồ quá nặng!");
+                return;
+            }
+            StartCoroutine(GameUI.Instance.ToggleFishingPopUp());
             inventory.Save();
         }
+    }
+
+    private void SetUI(Item item, int quantity)
+    {
+        GameUI.Instance.fishingPopUpTxt.text = "Đã bắt được " + item.ItemName + " x" + quantity;
+        GameUI.Instance.fishingPopUpIcon.transform.Find("Icon").GetComponent<Image>().sprite = fishSO.Icon;
+        GameUI.Instance.fishingPopUpIcon.transform.Find("Icon").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        GameUI.Instance.fishingPopUpIcon.transform.Find("Outline").GetComponent<Outline>().effectColor = ExtensionMethods.GetColorByGrade(fishSO.ColorGrade);
     }
 
     private IEnumerator ResetMinigame()
@@ -193,7 +208,7 @@ public class FishingMiniGame : MonoBehaviour
         if (isResetting) yield break;
         isResetting = true;
         isStarted = false;
-        int timeBeforeReset = 2;
+        int timeBeforeReset = 1;
         yield return new WaitForSeconds(timeBeforeReset);
         isResetting = false;
         fm.CancelCastAnimation();

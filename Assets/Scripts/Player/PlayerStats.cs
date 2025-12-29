@@ -5,7 +5,9 @@ public class PlayerStats
     public float currentHealth;
     public float currentMaxHealth;
     public float currentStamina;
+    public float currentMaxStamina;
     public float currentMana;
+    public float currentMaxMana;
 
     public int currentATK;
     public int currentDEF;
@@ -20,6 +22,7 @@ public class PlayerStats
     public float currentXP;
 
     public float currentItemDropRate;
+    public float currentStaminaRecoverRate;
 
     public double currentSilverCoin;
 
@@ -28,7 +31,9 @@ public class PlayerStats
         currentHealth = baseData.Health;
         currentMaxHealth = baseData.Health;
         currentStamina = baseData.Stamina;
+        currentMaxStamina = baseData.Stamina;
         currentMana = baseData.Mana;
+        currentMaxMana = baseData.Mana;
 
         currentATK = baseData.ATK;
         currentDEF = baseData.DEF;
@@ -43,6 +48,7 @@ public class PlayerStats
         currentXP = 0f;
 
         currentItemDropRate = 0f;
+        currentStaminaRecoverRate = 4f;
 
         currentSilverCoin = 0;
     }

@@ -29,6 +29,9 @@ public class GameUI : MonoBehaviour
     public Image slotBar;
     public GameObject fishingPopUpIcon;
     public Image miniGameTimeBar;
+    public Image staminaBar;
+    public Image hpBar;
+    public Image manaBar;
 
     [Header("Screens")]
     [SerializeField]
@@ -57,6 +60,9 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI fishingPopUpTxt;
     public TextMeshProUGUI miniGameTimeTxt;
     public TextMeshProUGUI miniGameTxt;
+    public TextMeshProUGUI staminaTxt;
+    public TextMeshProUGUI hpTxt;
+    public TextMeshProUGUI manaTxt;
 
     public static GameUI Instance;
 
@@ -147,6 +153,7 @@ public class GameUI : MonoBehaviour
         if (GameInput.Instance.isCloseUIAction())
         {
             DisableScreens();
+            camera.GetComponent<CinemachineInputAxisController>().enabled = true;
         }
     }
 
@@ -180,7 +187,7 @@ public class GameUI : MonoBehaviour
 
     public IEnumerator ToggleFishingPopUp()
     {
-        int popUpTime = 3;
+        int popUpTime = 2;
         fishingPopUp.SetActive(true);
 
         yield return new WaitForSeconds(popUpTime);

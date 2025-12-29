@@ -48,7 +48,7 @@ public abstract class UserInterface : MonoBehaviour
         AddEvent(removeItemBtn, EventTriggerType.PointerExit, delegate { OnExitRemove(removeItemBtn); });
     }
 
-    private void Update()
+    public virtual void Update()
     {
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
@@ -60,14 +60,6 @@ public abstract class UserInterface : MonoBehaviour
             OnSlotUpdate(inventory.GetSlots[i]);
         }
     }
-
-    // private void OnDestroy()
-    // {
-    //     for (int i = 0; i < inventory.GetSlots.Length; i++)
-    //     {
-    //         inventory.GetSlots[i].OnAfterUpdate -= OnSlotUpdate;
-    //     }
-    // }
 
     public abstract void CreateSlots();
 
@@ -243,8 +235,8 @@ public abstract class UserInterface : MonoBehaviour
                 {
                     if (equipment.GetSlots[i].allowedItems.Contains(slotsOnInterface[obj].itemSO.Type))
                     {
-                        inventory.SwapItemSlot(slotsOnInterface[obj], equipment.GetSlots[i]);
                         inventory.CurrentWeight -= slotsOnInterface[obj].itemSO.Weight;
+                        inventory.SwapItemSlot(slotsOnInterface[obj], equipment.GetSlots[i]);
                         inventory.Save();
                         equipment.Save();
                         ItemToolTip.Instance.HideItemToolTip();
@@ -272,6 +264,7 @@ public abstract class UserInterface : MonoBehaviour
                     return;
                 }
 
+                inv.CurrentWeight += slotsOnInterface[obj].itemSO.Weight;
                 inv.SwapItemSlot(slotsOnInterface[obj], emptySlot);
                 inv.Save();
                 equipment.Save();
@@ -284,8 +277,8 @@ public abstract class UserInterface : MonoBehaviour
     {
         if (slotsOnInterface.ContainsKey(obj))
         {
-            inventory.RemoveItem(slotsOnInterface[obj].item);
             inventory.CurrentWeight -= slotsOnInterface[obj].itemSO.Weight;
+            inventory.RemoveItem(slotsOnInterface[obj].item);
             inventory.Save();
             GameUI.Instance.confirmRemoveScreen.SetActive(false);
         }

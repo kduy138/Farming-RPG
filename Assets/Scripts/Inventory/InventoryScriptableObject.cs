@@ -1,4 +1,5 @@
 using System.IO;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "InventoryScriptableObject", menuName = "Scriptable Objects/Inventory")]
@@ -7,7 +8,7 @@ public class InventoryScriptableObject : ScriptableObject
     [SerializeField]
     private string savePath;
     public ItemDatabaseObject itemDatabase;
-    public Inventory container = new Inventory();
+    public Inventory container;
     public InventorySlot[] GetSlots { get { return container.slots; } }
 
     [Header("Weight")]
@@ -17,20 +18,33 @@ public class InventoryScriptableObject : ScriptableObject
     private float weightLimit;
     public float WeightLimit { get => weightLimit; private set => weightLimit = value; }
 
-    public bool AddItem(Item _item, int _quantity)
+    [Header("Slot")]
+    private int currentSlotCount;
+    public int CurrentSlotCount { get => currentSlotCount; private set => currentSlotCount = value; }
+    [SerializeField]
+    private int maxSlot;
+    public int MaxSlot { get => maxSlot; private set => maxSlot = value; }
+
+    private void OnEnable()
+    {
+        if (container == null || container.slots == null || container.slots.Length != MaxSlot)
+        {
+            container = new Inventory(MaxSlot);
+        }
+    }
+
+    public AddItemReturnCode AddItem(Item _item, int _quantity)
     {
         InventorySlot slot = FindItemOnInventory(_item);
 
         if (GetEmptySlotCount <= 0 && (!itemDatabase.itemSO[_item.ID].Stackable || slot == null))
         {
-            Debug.Log("Không thể thêm " + _item.ItemName + " - " + "Kho đồ đã đầy!!!");
-            return false;
+            return AddItemReturnCode.NoEmptySlot;
         }
 
         if (currentWeight >= weightLimit)
         {
-            Debug.Log("Không thể thêm " + _item.ItemName + " - " + "Kho đồ quá nặng!!!");
-            return false;
+            return AddItemReturnCode.TooHeavy;
         }
 
         if (!itemDatabase.itemSO[_item.ID].Stackable || slot == null)
@@ -38,13 +52,13 @@ public class InventoryScriptableObject : ScriptableObject
             SetItemToEmptySlot(_item, _quantity);
             currentWeight += itemDatabase.itemSO[_item.ID].Weight;
             Debug.Log("Đã thêm Item: " + _item.ItemName + " - " + _quantity);
-            return true;
+            return AddItemReturnCode.Success;
         }
 
         slot.AddQuantity(_quantity);
         currentWeight += itemDatabase.itemSO[_item.ID].Weight;
         Debug.Log("Đã thêm Item: " + _item.ItemName + " với số lượng x" + _quantity);
-        return true;
+        return AddItemReturnCode.Success;
     }
 
     public InventorySlot FindItemOnInventory(Item _item)
@@ -72,6 +86,15 @@ public class InventoryScriptableObject : ScriptableObject
                 }
             }
             return counter;
+        }
+    }
+
+    public int GetCurrentSlotCount
+    {
+        get
+        {
+            CurrentSlotCount = MaxSlot - GetEmptySlotCount;
+            return CurrentSlotCount;
         }
     }
 
@@ -173,10 +196,11 @@ public class InventoryScriptableObject : ScriptableObject
 [System.Serializable]
 public class Inventory
 {
-    public InventorySlot[] slots = new InventorySlot[32];
+    public InventorySlot[] slots;
 
-    public Inventory()
+    public Inventory(int slotCount)
     {
+        slots = new InventorySlot[slotCount];
         for (int i = 0; i < slots.Length; i++)
         {
             slots[i] = new InventorySlot();
@@ -291,4 +315,11 @@ public class InventorySaveData
     public int[] itemIDs;
     public int[] quantities;
     public float currentWeight;
+}
+
+public enum AddItemReturnCode
+{
+    TooHeavy,
+    NoEmptySlot,
+    Success,
 }

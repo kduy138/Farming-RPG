@@ -1,5 +1,8 @@
 ﻿using System.IO;
+using TMPro;
+using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -30,6 +33,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private FishingManager fm;
 
+    [Header("UI")]
+    private Image staminaBar;
+    private TextMeshProUGUI staminaTxt;
+    private Image hpBar;
+    private TextMeshProUGUI hpTxt;
+    private Image manaBar;
+    private TextMeshProUGUI manaTxt;
+
 
     private void Awake()
     {
@@ -43,15 +54,48 @@ public class Player : MonoBehaviour
         currentMoveSpeed = 0f;
     }
 
+    private void Start()
+    {
+        InitializePlayerUI();
+    }
+
     private void Update()
     {
         ToggleWalking();
         HandleSilverCoin();
+        HandlePlayerFillBar();
+        HandleStaminaRecoverOverTime();
     }
 
     private void FixedUpdate()
     {
         HandleMovement();
+    }
+
+    private void InitializePlayerUI()
+    {
+        if (GameUI.Instance == null)
+        {
+            Debug.LogError("GameUI.Instance is NULL");
+            return;
+        }
+        var GUIInstance = GameUI.Instance;
+        staminaBar = GUIInstance.staminaBar;
+        staminaTxt = GUIInstance.staminaTxt;
+        hpBar = GUIInstance.hpBar;
+        hpTxt = GUIInstance.hpTxt;
+        manaBar = GUIInstance.manaBar;
+        manaTxt = GUIInstance.manaTxt;
+    }
+
+    private void HandlePlayerFillBar()
+    {
+        staminaBar.fillAmount = runtimePlayerData.currentStamina / runtimePlayerData.currentMaxStamina;
+        staminaTxt.text = $"{Mathf.CeilToInt(runtimePlayerData.currentStamina)}/{runtimePlayerData.currentMaxStamina}";
+        hpBar.fillAmount = runtimePlayerData.currentHealth / runtimePlayerData.currentMaxHealth;
+        hpTxt.text = $"{runtimePlayerData.currentHealth}/{runtimePlayerData.currentMaxHealth}";
+        manaBar.fillAmount = runtimePlayerData.currentMana / runtimePlayerData.currentMaxMana;
+        manaTxt.text = $"{runtimePlayerData.currentMana}/{runtimePlayerData.currentMaxMana}";
     }
 
     private void ToggleWalking()
@@ -130,6 +174,20 @@ public class Player : MonoBehaviour
         GameUI.Instance.silverCoinText.text = runtimePlayerData.currentSilverCoin.ToString("n0");
     }
 
+    private void HandleStaminaRecoverOverTime()
+    {
+        if (runtimePlayerData.currentStamina >= runtimePlayerData.currentMaxStamina)
+        {
+            runtimePlayerData.currentStamina = runtimePlayerData.currentMaxStamina;
+            return;
+        }
+
+        if (runtimePlayerData.currentStamina < runtimePlayerData.currentMaxStamina)
+        {
+            runtimePlayerData.currentStamina += runtimePlayerData.currentStaminaRecoverRate * Time.deltaTime;
+        }
+    }
+
     public float GetNormalizedSpeed()
     {
         float normalized = currentMoveSpeed / runtimePlayerData.currentRunSpeed;
@@ -154,10 +212,12 @@ public class Player : MonoBehaviour
         string fullSavePath = Application.persistentDataPath + savePath;
         PlayerSaveData saveData = new PlayerSaveData();
 
-        saveData.MaxHealth = runtimePlayerData.currentMaxHealth;
         saveData.Health = runtimePlayerData.currentHealth;
+        saveData.MaxHealth = runtimePlayerData.currentMaxHealth;
         saveData.Stamina = runtimePlayerData.currentStamina;
+        saveData.MaxStamina = runtimePlayerData.currentMaxStamina;
         saveData.Mana = runtimePlayerData.currentMana;
+        saveData.MaxMana = runtimePlayerData.currentMaxMana;
 
         saveData.ATK = runtimePlayerData.currentATK;
         saveData.DEF = runtimePlayerData.currentDEF;
@@ -172,6 +232,7 @@ public class Player : MonoBehaviour
         saveData.XP = runtimePlayerData.currentXP;
 
         saveData.ItemDropRate = runtimePlayerData.currentItemDropRate;
+        saveData.StaminaRecoverRate = runtimePlayerData.currentStaminaRecoverRate;
 
         saveData.SilverCoin = runtimePlayerData.currentSilverCoin;
 
@@ -191,10 +252,12 @@ public class Player : MonoBehaviour
         string json = File.ReadAllText(fullSavePath);
         PlayerSaveData saveData = JsonUtility.FromJson<PlayerSaveData>(json);
 
-        runtimePlayerData.currentMaxHealth = saveData.MaxHealth;
         runtimePlayerData.currentHealth = saveData.Health;
+        runtimePlayerData.currentMaxHealth = saveData.MaxHealth;
         runtimePlayerData.currentMana = saveData.Mana;
+        runtimePlayerData.currentMaxMana = saveData.MaxMana;
         runtimePlayerData.currentStamina = saveData.Stamina;
+        runtimePlayerData.currentMaxStamina = saveData.MaxStamina;
 
         runtimePlayerData.currentATK = saveData.ATK;
         runtimePlayerData.currentDEF = saveData.DEF;
@@ -209,6 +272,7 @@ public class Player : MonoBehaviour
         runtimePlayerData.currentXP = saveData.XP;
 
         runtimePlayerData.currentItemDropRate = saveData.ItemDropRate;
+        runtimePlayerData.currentStaminaRecoverRate = saveData.StaminaRecoverRate;
 
         runtimePlayerData.currentSilverCoin = saveData.SilverCoin;
 
@@ -219,10 +283,12 @@ public class Player : MonoBehaviour
 [System.Serializable]
 public class PlayerSaveData
 {
-    public float MaxHealth;
     public float Health;
+    public float MaxHealth;
     public float Stamina;
+    public float MaxStamina;
     public float Mana;
+    public float MaxMana;
 
     public int ATK;
     public int DEF;
@@ -237,6 +303,7 @@ public class PlayerSaveData
     public float XP;
 
     public float ItemDropRate;
+    public float StaminaRecoverRate;
 
     public double SilverCoin;
 }

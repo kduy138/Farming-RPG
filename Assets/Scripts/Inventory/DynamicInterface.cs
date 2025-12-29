@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,14 +12,24 @@ public class DynamicInterface : UserInterface
     private GameObject discardOptionHolder;
     private GameObject weightAndSlotCountHolder;
 
+    private TextMeshProUGUI weightText;
+    private TextMeshProUGUI slotText;
+    private Image weightBar;
+    private Image slotBar;
+
     [SerializeField]
     private List<InventorySlot> discardSlots = new List<InventorySlot>();
 
     public override void Start()
     {
         base.Start();
-        discardOptionHolder = GameUI.Instance.discardOptionHolder;
-        weightAndSlotCountHolder = GameUI.Instance.weightAndSlotCountHolder;
+        InitializeUI();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        HandleWeightAndSlotBar();
     }
 
     public override void CreateSlots()
@@ -41,6 +52,30 @@ public class DynamicInterface : UserInterface
             inventory.GetSlots[i].slotDisplay = obj;
             slotsOnInterface.Add(obj, inventory.GetSlots[i]);
         }
+    }
+
+    private void InitializeUI()
+    {
+        if (GameUI.Instance == null)
+        {
+            Debug.LogError("GameUI.Instance is NULL");
+            return;
+        }
+        var GUIInstance = GameUI.Instance;
+        discardOptionHolder = GUIInstance.discardOptionHolder;
+        weightAndSlotCountHolder = GUIInstance.weightAndSlotCountHolder;
+        weightBar = GUIInstance.weightBar;
+        slotBar = GUIInstance.slotBar;
+        weightText = GUIInstance.weightText;
+        slotText = GUIInstance.slotText;
+    }
+
+    private void HandleWeightAndSlotBar()
+    {
+        weightText.text = $"<color=#FFCD00>Trọng lượng:</color> {inventory.CurrentWeight}/{inventory.WeightLimit}";
+        weightBar.fillAmount = inventory.CurrentWeight / inventory.WeightLimit;
+        slotText.text = $"<color=#FFCD00>Số ô đồ:</color> {inventory.GetCurrentSlotCount}/{inventory.MaxSlot}";
+        slotBar.fillAmount = (float)inventory.CurrentSlotCount / inventory.MaxSlot;
     }
 
     private void OnLMBDiscardClick(GameObject obj, PointerEventData data)
