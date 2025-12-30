@@ -359,6 +359,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "AI_Test",
+            "id": "c5b42119-bc2e-43c8-9086-965c37ed77a0",
+            "actions": [
+                {
+                    "name": "LMB",
+                    "type": "Button",
+                    "id": "3f9ad731-bc85-43c2-a067-c60ce0b820c2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2dd8911b-bcb0-4d5f-b4cd-958419553cc4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LMB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

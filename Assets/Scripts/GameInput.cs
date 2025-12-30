@@ -110,4 +110,9 @@ public class GameInput : MonoBehaviour
         }
         return false;
     }
+
+    public bool isLMBAITestAction()
+    {
+        return inputActions.AI_Test.LMB.IsPressed();
+    }
 }

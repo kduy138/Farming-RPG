@@ -180,18 +180,22 @@ public class FishingMiniGame : MonoBehaviour
             int quantity = 1;
             Item item = new Item(fishSO);
             SetUI(item, quantity);
-            if (inventory.AddItem(item, quantity) == AddItemReturnCode.NoEmptySlot)
+
+            AddItemReturnCode fishingResult = inventory.AddItem(item, quantity);
+
+            switch(fishingResult)
             {
-                Debug.Log("Kho đồ đã đầy!");
-                return;
+                case AddItemReturnCode.NoEmptySlot:
+                    Debug.Log("Kho đồ đã đầy!");
+                    break;
+                case AddItemReturnCode.TooHeavy:
+                    Debug.Log("Kho đồ quá nặng!");
+                    break;
+                case AddItemReturnCode.Success:
+                    StartCoroutine(GameUI.Instance.ToggleFishingPopUp());
+                    inventory.Save();
+                    break;
             }
-            else if(inventory.AddItem(item, quantity) == AddItemReturnCode.TooHeavy)
-            {
-                Debug.Log("Kho đồ quá nặng!");
-                return;
-            }
-            StartCoroutine(GameUI.Instance.ToggleFishingPopUp());
-            inventory.Save();
         }
     }
 
