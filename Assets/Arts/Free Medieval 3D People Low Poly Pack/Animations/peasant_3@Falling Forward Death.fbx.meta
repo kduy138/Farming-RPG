@@ -1,13 +1,5 @@
 fileFormatVersion: 2
-guid: 0392ad5188ec61545b5b7f77789a7dfb
-AssetOrigin:
-  serializedVersion: 1
-  productId: 322588
-  packageName: "[FREE] Fantasy Monster 01 (Rework) \u2013 Game Ready (Rig + Animation)
-    \u2013 PixeliusVita"
-  packageVersion: 2.0
-  assetPath: Assets/Stylized3DMonster/Monster01/Monster01_AllAnim.fbx
-  uploadId: 832882
+guid: d57fd885d88f736429daddd37988d06f
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -30,7 +22,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -102,13 +94,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 3
+  animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

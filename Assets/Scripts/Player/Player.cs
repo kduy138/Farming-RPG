@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using TMPro;
-using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,11 +12,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float currentMoveSpeed = 0f;
     private float moveSpeed;
-    private bool isWalking = false;
 
+    public event EventHandler OnDead;
+
+    [Header("Flags")]
+    private bool isWalking = false;
+    [SerializeField]
+    private bool isDead = false;
+
+    [Header("References")]
     [SerializeField]
     private PlayerScriptableObject baseData;
     public PlayerStats runtimePlayerData { get; private set; }
+    [SerializeField]
+    private FishingManager fm;
 
     [SerializeField]
     private string savePath;
@@ -29,9 +38,6 @@ public class Player : MonoBehaviour
     private float rotationSpeed;
     [SerializeField]
     private Transform cinemachineCamera;
-
-    [SerializeField]
-    private FishingManager fm;
 
     [Header("UI")]
     private Image staminaBar;
@@ -65,6 +71,7 @@ public class Player : MonoBehaviour
         HandleSilverCoin();
         HandlePlayerFillBar();
         HandleStaminaRecoverOverTime();
+        HandlePlayerDead();
     }
 
     private void FixedUpdate()
@@ -188,10 +195,34 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void HandlePlayerDead()
+    {
+        if (runtimePlayerData.currentHealth <= 0f && !isDead)
+        {
+            isDead = true;
+            OnDead?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public void TakeDamage(float damageAmount)
+    {
+        if (runtimePlayerData.currentHealth <= 0f) {
+            runtimePlayerData.currentHealth = 0f;
+            return;
+        }
+
+        runtimePlayerData.currentHealth -= damageAmount;
+    }
+
     public float GetNormalizedSpeed()
     {
         float normalized = currentMoveSpeed / runtimePlayerData.currentRunSpeed;
         return Mathf.Clamp01(normalized);
+    }
+
+    public Transform GetPlayerTransform()
+    {
+        return transform;
     }
 
     public float GetBlendSpeed()
@@ -204,6 +235,16 @@ public class Player : MonoBehaviour
     public float GetCurrentMoveSpeed()
     {
         return currentMoveSpeed;
+    }
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
+    public void ResetDeadFlag()
+    {
+        isDead = false;
     }
 
     [ContextMenu("Save")]

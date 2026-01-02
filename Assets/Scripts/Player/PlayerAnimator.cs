@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,10 +9,14 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField]
     private FishingManager fm;
 
+    private bool isDeadTriggered = false;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
         player = GetComponent<Player>();
+
+        player.OnDead += TriggerDead;
     }
 
     private void Update()
@@ -39,7 +44,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void TriggerCast()
     {
-        if(fm.IsCast() == true)
+        if(fm.IsCast())
         {
             animator.SetTrigger("Cast");
             fm.ResetCast();
@@ -49,5 +54,10 @@ public class PlayerAnimator : MonoBehaviour
     public void CancelCastAnimation()
     {
         animator.Play("Blend Tree Fishing", 0, 0f);
+    }
+
+    private void TriggerDead(object sender, EventArgs e)
+    {
+        animator.SetTrigger("Dead");
     }
 }
