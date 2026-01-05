@@ -17,9 +17,13 @@ MonoBehaviour:
   mana: 300
   atk: 10
   def: 10
-  evasion: 50
-  damageReduction: 30
+  evasion: 20
+  damageReduction: 0
   walkSpeed: 3
   runSpeed: 7
   holdingItemWalkSpeed: 2
   level: 1
+  deathPenalty: 13
+  itemDropRate: 0
+  staminaRecoverRate: 4
+  fishingTime: 8

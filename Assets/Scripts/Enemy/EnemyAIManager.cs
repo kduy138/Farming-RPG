@@ -141,6 +141,8 @@ public class EnemyAIManager : MonoBehaviour
 
     private void ChasePlayer()
     {
+        if (player.IsDead()) return;
+
         isIdle = false;
         isPatrolling = false;
 
@@ -150,6 +152,7 @@ public class EnemyAIManager : MonoBehaviour
 
     private void Attack()
     {
+        if (player.IsDead()) return;
         if (isAttacking) return;
 
         float distance = Vector3.Distance(transform.position, player.GetPlayerTransform().position);

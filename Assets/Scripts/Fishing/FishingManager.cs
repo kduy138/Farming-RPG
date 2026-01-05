@@ -4,11 +4,20 @@ using UnityEngine.Rendering;
 
 public class FishingManager : MonoBehaviour
 {
+    [Header("References")]
     private Player player;
+    private FishBoolManager fishBoolManager;
+    private FishingMiniGame miniGame;
+    [SerializeField]
+    private InventoryScriptableObject inventory;
+
+    [Header("Flags")]
     public bool isFishing = false;
     public bool isCast = false;
     public bool isWaitingToCatch = false;
     public bool isPlayingMinigame = false;
+
+    [Header("Game Objects")]
     [SerializeField]
     private GameObject fishingRod;
     [SerializeField]
@@ -16,11 +25,11 @@ public class FishingManager : MonoBehaviour
     [System.NonSerialized]
     public GameObject spawnedBait;
 
-    private FishBoolManager fishBoolManager;
 
     private void Awake()
     {
         player = GetComponentInParent<Player>();
+        miniGame = FindAnyObjectByType<FishingMiniGame>();
         fishingRod.SetActive(false);
     }
 
@@ -131,8 +140,7 @@ public class FishingManager : MonoBehaviour
 
     private IEnumerator WaitToCatch()
     {
-        int waitingTime = 8;
-        yield return new WaitForSeconds(waitingTime);
+        yield return new WaitForSeconds(player.runtimePlayerData.currentFishingTime);
         isWaitingToCatch = false;
         EnterFishingMinigame();
     }
@@ -140,9 +148,11 @@ public class FishingManager : MonoBehaviour
     private void EnterFishingMinigame() {
         if (!isFishing) return;
         if(fishBoolManager == null) return;
+        if (miniGame == null) return;
 
         isPlayingMinigame = true;
-        FindAnyObjectByType<FishingMiniGame>().BeginMinigame(fishBoolManager);
+
+        miniGame.BeginMinigame(fishBoolManager);
     }
 
     public void CancelCastOnTerrain()
@@ -180,6 +190,11 @@ public class FishingManager : MonoBehaviour
     {
         var playerAnimator = player.GetComponent<PlayerAnimator>();
         playerAnimator.CancelCastAnimation();
+    }
+
+    public void AddFishToInventory(Item item, int quantity)
+    {
+            inventory.AddItem(item, quantity);
     }
 
     public void ResetCast()

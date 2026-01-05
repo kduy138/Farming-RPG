@@ -1,5 +1,4 @@
 using System.IO;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "InventoryScriptableObject", menuName = "Scriptable Objects/Inventory")]
@@ -33,11 +32,11 @@ public class InventoryScriptableObject : ScriptableObject
         }
     }
 
-    public AddItemReturnCode AddItem(Item _item, int _quantity)
+    public AddItemReturnCode CheckAddItem(Item _item, int _quantity)
     {
-        InventorySlot slot = FindItemOnInventory(_item);
+        InventorySlot slotWithThisItem = FindItemOnInventory(_item);
 
-        if (GetEmptySlotCount <= 0 && (!itemDatabase.itemSO[_item.ID].Stackable || slot == null))
+        if (GetEmptySlotCount <= 0 && (!itemDatabase.itemSO[_item.ID].Stackable || slotWithThisItem == null))
         {
             return AddItemReturnCode.NoEmptySlot;
         }
@@ -47,18 +46,29 @@ public class InventoryScriptableObject : ScriptableObject
             return AddItemReturnCode.TooHeavy;
         }
 
-        if (!itemDatabase.itemSO[_item.ID].Stackable || slot == null)
+        if (!itemDatabase.itemSO[_item.ID].Stackable || slotWithThisItem == null)
+        {
+            return AddItemReturnCode.Allow;
+        }
+
+        return AddItemReturnCode.Allow;
+    }
+
+    public void AddItem(Item _item, int _quantity)
+    {
+        InventorySlot slotWithThisItem = FindItemOnInventory(_item);
+
+        if (!itemDatabase.itemSO[_item.ID].Stackable || slotWithThisItem == null)
         {
             SetItemToEmptySlot(_item, _quantity);
             currentWeight += itemDatabase.itemSO[_item.ID].Weight;
             Debug.Log("Đã thêm Item: " + _item.ItemName + " - " + _quantity);
-            return AddItemReturnCode.Success;
+            return;
         }
 
-        slot.AddQuantity(_quantity);
+        slotWithThisItem.AddQuantity(_quantity);
         currentWeight += itemDatabase.itemSO[_item.ID].Weight;
         Debug.Log("Đã thêm Item: " + _item.ItemName + " với số lượng x" + _quantity);
-        return AddItemReturnCode.Success;
     }
 
     public InventorySlot FindItemOnInventory(Item _item)
@@ -319,7 +329,8 @@ public class InventorySaveData
 
 public enum AddItemReturnCode
 {
+    None,
     TooHeavy,
     NoEmptySlot,
-    Success,
+    Allow,
 }

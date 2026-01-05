@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class FishingMiniGame : MonoBehaviour
 {
@@ -22,25 +21,29 @@ public class FishingMiniGame : MonoBehaviour
 
     public List<Key> keys;
     public List<SpawnedKey> keySequenceList;
+    private int keySequenceLength = 0;
 
     [SerializeField]
     private GameObject KeySequenceContainer;
 
+    [Header("References")]
     [SerializeField]
     private FishingManager fm;
     [SerializeField]
     private InventoryScriptableObject inventory;
     public FishBoolManager currentFishBoolManager;
     private ItemScriptableObject fishSO;
+    private Item pendingItem;
 
-    private int keySequenceLength = 0;
-    [SerializeField]
     private int currentInputActionID;
-    [SerializeField]
     private int currentKeyIndex = 0;
 
     private const float MiniGameTime = 7.0f;
     private float currentMiniGameTime;
+
+    [Header("Flags")]
+    [SerializeField]
+    private bool isWaitingForPlayerToCatch = false;
     private bool isStarted = false;
     private bool isResetting = false;
 
@@ -53,6 +56,7 @@ public class FishingMiniGame : MonoBehaviour
     {
         SetCurrentInputActionID();
         HandleMinigame();
+        HandleCatchFish();
     }
 
     public void BeginMinigame(FishBoolManager fbm)
@@ -155,6 +159,44 @@ public class FishingMiniGame : MonoBehaviour
         }
     }
 
+    private void OnFishingSuccess()
+    {
+        StartCoroutine(ResetMinigame());
+        GameUI.Instance.ToggleFishingPopUp();
+
+        if (fishSO == null) return;
+
+        pendingItem = new Item(fishSO);
+        isWaitingForPlayerToCatch = true;
+
+        SetUI(pendingItem, 1);
+        GameUI.Instance.catchFishWarningTxt.text = "Nhấn E để lấy cá";
+    }
+
+    private void HandleCatchFish()
+    {
+        if (!isWaitingForPlayerToCatch) return;
+
+        if (!GameInput.Instance.isTakeFishAction()) return;
+
+        AddItemReturnCode addItemPermission = inventory.CheckAddItem(pendingItem, 1);
+        Debug.Log(addItemPermission);
+        switch (addItemPermission)
+        {
+            case AddItemReturnCode.NoEmptySlot:
+                GameUI.Instance.catchFishWarningTxt.text = "Kho đồ đã đầy!";
+                break;
+            case AddItemReturnCode.TooHeavy:
+                GameUI.Instance.catchFishWarningTxt.text = "Kho đồ quá nặng!";
+                break;
+            case AddItemReturnCode.Allow:
+                GameUI.Instance.catchFishWarningTxt.text = "Đã thêm cá vào kho đồ!";
+                fm.AddFishToInventory(pendingItem, 1);
+                isWaitingForPlayerToCatch = false;
+                break;
+        }
+    }
+
     private void SpawnKeySequence()
     {
         SetKeySequenceLength();
@@ -168,34 +210,6 @@ public class FishingMiniGame : MonoBehaviour
                 ID = randomKey.ID,
                 spawnedKey = spawnedKey,
             });
-        }
-    }
-
-    private void OnFishingSuccess()
-    {
-        StartCoroutine(ResetMinigame());
-
-        if (fishSO != null)
-        {
-            int quantity = 1;
-            Item item = new Item(fishSO);
-            SetUI(item, quantity);
-
-            AddItemReturnCode fishingResult = inventory.AddItem(item, quantity);
-
-            switch(fishingResult)
-            {
-                case AddItemReturnCode.NoEmptySlot:
-                    Debug.Log("Kho đồ đã đầy!");
-                    break;
-                case AddItemReturnCode.TooHeavy:
-                    Debug.Log("Kho đồ quá nặng!");
-                    break;
-                case AddItemReturnCode.Success:
-                    StartCoroutine(GameUI.Instance.ToggleFishingPopUp());
-                    inventory.Save();
-                    break;
-            }
         }
     }
 

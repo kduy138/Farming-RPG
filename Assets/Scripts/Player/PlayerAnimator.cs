@@ -9,8 +9,6 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField]
     private FishingManager fm;
 
-    private bool isDeadTriggered = false;
-
     private void Start()
     {
         animator = GetComponent<Animator>();

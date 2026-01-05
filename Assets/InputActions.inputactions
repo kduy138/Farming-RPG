@@ -322,6 +322,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UI_TakeFish",
+                    "type": "Button",
+                    "id": "0a946985-3a46-4385-9d00-0ffd1042c1de",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -355,6 +364,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "UI_Fishing_Minigame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec20e263-7fbc-476b-a821-8c6f98d7dc16",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UI_TakeFish",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

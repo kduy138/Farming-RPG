@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
     private Vector3 lastMoveDirection;
     [SerializeField]
@@ -21,6 +20,7 @@ public class Player : MonoBehaviour
     private bool isDead = false;
 
     [Header("References")]
+    private Rigidbody playerRigidbody;
     [SerializeField]
     private PlayerScriptableObject baseData;
     public PlayerStats runtimePlayerData { get; private set; }
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         ToggleWalking();
-        HandleSilverCoin();
+        VisualizePlayerSilverCoin();
         HandlePlayerFillBar();
         HandleStaminaRecoverOverTime();
         HandlePlayerDead();
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleMovement();
+        HandlePlayerMovement();
     }
 
     private void InitializePlayerUI()
@@ -129,9 +129,9 @@ public class Player : MonoBehaviour
         moveSpeed = speed;
     }
 
-    private void HandleMovement()
+    private void HandlePlayerMovement()
     {
-        if (fm.IsWaitingToCatch() == true)
+        if (fm.IsWaitingToCatch() == true || isDead)
         {
             return;
         }
@@ -176,7 +176,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void HandleSilverCoin()
+    private void VisualizePlayerSilverCoin()
     {
         GameUI.Instance.silverCoinText.text = runtimePlayerData.currentSilverCoin.ToString("n0");
     }
@@ -200,7 +200,9 @@ public class Player : MonoBehaviour
         if (runtimePlayerData.currentHealth <= 0f && !isDead)
         {
             isDead = true;
+            runtimePlayerData.currentHealth = 0f;
             OnDead?.Invoke(this, EventArgs.Empty);
+            GameUI.Instance.playerDeadScreen.SetActive(true);
         }
     }
 
@@ -248,34 +250,37 @@ public class Player : MonoBehaviour
     }
 
     [ContextMenu("Save")]
-    public void Save()
+    public void SavePlayerData()
     {
         string fullSavePath = Application.persistentDataPath + savePath;
         PlayerSaveData saveData = new PlayerSaveData();
 
-        saveData.Health = runtimePlayerData.currentHealth;
+        saveData.CurrentHealth = runtimePlayerData.currentHealth;
         saveData.MaxHealth = runtimePlayerData.currentMaxHealth;
-        saveData.Stamina = runtimePlayerData.currentStamina;
+        saveData.CurrentStamina = runtimePlayerData.currentStamina;
         saveData.MaxStamina = runtimePlayerData.currentMaxStamina;
-        saveData.Mana = runtimePlayerData.currentMana;
+        saveData.CurrentMana = runtimePlayerData.currentMana;
         saveData.MaxMana = runtimePlayerData.currentMaxMana;
 
-        saveData.ATK = runtimePlayerData.currentATK;
-        saveData.DEF = runtimePlayerData.currentDEF;
-        saveData.Evasion = runtimePlayerData.currentEvasion;
-        saveData.DamageReduction = runtimePlayerData.currentDamageReduction;
+        saveData.CurrentATK = runtimePlayerData.currentATK;
+        saveData.CurrentDEF = runtimePlayerData.currentDEF;
+        saveData.CurrentEvasion = runtimePlayerData.currentEvasion;
+        saveData.CurrentDamageReduction = runtimePlayerData.currentDamageReduction;
 
-        saveData.WalkSpeed = runtimePlayerData.currentWalkSpeed;
-        saveData.RunSpeed = runtimePlayerData.currentRunSpeed;
-        saveData.HoldingItemWalkSpeed = runtimePlayerData.currentHoldingItemWalkSpeed;
+        saveData.CurrentWalkSpeed = runtimePlayerData.currentWalkSpeed;
+        saveData.CurrentRunSpeed = runtimePlayerData.currentRunSpeed;
+        saveData.CurrentHoldingItemWalkSpeed = runtimePlayerData.currentHoldingItemWalkSpeed;
 
-        saveData.Level = runtimePlayerData.currentLevel;
-        saveData.XP = runtimePlayerData.currentXP;
+        saveData.CurrentLevel = runtimePlayerData.currentLevel;
+        saveData.CurrentXP = runtimePlayerData.currentXP;
+        saveData.CurrentDeathPenalty = runtimePlayerData.currentDeathPenalty;
 
-        saveData.ItemDropRate = runtimePlayerData.currentItemDropRate;
-        saveData.StaminaRecoverRate = runtimePlayerData.currentStaminaRecoverRate;
+        saveData.CurrentItemDropRate = runtimePlayerData.currentItemDropRate;
+        saveData.CurrentStaminaRecoverRate = runtimePlayerData.currentStaminaRecoverRate;
 
-        saveData.SilverCoin = runtimePlayerData.currentSilverCoin;
+        saveData.CurrentFishingTime = runtimePlayerData.currentFishingTime;
+
+        saveData.CurrentSilverCoin = runtimePlayerData.currentSilverCoin;
 
         string json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(fullSavePath, json);
@@ -284,7 +289,7 @@ public class Player : MonoBehaviour
     }
 
     [ContextMenu("Load")]
-    public void Load()
+    public void LoadPlayerData()
     {
         string fullSavePath = string.Concat(Application.persistentDataPath, savePath);
 
@@ -293,29 +298,32 @@ public class Player : MonoBehaviour
         string json = File.ReadAllText(fullSavePath);
         PlayerSaveData saveData = JsonUtility.FromJson<PlayerSaveData>(json);
 
-        runtimePlayerData.currentHealth = saveData.Health;
+        runtimePlayerData.currentHealth = saveData.CurrentHealth;
         runtimePlayerData.currentMaxHealth = saveData.MaxHealth;
-        runtimePlayerData.currentMana = saveData.Mana;
+        runtimePlayerData.currentMana = saveData.CurrentMana;
         runtimePlayerData.currentMaxMana = saveData.MaxMana;
-        runtimePlayerData.currentStamina = saveData.Stamina;
+        runtimePlayerData.currentStamina = saveData.CurrentStamina;
         runtimePlayerData.currentMaxStamina = saveData.MaxStamina;
 
-        runtimePlayerData.currentATK = saveData.ATK;
-        runtimePlayerData.currentDEF = saveData.DEF;
-        runtimePlayerData.currentEvasion = saveData.Evasion;
-        runtimePlayerData.currentDamageReduction = saveData.DamageReduction;
+        runtimePlayerData.currentATK = saveData.CurrentATK;
+        runtimePlayerData.currentDEF = saveData.CurrentDEF;
+        runtimePlayerData.currentEvasion = saveData.CurrentEvasion;
+        runtimePlayerData.currentDamageReduction = saveData.CurrentDamageReduction;
 
-        runtimePlayerData.currentWalkSpeed = saveData.WalkSpeed;
-        runtimePlayerData.currentRunSpeed = saveData.RunSpeed;
-        runtimePlayerData.currentHoldingItemWalkSpeed = saveData.HoldingItemWalkSpeed;
+        runtimePlayerData.currentWalkSpeed = saveData.CurrentWalkSpeed;
+        runtimePlayerData.currentRunSpeed = saveData.CurrentRunSpeed;
+        runtimePlayerData.currentHoldingItemWalkSpeed = saveData.CurrentHoldingItemWalkSpeed;
 
-        runtimePlayerData.currentLevel = saveData.Level;
-        runtimePlayerData.currentXP = saveData.XP;
+        runtimePlayerData.currentLevel = saveData.CurrentLevel;
+        runtimePlayerData.currentXP = saveData.CurrentXP;
+        runtimePlayerData.currentDeathPenalty = saveData.CurrentDeathPenalty;
 
-        runtimePlayerData.currentItemDropRate = saveData.ItemDropRate;
-        runtimePlayerData.currentStaminaRecoverRate = saveData.StaminaRecoverRate;
+        runtimePlayerData.currentItemDropRate = saveData.CurrentItemDropRate;
+        runtimePlayerData.currentStaminaRecoverRate = saveData.CurrentStaminaRecoverRate;
 
-        runtimePlayerData.currentSilverCoin = saveData.SilverCoin;
+        runtimePlayerData.currentFishingTime = saveData.CurrentFishingTime;
+
+        runtimePlayerData.currentSilverCoin = saveData.CurrentSilverCoin;
 
         Debug.Log("Đã tải dữ liệu nhân vật được lưu tại: " + fullSavePath);
     }
@@ -324,27 +332,30 @@ public class Player : MonoBehaviour
 [System.Serializable]
 public class PlayerSaveData
 {
-    public float Health;
+    public float CurrentHealth;
     public float MaxHealth;
-    public float Stamina;
+    public float CurrentStamina;
     public float MaxStamina;
-    public float Mana;
+    public float CurrentMana;
     public float MaxMana;
 
-    public int ATK;
-    public int DEF;
-    public int Evasion;
-    public int DamageReduction;
+    public int CurrentATK;
+    public int CurrentDEF;
+    public int CurrentEvasion;
+    public int CurrentDamageReduction;
 
-    public float WalkSpeed;
-    public float RunSpeed;
-    public float HoldingItemWalkSpeed;
+    public float CurrentWalkSpeed;
+    public float CurrentRunSpeed;
+    public float CurrentHoldingItemWalkSpeed;
 
-    public int Level;
-    public float XP;
+    public int CurrentLevel;
+    public float CurrentXP;
+    public float CurrentDeathPenalty;
 
-    public float ItemDropRate;
-    public float StaminaRecoverRate;
+    public float CurrentItemDropRate;
+    public float CurrentStaminaRecoverRate;
 
-    public double SilverCoin;
+    public float CurrentFishingTime;
+
+    public double CurrentSilverCoin;
 }

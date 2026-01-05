@@ -13,13 +13,13 @@ public class GameManager : MonoBehaviour
     {
         inventory.Load();
         equipment.Load();
-        player.Load();
+        player.LoadPlayerData();
     }
 
     private void OnApplicationQuit()
     {
         inventory.Save();
         equipment.Save();
-        player.Save();
+        player.SavePlayerData();
     }
 }

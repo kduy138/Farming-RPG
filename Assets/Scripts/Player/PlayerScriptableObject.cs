@@ -43,4 +43,20 @@ public class PlayerScriptableObject : ScriptableObject
     [SerializeField]
     private int level;
     public int Level { get => level; private set => level = value; }
+    [SerializeField]
+    private float deathPenalty;
+    public float DeathPenalty { get => deathPenalty; private set => deathPenalty = value; }
+
+    [Header("Rates")]
+    [SerializeField]
+    private float itemDropRate;
+    public float ItemDropRate { get => itemDropRate; private set => itemDropRate = value; }
+    [SerializeField]
+    private float staminaRecoverRate;
+    public float StaminaRecoverRate { get => staminaRecoverRate; private set => staminaRecoverRate = value; }
+
+    [Header("Times")]
+    [SerializeField]
+    private float fishingTime;
+    public float FishingTime { get => fishingTime; private set => fishingTime = value;}
 }

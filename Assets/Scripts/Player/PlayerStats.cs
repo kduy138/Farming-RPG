@@ -20,9 +20,12 @@ public class PlayerStats
 
     public int currentLevel;
     public float currentXP;
+    public float currentDeathPenalty;
 
     public float currentItemDropRate;
     public float currentStaminaRecoverRate;
+
+    public float currentFishingTime;
 
     public double currentSilverCoin;
 
@@ -46,9 +49,12 @@ public class PlayerStats
 
         currentLevel = baseData.Level;
         currentXP = 0f;
+        currentDeathPenalty = baseData.DeathPenalty;
 
-        currentItemDropRate = 0f;
-        currentStaminaRecoverRate = 4f;
+        currentItemDropRate = baseData.ItemDropRate;
+        currentStaminaRecoverRate = baseData.StaminaRecoverRate;
+
+        currentFishingTime = baseData.FishingTime;
 
         currentSilverCoin = 0;
     }

@@ -111,8 +111,7 @@ public class GameInput : MonoBehaviour
         return false;
     }
 
-    public bool isLMBAITestAction()
-    {
-        return inputActions.AI_Test.LMB.IsPressed();
+    public bool isTakeFishAction() {
+        return inputActions.UI.UI_TakeFish.IsPressed();
     }
 }

@@ -45,6 +45,7 @@ public class GameUI : MonoBehaviour
     public GameObject discardOptionHolder;
     public GameObject weightAndSlotCountHolder;
     public GameObject fishingPopUp;
+    public GameObject playerDeadScreen;
 
     [Header("Buttons")]
     public GameObject removeItemBtn;
@@ -63,6 +64,7 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI staminaTxt;
     public TextMeshProUGUI hpTxt;
     public TextMeshProUGUI manaTxt;
+    public TextMeshProUGUI catchFishWarningTxt;
 
     public static GameUI Instance;
 
@@ -70,6 +72,7 @@ public class GameUI : MonoBehaviour
     {
         Instance = this;
         DisableScreens();
+        DisableTexts();
         if (fishingScreen) fishingScreen.SetActive(false);
         if (minigameScreen) minigameScreen.SetActive(false);
     }
@@ -89,6 +92,12 @@ public class GameUI : MonoBehaviour
         if (confirmRemoveScreen) confirmRemoveScreen.SetActive(false);
         if (discardOptionHolder) discardOptionHolder.SetActive(false);
         if (fishingPopUp) fishingPopUp.SetActive(false);
+        if (playerDeadScreen) playerDeadScreen.SetActive(false);
+    }
+
+    private void DisableTexts()
+    {
+        //if (catchFishWarningTxt) catchFishWarningTxt.enabled = false;
     }
 
     private void ToggleInventoryScreen()
@@ -185,12 +194,8 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public IEnumerator ToggleFishingPopUp()
+    public void ToggleFishingPopUp()
     {
-        int popUpTime = 2;
         fishingPopUp.SetActive(true);
-
-        yield return new WaitForSeconds(popUpTime);
-        fishingPopUp.SetActive(false);
     }
 }
