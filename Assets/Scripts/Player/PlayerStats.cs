@@ -19,8 +19,12 @@ public class PlayerStats
     public float currentHoldingItemWalkSpeed;
 
     public int currentLevel;
+    public int MaxLevel;
     public float currentXP;
+    public float MaxXP;
     public float currentDeathPenalty;
+
+    public float currentFishingXP;
 
     public float currentItemDropRate;
     public float currentStaminaRecoverRate;
@@ -48,8 +52,12 @@ public class PlayerStats
         currentHoldingItemWalkSpeed = baseData.HoldingItemWalkSpeed;
 
         currentLevel = baseData.Level;
+        MaxLevel = 99;
         currentXP = 0f;
+        MaxXP = 13034431f;
         currentDeathPenalty = baseData.DeathPenalty;
+
+        currentFishingXP = baseData.FishingXP;
 
         currentItemDropRate = baseData.ItemDropRate;
         currentStaminaRecoverRate = baseData.StaminaRecoverRate;

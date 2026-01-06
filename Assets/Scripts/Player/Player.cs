@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         ToggleWalking();
-        VisualizePlayerSilverCoin();
+        DisplayPlayerUI();
         HandlePlayerFillBar();
         HandleStaminaRecoverOverTime();
         HandlePlayerDead();
@@ -93,6 +93,12 @@ public class Player : MonoBehaviour
         hpTxt = GUIInstance.hpTxt;
         manaBar = GUIInstance.manaBar;
         manaTxt = GUIInstance.manaTxt;
+    }
+
+    private void DisplayPlayerUI()
+    {
+        DisplayPlayerSilverCoin();
+        DisplayPlayerLevelAndXP();
     }
 
     private void HandlePlayerFillBar()
@@ -176,9 +182,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void VisualizePlayerSilverCoin()
+    private void DisplayPlayerSilverCoin()
     {
         GameUI.Instance.silverCoinText.text = runtimePlayerData.currentSilverCoin.ToString("n0");
+    }
+
+    private void DisplayPlayerLevelAndXP()
+    {
+        GameUI.Instance.levelTxt.text = runtimePlayerData.currentLevel.ToString();
+        GameUI.Instance.xpTxt.text = $"{runtimePlayerData.currentXP}/{XPToReachNextLevelCalculator(runtimePlayerData.currentLevel + 1)}";
     }
 
     private void HandleStaminaRecoverOverTime()
@@ -212,8 +224,56 @@ public class Player : MonoBehaviour
             runtimePlayerData.currentHealth = 0f;
             return;
         }
-
         runtimePlayerData.currentHealth -= damageAmount;
+    }
+
+    private int XPToReachNextLevelCalculator(int nextLevel)
+    {
+        if (nextLevel > runtimePlayerData.MaxLevel) { 
+            return 0; 
+        }
+
+        int firstPass = 0;
+        int xp = 0;
+
+        for (int l = 1; l < nextLevel; l++)
+        {
+            firstPass += (int)Math.Floor(l + (300.0f * Math.Pow(2.0f, l / 7.0f)));
+            xp = firstPass / 4;
+        }
+        if (xp > runtimePlayerData.MaxXP)
+        {
+            return (int)runtimePlayerData.MaxXP;
+        }
+        return xp;
+    }
+
+    public void GainXP(float amount)
+    {
+        if (runtimePlayerData.currentXP + amount < 0)
+        {
+            return;
+        }
+        if (runtimePlayerData.currentXP > runtimePlayerData.MaxXP) { 
+            runtimePlayerData.currentXP = runtimePlayerData.MaxXP;
+            return;
+        }
+
+        runtimePlayerData.currentXP += amount;
+        if (runtimePlayerData.currentXP >= XPToReachNextLevelCalculator(runtimePlayerData.currentLevel + 1))
+        {
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        if (runtimePlayerData.currentLevel >= runtimePlayerData.MaxLevel)
+        {
+            return;
+        }
+
+        runtimePlayerData.currentLevel += 1;
     }
 
     public float GetNormalizedSpeed()
@@ -275,6 +335,8 @@ public class Player : MonoBehaviour
         saveData.CurrentXP = runtimePlayerData.currentXP;
         saveData.CurrentDeathPenalty = runtimePlayerData.currentDeathPenalty;
 
+        saveData.CurrentFishingXP = runtimePlayerData.currentFishingXP;
+
         saveData.CurrentItemDropRate = runtimePlayerData.currentItemDropRate;
         saveData.CurrentStaminaRecoverRate = runtimePlayerData.currentStaminaRecoverRate;
 
@@ -318,6 +380,8 @@ public class Player : MonoBehaviour
         runtimePlayerData.currentXP = saveData.CurrentXP;
         runtimePlayerData.currentDeathPenalty = saveData.CurrentDeathPenalty;
 
+        runtimePlayerData.currentFishingXP = saveData.CurrentFishingXP;
+
         runtimePlayerData.currentItemDropRate = saveData.CurrentItemDropRate;
         runtimePlayerData.currentStaminaRecoverRate = saveData.CurrentStaminaRecoverRate;
 
@@ -351,6 +415,8 @@ public class PlayerSaveData
     public int CurrentLevel;
     public float CurrentXP;
     public float CurrentDeathPenalty;
+
+    public float CurrentFishingXP;
 
     public float CurrentItemDropRate;
     public float CurrentStaminaRecoverRate;

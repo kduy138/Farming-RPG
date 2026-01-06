@@ -25,7 +25,6 @@ public class FishingManager : MonoBehaviour
     [System.NonSerialized]
     public GameObject spawnedBait;
 
-
     private void Awake()
     {
         player = GetComponentInParent<Player>();
@@ -73,7 +72,6 @@ public class FishingManager : MonoBehaviour
                 isWaitingToCatch = false;
                 Destroy(spawnedBait.gameObject);
             }
-            Debug.Log("Fishing: " + isFishing);
         }
     }
 
@@ -87,8 +85,8 @@ public class FishingManager : MonoBehaviour
 
             isCast = true;
             isWaitingToCatch = true;
+            miniGame.HandleReleaseFish();
             StartCoroutine(WaitToSpawnFishingBait());
-            Debug.Log("Casted");
         }
     }
 
@@ -155,6 +153,11 @@ public class FishingManager : MonoBehaviour
         miniGame.BeginMinigame(fishBoolManager);
     }
 
+    public void GiveFishingXPToPlayer()
+    {
+        player.GainXP(player.runtimePlayerData.currentFishingXP);
+    }
+
     public void CancelCastOnTerrain()
     {
         isCast = false;
@@ -210,6 +213,11 @@ public class FishingManager : MonoBehaviour
     public void ResetWaiting()
     {
         isWaitingToCatch = false;
+    }
+
+    public Player GetPlayer()
+    {
+        return player;
     }
 
     public bool IsFishing()

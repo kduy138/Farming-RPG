@@ -170,7 +170,7 @@ public class FishingMiniGame : MonoBehaviour
         isWaitingForPlayerToCatch = true;
 
         SetUI(pendingItem, 1);
-        GameUI.Instance.catchFishWarningTxt.text = "Nhấn E để lấy cá";
+        fm.GiveFishingXPToPlayer();
     }
 
     private void HandleCatchFish()
@@ -190,11 +190,18 @@ public class FishingMiniGame : MonoBehaviour
                 GameUI.Instance.catchFishWarningTxt.text = "Kho đồ quá nặng!";
                 break;
             case AddItemReturnCode.Allow:
-                GameUI.Instance.catchFishWarningTxt.text = "Đã thêm cá vào kho đồ!";
                 fm.AddFishToInventory(pendingItem, 1);
-                isWaitingForPlayerToCatch = false;
+                HandleReleaseFish();
+                inventory.Save();
                 break;
         }
+    }
+
+    public void HandleReleaseFish()
+    {
+        pendingItem = null;
+        isWaitingForPlayerToCatch = false;
+        GameUI.Instance.fishingPopUp.SetActive(false);
     }
 
     private void SpawnKeySequence()
@@ -244,7 +251,6 @@ public class FishingMiniGame : MonoBehaviour
         GameUI.Instance.minigameScreen.SetActive(false);
         GameUI.Instance.miniGameTimeTxt.text = "Nhấn để bắt đầu";
         GameUI.Instance.miniGameTxt.text = "Nhấn lần lượt đúng theo các phím bên dưới trước khi cá kịp trốn thoát";
-        GameUI.Instance.miniGameTxt.color = new Color32(255, 255, 0, 255);
         GameUI.Instance.miniGameTimeBar.fillAmount = currentMiniGameTime / MiniGameTime;
     }
 

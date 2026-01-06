@@ -47,6 +47,11 @@ public class PlayerScriptableObject : ScriptableObject
     private float deathPenalty;
     public float DeathPenalty { get => deathPenalty; private set => deathPenalty = value; }
 
+    [Header("XPs Gain")]
+    [SerializeField]
+    private float fishingXP;
+    public float FishingXP { get => fishingXP; private set => fishingXP = value;}
+
     [Header("Rates")]
     [SerializeField]
     private float itemDropRate;

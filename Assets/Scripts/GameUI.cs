@@ -65,6 +65,8 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI hpTxt;
     public TextMeshProUGUI manaTxt;
     public TextMeshProUGUI catchFishWarningTxt;
+    public TextMeshProUGUI levelTxt;
+    public TextMeshProUGUI xpTxt;
 
     public static GameUI Instance;
 
