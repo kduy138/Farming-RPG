@@ -8,13 +8,19 @@ public class PlayerAnimator : MonoBehaviour
     private Player player;
     [SerializeField]
     private FishingManager fm;
+    private MiningManager mm;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         player = GetComponent<Player>();
+        mm = FindAnyObjectByType<MiningManager>();
 
         player.OnDead += TriggerDead;
+        if (mm != null)
+        {
+            mm.OnMining += TriggerMining;
+        }
     }
 
     private void Update()
@@ -57,5 +63,15 @@ public class PlayerAnimator : MonoBehaviour
     private void TriggerDead(object sender, EventArgs e)
     {
         animator.SetTrigger("Dead");
+    }
+
+    private void TriggerMining(object sender, EventArgs e)
+    {
+        animator.SetTrigger("Mining");
+    }
+
+    public void CancelMiningAnimation()
+    {
+        animator.Play("Blend Tree Player Movement");
     }
 }

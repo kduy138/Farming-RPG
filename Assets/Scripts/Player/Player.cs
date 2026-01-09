@@ -24,7 +24,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private PlayerScriptableObject baseData;
     public PlayerStats runtimePlayerData { get; private set; }
-    [SerializeField]
     private FishingManager fm;
 
     [SerializeField]
@@ -58,6 +57,8 @@ public class Player : MonoBehaviour
 
         moveSpeed = runtimePlayerData.currentRunSpeed;
         currentMoveSpeed = 0f;
+
+        fm = transform.Find("FishingManager")?.GetComponent<FishingManager>();
     }
 
     private void Start()

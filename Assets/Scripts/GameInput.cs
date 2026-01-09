@@ -114,4 +114,9 @@ public class GameInput : MonoBehaviour
     public bool isTakeFishAction() {
         return inputActions.UI.UI_TakeFish.IsPressed();
     }
+
+    public bool isMiningAction()
+    {
+        return inputActions.Player.Player_Mining.WasPressedThisFrame();
+    }
 }

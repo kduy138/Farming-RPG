@@ -10,8 +10,6 @@ public class GameUI : MonoBehaviour
 
     [SerializeField]
     private CinemachineCamera camera;
-    private float defaultXSpeed;
-    private float defaultYSpeed;
 
     [Header("References")]
     [SerializeField]
