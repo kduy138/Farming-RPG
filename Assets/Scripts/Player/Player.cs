@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private bool isWalking = false;
     [SerializeField]
     private bool isDead = false;
+    private bool isMovementLocked = false;
 
     [Header("References")]
     private Rigidbody playerRigidbody;
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
     private PlayerScriptableObject baseData;
     public PlayerStats runtimePlayerData { get; private set; }
     private FishingManager fm;
+    private MiningManager mm;
 
     [SerializeField]
     private string savePath;
@@ -68,6 +70,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (isDead) return;
+
         ToggleWalking();
         DisplayPlayerUI();
         HandlePlayerFillBar();
@@ -138,7 +142,7 @@ public class Player : MonoBehaviour
 
     private void HandlePlayerMovement()
     {
-        if (fm.IsWaitingToCatch() == true || isDead)
+        if (isMovementLocked)
         {
             return;
         }
@@ -183,6 +187,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void MovementLock()
+    {
+        isMovementLocked = true;
+        currentMoveSpeed = 0f;
+    }
+
+    public void MovementUnlock()
+    {
+        isMovementLocked = false;
+    }
+
     private void DisplayPlayerSilverCoin()
     {
         GameUI.Instance.silverCoinText.text = runtimePlayerData.currentSilverCoin.ToString("n0");
@@ -213,6 +228,7 @@ public class Player : MonoBehaviour
         if (runtimePlayerData.currentHealth <= 0f && !isDead)
         {
             isDead = true;
+            MovementLock();
             runtimePlayerData.currentHealth = 0f;
             OnDead?.Invoke(this, EventArgs.Empty);
             GameUI.Instance.playerDeadScreen.SetActive(true);

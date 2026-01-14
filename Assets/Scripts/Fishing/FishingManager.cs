@@ -50,7 +50,7 @@ public class FishingManager : MonoBehaviour
                 return;
             }
 
-            if (isFishing == false)
+            if (!isFishing)
             {
                 isFishing = true;
                 player.SetPlayerMoveSpeed(playerData.currentHoldingItemWalkSpeed);
@@ -85,6 +85,7 @@ public class FishingManager : MonoBehaviour
 
             isCast = true;
             isWaitingToCatch = true;
+            player.MovementLock();
             miniGame.HandleReleaseFish();
             StartCoroutine(WaitToSpawnFishingBait());
         }
