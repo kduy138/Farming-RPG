@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
         inventory.Load();
         equipment.Load();
         player.LoadPlayerData();
+        CursorManager.Instance.LockCursor();
     }
 
     private void OnApplicationQuit()

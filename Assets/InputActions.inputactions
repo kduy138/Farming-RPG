@@ -351,6 +351,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UI_Cursor",
+                    "type": "Button",
+                    "id": "7178fd05-a48c-4671-b1a3-09eb691a0f75",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -397,32 +406,15 @@
                     "action": "UI_TakeFish",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "AI_Test",
-            "id": "c5b42119-bc2e-43c8-9086-965c37ed77a0",
-            "actions": [
-                {
-                    "name": "LMB",
-                    "type": "Button",
-                    "id": "3f9ad731-bc85-43c2-a067-c60ce0b820c2",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
+                },
                 {
                     "name": "",
-                    "id": "2dd8911b-bcb0-4d5f-b4cd-958419553cc4",
-                    "path": "<Mouse>/leftButton",
+                    "id": "76aafbc1-d9af-46a2-953c-d7867b92b483",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LMB",
+                    "action": "UI_Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

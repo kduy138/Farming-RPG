@@ -106,14 +106,16 @@ public class GameUI : MonoBehaviour
         {
             isInventoryOpen = true;
             inventoryScreen.SetActive(true);
-            camera.GetComponent<CinemachineInputAxisController>().enabled = false;
+            CursorManager.Instance.UnlockCursor();
+            CameraManager.Instance.DisableCamera();
         }
         else if (isInventoryOpen && GameInput.Instance.isInventoryAction())
         {
             isInventoryOpen = false;
             inventoryScreen.SetActive(false);
             itemToolTipScreen.SetActive(false);
-            camera.GetComponent<CinemachineInputAxisController>().enabled = true;
+            CursorManager.Instance.LockCursor();
+            CameraManager.Instance.EnableCamera();
         }
     }
 

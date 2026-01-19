@@ -119,4 +119,9 @@ public class GameInput : MonoBehaviour
     {
         return inputActions.Player.Player_Mining.WasPressedThisFrame();
     }
+
+    public bool isCursorAction()
+    {
+        return inputActions.UI.UI_Cursor.WasPressedThisFrame();
+    }
 }

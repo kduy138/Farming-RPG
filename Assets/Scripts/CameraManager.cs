@@ -1,21 +1,27 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
+    public static CameraManager Instance;
+
     private Vector2 _input;
     [SerializeField]
     private MouseSensitivity mouseSensitivity;
     private CameraRotation cameraRotation;
     [SerializeField]
     private CameraAngle cameraAngle;
+    private CinemachineCamera camera;
 
     private InputActions inputActions;
 
     private void Awake()
     {
+        Instance = this;
         inputActions = new InputActions();
+        camera = FindAnyObjectByType<CinemachineCamera>();
     }
 
     private void OnEnable()
@@ -47,6 +53,18 @@ public class CameraManager : MonoBehaviour
     public void Look(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
+    }
+
+    public void DisableCamera()
+    {
+        if (camera == null) return;
+        camera.GetComponent<CinemachineInputAxisController>().enabled = false;
+    }
+
+    public void EnableCamera()
+    {
+        if (camera == null) return;
+        camera.GetComponent<CinemachineInputAxisController>().enabled = true;
     }
 }
 
