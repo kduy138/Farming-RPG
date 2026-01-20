@@ -358,6 +358,7 @@ public class Player : MonoBehaviour
         saveData.CurrentStaminaRecoverRate = runtimePlayerData.currentStaminaRecoverRate;
 
         saveData.CurrentFishingTime = runtimePlayerData.currentFishingTime;
+        saveData.CurrentMiningTime = runtimePlayerData.currentMiningTime;
 
         saveData.CurrentSilverCoin = runtimePlayerData.currentSilverCoin;
 
@@ -403,6 +404,7 @@ public class Player : MonoBehaviour
         runtimePlayerData.currentStaminaRecoverRate = saveData.CurrentStaminaRecoverRate;
 
         runtimePlayerData.currentFishingTime = saveData.CurrentFishingTime;
+        runtimePlayerData.currentMiningTime = saveData.CurrentMiningTime;
 
         runtimePlayerData.currentSilverCoin = saveData.CurrentSilverCoin;
 
@@ -439,6 +441,7 @@ public class PlayerSaveData
     public float CurrentStaminaRecoverRate;
 
     public float CurrentFishingTime;
+    public float CurrentMiningTime;
 
     public double CurrentSilverCoin;
 }

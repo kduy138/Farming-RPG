@@ -64,4 +64,7 @@ public class PlayerScriptableObject : ScriptableObject
     [SerializeField]
     private float fishingTime;
     public float FishingTime { get => fishingTime; private set => fishingTime = value;}
+    [SerializeField]
+    private float miningTime;
+    public float MiningTime { get => miningTime; private set => miningTime = value; }
 }

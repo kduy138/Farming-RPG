@@ -28,3 +28,4 @@ MonoBehaviour:
   itemDropRate: 0
   staminaRecoverRate: 4
   fishingTime: 14
+  miningTime: 6

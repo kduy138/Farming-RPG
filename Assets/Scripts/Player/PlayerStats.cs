@@ -30,6 +30,7 @@ public class PlayerStats
     public float currentStaminaRecoverRate;
 
     public float currentFishingTime;
+    public float currentMiningTime;
 
     public double currentSilverCoin;
 
@@ -63,6 +64,7 @@ public class PlayerStats
         currentStaminaRecoverRate = baseData.StaminaRecoverRate;
 
         currentFishingTime = baseData.FishingTime;
+        currentMiningTime = baseData.MiningTime;
 
         currentSilverCoin = 0;
     }

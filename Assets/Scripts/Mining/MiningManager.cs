@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class MiningManager : MonoBehaviour, IInteractable
 
     [Header("References")]
     private GameObject interactBillboard;
+    private Player thisPlayer;
 
     [Header("Flags")]
     public bool isMining = false;
@@ -33,11 +35,22 @@ public class MiningManager : MonoBehaviour, IInteractable
         }
 
         player.MovementLock();
+        thisPlayer = player;
         isMining = true;
         Vector3 direction = transform.position - player.transform.position;
         direction.y = 0;
         player.transform.rotation = Quaternion.LookRotation(direction);
         OnMining?.Invoke(this, EventArgs.Empty);
+    }
+
+    private IEnumerator Mining()
+    {
+        yield return new WaitForSeconds(thisPlayer.runtimePlayerData.currentMiningTime);
+    }
+
+    private void MiningDuration()
+    {
+
     }
 
     public void OnFocus()
@@ -54,7 +67,6 @@ public class MiningManager : MonoBehaviour, IInteractable
         {
             interactBillboard.SetActive(false);
         }
-        CancelMining();
     }
 
     private void CancelMining()
@@ -62,6 +74,8 @@ public class MiningManager : MonoBehaviour, IInteractable
         if (!isMining) return;
 
         isMining = false;
+        thisPlayer.MovementUnlock();
+        thisPlayer = null;
 
         var playerAnimator = FindAnyObjectByType<PlayerAnimator>();
         if (playerAnimator != null)

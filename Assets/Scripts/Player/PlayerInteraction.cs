@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    private IInteractable currentInteractable;
+
+    [Header("Settings")]
     [SerializeField]
     private float interactDistance = 3f;
     [SerializeField]
-    private LayerMask interactLayer;
+    private float interactRadius = 3f;
     [SerializeField]
-    private Camera camera;
-    private IInteractable currentInteractable;
+    private LayerMask interactLayer;
 
     private void Update()
     {
@@ -25,9 +27,14 @@ public class PlayerInteraction : MonoBehaviour
 
     private void DetectInteractable()
     {
-        Ray ray = new Ray(camera.transform.position, camera.transform.forward);
+        Camera camera = Camera.main;
+        if (camera == null) return;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
+        Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+
+        Debug.DrawRay(camera.transform.position, ray.direction, Color.red);
+
+        if (Physics.SphereCast(ray, interactRadius, out RaycastHit hit, interactDistance, interactLayer))
         {
             if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
@@ -51,25 +58,4 @@ public class PlayerInteraction : MonoBehaviour
             currentInteractable = null;
         }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.TryGetComponent(out IInteractable interactable))
-    //    {
-    //        currentInteractable = interactable;
-    //        currentInteractable.OnFocus();
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.TryGetComponent(out IInteractable interactable))
-    //    {
-    //        if (currentInteractable == interactable)
-    //        {
-    //            currentInteractable.OnLostFocus();
-    //            currentInteractable = null;
-    //        }
-    //    }
-    //}
 }
