@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool isDead = false;
     private bool isMovementLocked = false;
+    private bool isInAction = false;
 
     [Header("References")]
     private Rigidbody playerRigidbody;
@@ -324,6 +325,16 @@ public class Player : MonoBehaviour
     public void ResetDeadFlag()
     {
         isDead = false;
+    }
+
+    public void SetIsInAction(bool value)
+    {
+        isInAction = value;
+    }
+
+    public bool IsInAction()
+    {
+        return isInAction;
     }
 
     [ContextMenu("Save")]

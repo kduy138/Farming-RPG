@@ -46,21 +46,30 @@ public class FishingManager : MonoBehaviour
             var playerData = player.runtimePlayerData;
             if (player.GetCurrentMoveSpeed() > 0)
             {
-                Debug.Log("Không thể thực hiện hành động này hiện tại!!");
+                Debug.Log("Không thể thực hiện hành động này hiện tại!");
                 return;
             }
 
             if (!isFishing)
             {
                 isFishing = true;
+                player.SetIsInAction(true);
                 player.SetPlayerMoveSpeed(playerData.currentHoldingItemWalkSpeed);
                 fishingRod.SetActive(true);
             }
             else
             {
                 isFishing = false;
+                player.SetIsInAction(false);
+                player.MovementUnlock();
+                if (isWaitingToCatch)
+                {
+                    CancelCastAnimation();
+                }
                 isCast = false;
-                if(player.IsWalking())
+                fishingRod.SetActive(false);
+                isWaitingToCatch = false;
+                if (player.IsWalking())
                 {
                     player.SetPlayerMoveSpeed(playerData.currentWalkSpeed);
                 }
@@ -68,9 +77,11 @@ public class FishingManager : MonoBehaviour
                 {
                     player.SetPlayerMoveSpeed(playerData.currentRunSpeed);
                 }
-                fishingRod.SetActive(false);
-                isWaitingToCatch = false;
-                Destroy(spawnedBait.gameObject);
+               
+                if (spawnedBait != null)
+                {
+                    Destroy(spawnedBait.gameObject);
+                }
             }
         }
     }
@@ -120,7 +131,7 @@ public class FishingManager : MonoBehaviour
             fishBoolManager = hit.collider.GetComponent<FishBoolManager>();
             if (fishBoolManager == null)
             {
-                Debug.Log("Không tìm thấy cá!!");
+                Debug.Log("Không tìm thấy cá!");
             }
         }
 
@@ -130,7 +141,7 @@ public class FishingManager : MonoBehaviour
 
         if (!hitWater)
         {
-            Debug.Log("Cannot fish on terrain!!");
+            Debug.Log("Không thể câu cá trên mặt đất!");
             CancelCastOnTerrain();
             CancelCastAnimation();
             return;
@@ -163,6 +174,7 @@ public class FishingManager : MonoBehaviour
     {
         isCast = false;
         isWaitingToCatch = false;
+        player.MovementUnlock();
 
         if (spawnedBait != null)
         {
@@ -182,6 +194,7 @@ public class FishingManager : MonoBehaviour
         {
             if (!isWaitingToCatch) return;
 
+            player.MovementUnlock();
             isWaitingToCatch = false;
             isCast = false;
             StopAllCoroutines();

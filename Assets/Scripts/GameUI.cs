@@ -25,11 +25,12 @@ public class GameUI : MonoBehaviour
     public Sprite discardIcon;
     public Image weightBar;
     public Image slotBar;
-    public GameObject fishingPopUpIcon;
+    public GameObject itemPopUpIcon;
     public Image miniGameTimeBar;
     public Image staminaBar;
     public Image hpBar;
     public Image manaBar;
+    public Image miningTimebar;
 
     [Header("Screens")]
     [SerializeField]
@@ -42,8 +43,9 @@ public class GameUI : MonoBehaviour
     private GameObject itemToolTipScreen;
     public GameObject discardOptionHolder;
     public GameObject weightAndSlotCountHolder;
-    public GameObject fishingPopUp;
+    public GameObject getItemPopUp;
     public GameObject playerDeadScreen;
+    public GameObject miningScreen;
 
     [Header("Buttons")]
     public GameObject removeItemBtn;
@@ -56,15 +58,16 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI castBtnText;
     public TextMeshProUGUI weightText;
     public TextMeshProUGUI slotText;
-    public TextMeshProUGUI fishingPopUpTxt;
+    public TextMeshProUGUI getItemPopUpTxt;
     public TextMeshProUGUI miniGameTimeTxt;
     public TextMeshProUGUI miniGameTxt;
     public TextMeshProUGUI staminaTxt;
     public TextMeshProUGUI hpTxt;
     public TextMeshProUGUI manaTxt;
-    public TextMeshProUGUI catchFishWarningTxt;
+    public TextMeshProUGUI getItemWarningTxt;
     public TextMeshProUGUI levelTxt;
     public TextMeshProUGUI xpTxt;
+    public TextMeshProUGUI miningTimeTxt;
 
     public static GameUI Instance;
 
@@ -91,8 +94,9 @@ public class GameUI : MonoBehaviour
         if (inventoryScreen) inventoryScreen.SetActive(false);
         if (confirmRemoveScreen) confirmRemoveScreen.SetActive(false);
         if (discardOptionHolder) discardOptionHolder.SetActive(false);
-        if (fishingPopUp) fishingPopUp.SetActive(false);
+        if (getItemPopUp) getItemPopUp.SetActive(false);
         if (playerDeadScreen) playerDeadScreen.SetActive(false);
+        if (miningScreen) miningScreen.SetActive(false);
     }
 
     private void DisableTexts()
@@ -153,11 +157,19 @@ public class GameUI : MonoBehaviour
 
     private void ToggleMinigameScreen()
     {
-        if (fm.IsPlayingMinigame() == true && GameInput.Instance.isTriggerFishingMinigame())
+        if (fm.IsPlayingMinigame() && GameInput.Instance.isTriggerFishingMinigame())
         {
             minigameScreen.SetActive(true);
         }
     }
+
+    //private void ToggleMiningScreen(bool isMining)
+    //{
+    //    if(isMining)
+    //    {
+    //        miningScreen.SetActive(true);
+    //    }
+    //}
 
     private void CloseScreenWithEscape()
     {
@@ -196,8 +208,8 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public void ToggleFishingPopUp()
+    public void ToggleGetItemPopUp()
     {
-        fishingPopUp.SetActive(true);
+        getItemPopUp.SetActive(true);
     }
 }

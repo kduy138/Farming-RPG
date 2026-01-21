@@ -14,6 +14,9 @@ public class MiningManager : MonoBehaviour, IInteractable
     [Header("Flags")]
     public bool isMining = false;
 
+    [Header("Coroutines")]
+    private Coroutine miningCoroutine;
+
     private void Awake()
     {
         interactBillboard = transform.Find("InteractMenuCanvas")?.gameObject;
@@ -24,9 +27,20 @@ public class MiningManager : MonoBehaviour, IInteractable
         }
     }
 
+    private void Update()
+    {
+     
+    }
+
     public void Interact(Player player)
     {
         if (isMining) return;
+
+        if (player.IsInAction()) 
+        {
+            Debug.Log("Đang trong một hành động khác!");
+            return; 
+        }
 
         if (player.GetCurrentMoveSpeed() > 0)
         {
@@ -34,13 +48,16 @@ public class MiningManager : MonoBehaviour, IInteractable
             return;
         }
 
+        GameUI.Instance.miningScreen.SetActive(true);
         player.MovementLock();
         thisPlayer = player;
         isMining = true;
+        player.SetIsInAction(true);
         Vector3 direction = transform.position - player.transform.position;
         direction.y = 0;
         player.transform.rotation = Quaternion.LookRotation(direction);
         OnMining?.Invoke(this, EventArgs.Empty);
+        miningCoroutine = StartCoroutine(MiningCoroutine());
     }
 
     private IEnumerator Mining()
@@ -48,9 +65,18 @@ public class MiningManager : MonoBehaviour, IInteractable
         yield return new WaitForSeconds(thisPlayer.runtimePlayerData.currentMiningTime);
     }
 
-    private void MiningDuration()
+    private IEnumerator MiningCoroutine()
     {
+        float miningTime = thisPlayer.runtimePlayerData.currentMiningTime;
+        float currentMiningTime = miningTime;
 
+        while (currentMiningTime > 0) {
+            currentMiningTime -= Time.deltaTime;
+            currentMiningTime = Mathf.Max(currentMiningTime, 0f);
+            GameUI.Instance.miniGameTimeBar.fillAmount = currentMiningTime / miningTime;
+            GameUI.Instance.miningTimeTxt.text = $"{Mathf.CeilToInt(currentMiningTime)} giây";
+            yield return null;
+        }
     }
 
     public void OnFocus()
@@ -69,18 +95,22 @@ public class MiningManager : MonoBehaviour, IInteractable
         }
     }
 
-    private void CancelMining()
+    private void GetOutMiningState()
     {
         if (!isMining) return;
 
-        isMining = false;
-        thisPlayer.MovementUnlock();
-        thisPlayer = null;
-
-        var playerAnimator = FindAnyObjectByType<PlayerAnimator>();
-        if (playerAnimator != null)
+        GameUI.Instance.miningScreen.SetActive(false);
+        if (thisPlayer != null)
         {
-            playerAnimator.CancelMiningAnimation();
+            thisPlayer.SetIsInAction(false);
+            thisPlayer.MovementUnlock();
+            var playerAnimator = thisPlayer.GetComponent<PlayerAnimator>();
+            if (playerAnimator != null)
+            {
+                playerAnimator.CancelMiningAnimation();
+            }
         }
+        thisPlayer = null;
+        isMining = false;
     }
 }
