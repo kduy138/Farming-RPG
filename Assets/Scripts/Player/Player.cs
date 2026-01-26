@@ -8,11 +8,8 @@ public class Player : MonoBehaviour
 {
     private Vector3 moveDirection;
     private Vector3 lastMoveDirection;
-    [SerializeField]
     private float currentMoveSpeed = 0f;
     private float moveSpeed;
-
-    public event EventHandler OnDead;
 
     [Header("Flags")]
     private bool isWalking = false;
@@ -22,12 +19,13 @@ public class Player : MonoBehaviour
     private bool isInAction = false;
 
     [Header("References")]
+    public PlayerEvents events { get; private set; } 
     private Rigidbody playerRigidbody;
     [SerializeField]
     private PlayerScriptableObject baseData;
     public PlayerStats runtimePlayerData { get; private set; }
-    private FishingManager fm;
-    private MiningManager mm;
+    private FishingManager currentFishingManager;
+    private MiningManager currentMiningManager;
 
     [SerializeField]
     private string savePath;
@@ -52,6 +50,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        events = new PlayerEvents();
         runtimePlayerData = new PlayerStats();
         runtimePlayerData.InitFrom(baseData);
 
@@ -60,8 +59,6 @@ public class Player : MonoBehaviour
 
         moveSpeed = runtimePlayerData.currentRunSpeed;
         currentMoveSpeed = 0f;
-
-        fm = transform.Find("FishingManager")?.GetComponent<FishingManager>();
     }
 
     private void Start()
@@ -231,7 +228,7 @@ public class Player : MonoBehaviour
             isDead = true;
             MovementLock();
             runtimePlayerData.currentHealth = 0f;
-            OnDead?.Invoke(this, EventArgs.Empty);
+            events.TriggerOnDead();
             GameUI.Instance.playerDeadScreen.SetActive(true);
         }
     }
@@ -335,6 +332,16 @@ public class Player : MonoBehaviour
     public bool IsInAction()
     {
         return isInAction;
+    }
+
+    public void SetCurrentFishingManager(FishingManager fm)
+    {
+        currentFishingManager = fm;
+    }
+
+    public FishingManager GetCurrentFishingManager()
+    {
+        return currentFishingManager;
     }
 
     [ContextMenu("Save")]

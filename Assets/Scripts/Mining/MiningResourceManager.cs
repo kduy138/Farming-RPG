@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiningResourceManager : MonoBehaviour
+public class MiningResourceManager : MonoBehaviour, IItemDrop
 {
     [System.Serializable]
     public class MiningResource
@@ -13,7 +13,7 @@ public class MiningResourceManager : MonoBehaviour
 
     public List<MiningResource> resources;
 
-    public ItemScriptableObject GetRandomResource()
+    public ItemScriptableObject GetRandomItem()
     {
         float randomNumber = Random.Range(0f, 100f);
         List<MiningResource> possibleResources = new List<MiningResource>();
@@ -28,5 +28,10 @@ public class MiningResourceManager : MonoBehaviour
             return null;
 
         return possibleResources[Random.Range(0, possibleResources.Count)].itemSO;
+    }
+
+    public int GetRandomItemAmount()
+    {
+        return Random.Range(1, 10);
     }
 }

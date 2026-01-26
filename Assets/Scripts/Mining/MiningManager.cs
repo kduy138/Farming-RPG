@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MiningManager : MonoBehaviour, IInteractable
 {
-    public event EventHandler OnMining;
+    protected float cooldownTime = 10f;
+    protected bool isOnCooldown;
+    private IItemDrop itemDrop;
+
+    public bool IsOnCooldown => isOnCooldown;
 
     [Header("References")]
     private GameObject interactBillboard;
-    private Player thisPlayer;
-
-    [Header("Flags")]
-    public bool isMining = false;
-
-    [Header("Coroutines")]
-    private Coroutine miningCoroutine;
 
     private void Awake()
     {
         interactBillboard = transform.Find("InteractMenuCanvas")?.gameObject;
+        itemDrop = GetComponent<IItemDrop>();
 
         if (interactBillboard != null)
         {
@@ -27,15 +22,8 @@ public class MiningManager : MonoBehaviour, IInteractable
         }
     }
 
-    private void Update()
-    {
-     
-    }
-
     public void Interact(Player player)
     {
-        if (isMining) return;
-
         if (player.IsInAction()) 
         {
             Debug.Log("Đang trong một hành động khác!");
@@ -48,35 +36,12 @@ public class MiningManager : MonoBehaviour, IInteractable
             return;
         }
 
-        GameUI.Instance.miningScreen.SetActive(true);
-        player.MovementLock();
-        thisPlayer = player;
-        isMining = true;
-        player.SetIsInAction(true);
-        Vector3 direction = transform.position - player.transform.position;
-        direction.y = 0;
-        player.transform.rotation = Quaternion.LookRotation(direction);
-        OnMining?.Invoke(this, EventArgs.Empty);
-        miningCoroutine = StartCoroutine(MiningCoroutine());
-    }
-
-    private IEnumerator Mining()
-    {
-        yield return new WaitForSeconds(thisPlayer.runtimePlayerData.currentMiningTime);
-    }
-
-    private IEnumerator MiningCoroutine()
-    {
-        float miningTime = thisPlayer.runtimePlayerData.currentMiningTime;
-        float currentMiningTime = miningTime;
-
-        while (currentMiningTime > 0) {
-            currentMiningTime -= Time.deltaTime;
-            currentMiningTime = Mathf.Max(currentMiningTime, 0f);
-            GameUI.Instance.miniGameTimeBar.fillAmount = currentMiningTime / miningTime;
-            GameUI.Instance.miningTimeTxt.text = $"{Mathf.CeilToInt(currentMiningTime)} giây";
-            yield return null;
-        }
+        MiningAction action = new MiningAction(
+            this.transform, 
+            player.runtimePlayerData.currentMiningTime,
+            itemDrop
+        );
+        player.GetComponent<PlayerActionController>().StartAction(action);
     }
 
     public void OnFocus()
@@ -93,24 +58,5 @@ public class MiningManager : MonoBehaviour, IInteractable
         {
             interactBillboard.SetActive(false);
         }
-    }
-
-    private void GetOutMiningState()
-    {
-        if (!isMining) return;
-
-        GameUI.Instance.miningScreen.SetActive(false);
-        if (thisPlayer != null)
-        {
-            thisPlayer.SetIsInAction(false);
-            thisPlayer.MovementUnlock();
-            var playerAnimator = thisPlayer.GetComponent<PlayerAnimator>();
-            if (playerAnimator != null)
-            {
-                playerAnimator.CancelMiningAnimation();
-            }
-        }
-        thisPlayer = null;
-        isMining = false;
     }
 }

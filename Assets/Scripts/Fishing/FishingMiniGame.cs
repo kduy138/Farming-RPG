@@ -38,8 +38,10 @@ public class FishingMiniGame : MonoBehaviour
     private int currentInputActionID;
     private int currentKeyIndex = 0;
 
+    [Header("Settings")]
     private const float MiniGameTime = 7.0f;
     private float currentMiniGameTime;
+    private int itemAmount;
 
     [Header("Flags")]
     [SerializeField]
@@ -65,7 +67,8 @@ public class FishingMiniGame : MonoBehaviour
 
         if (currentFishBoolManager == null) return;
 
-        fishSO = currentFishBoolManager.GetRandomFish();
+        fishSO = currentFishBoolManager.GetRandomItem();
+        itemAmount = currentFishBoolManager.GetRandomItemAmount();
         SpawnKeySequence();
     }
 
@@ -169,7 +172,7 @@ public class FishingMiniGame : MonoBehaviour
         pendingItem = new Item(fishSO);
         isWaitingForPlayerToCatch = true;
 
-        SetUI(pendingItem, 1);
+        SetUI(pendingItem, itemAmount);
         fm.GiveFishingXPToPlayer();
     }
 
@@ -180,7 +183,6 @@ public class FishingMiniGame : MonoBehaviour
         if (!GameInput.Instance.isTakeFishAction()) return;
 
         AddItemReturnCode addItemPermission = inventory.CheckAddItem(pendingItem, 1);
-        Debug.Log(addItemPermission);
         switch (addItemPermission)
         {
             case AddItemReturnCode.NoEmptySlot:
@@ -190,7 +192,7 @@ public class FishingMiniGame : MonoBehaviour
                 GameUI.Instance.getItemWarningTxt.text = "Kho đồ quá nặng!";
                 break;
             case AddItemReturnCode.Allow:
-                fm.AddFishToInventory(pendingItem, 1);
+                fm.AddFishToInventory(pendingItem, itemAmount);
                 HandleReleaseFish();
                 inventory.Save();
                 break;
@@ -236,7 +238,7 @@ public class FishingMiniGame : MonoBehaviour
         int timeBeforeReset = 1;
         yield return new WaitForSeconds(timeBeforeReset);
         isResetting = false;
-        fm.CancelCastAnimation();
+        fm.GetPlayer().events.TriggerOnCastEnded();
         fm.CancelCastOnTerrain();
         fm.ResetIsPlayingMinigame();
         currentKeyIndex = 0;

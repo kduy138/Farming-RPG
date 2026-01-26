@@ -54,6 +54,8 @@ public class FishingManager : MonoBehaviour
             {
                 isFishing = true;
                 player.SetIsInAction(true);
+                player.SetCurrentFishingManager(this);
+                player.events.TriggerOnFishingStarted();
                 player.SetPlayerMoveSpeed(playerData.currentHoldingItemWalkSpeed);
                 fishingRod.SetActive(true);
             }
@@ -61,10 +63,12 @@ public class FishingManager : MonoBehaviour
             {
                 isFishing = false;
                 player.SetIsInAction(false);
+                player.events.TriggerOnFishingEnded();
+                player.SetCurrentFishingManager(null);
                 player.MovementUnlock();
                 if (isWaitingToCatch)
                 {
-                    CancelCastAnimation();
+                    player.events.TriggerOnCastEnded();
                 }
                 isCast = false;
                 fishingRod.SetActive(false);
@@ -97,6 +101,7 @@ public class FishingManager : MonoBehaviour
             isCast = true;
             isWaitingToCatch = true;
             player.MovementLock();
+            player.events.TriggerOnCastStarted();
             miniGame.HandleReleaseFish();
             StartCoroutine(WaitToSpawnFishingBait());
         }
@@ -125,8 +130,16 @@ public class FishingManager : MonoBehaviour
             10f,
             LayerMask.GetMask("Water")
         );
-        
-        if(hitWater)
+
+        if (!hitWater)
+        {
+            Debug.Log("Không thể câu cá trên mặt đất!");
+            CancelCastOnTerrain();
+            player.events.TriggerOnCastEnded();
+            return;
+        }
+
+        if (hitWater)
         {
             fishBoolManager = hit.collider.GetComponent<FishBoolManager>();
             if (fishBoolManager == null)
@@ -135,17 +148,10 @@ public class FishingManager : MonoBehaviour
             }
         }
 
+        player.SetCurrentFishingManager(this);
         spawnedBait = Instantiate(fishingBait, hit.point, Quaternion.identity);
         FindAnyObjectByType<FishingLineRenderer>().SetBait(spawnedBait.transform);
         StartCoroutine(WaitToCatch());
-
-        if (!hitWater)
-        {
-            Debug.Log("Không thể câu cá trên mặt đất!");
-            CancelCastOnTerrain();
-            CancelCastAnimation();
-            return;
-        }
     }
 
     private IEnumerator WaitToCatch()
@@ -199,19 +205,13 @@ public class FishingManager : MonoBehaviour
             isCast = false;
             StopAllCoroutines();
             Destroy(spawnedBait.gameObject);
-            CancelCastAnimation();
+            player.events.TriggerOnCastEnded();
         }
-    }
-
-    public void CancelCastAnimation()
-    {
-        var playerAnimator = player.GetComponent<PlayerAnimator>();
-        playerAnimator.CancelCastAnimation();
     }
 
     public void AddFishToInventory(Item item, int quantity)
     {
-            inventory.AddItem(item, quantity);
+        inventory.AddItem(item, quantity);
     }
 
     public void ResetCast()

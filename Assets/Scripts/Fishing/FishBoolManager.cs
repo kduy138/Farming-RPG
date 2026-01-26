@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishBoolManager : MonoBehaviour
+public class FishBoolManager : MonoBehaviour, IItemDrop
 {
     [System.Serializable]
     public class FishDrop
@@ -13,7 +13,7 @@ public class FishBoolManager : MonoBehaviour
 
     public List<FishDrop> fishDrops;
 
-    public ItemScriptableObject GetRandomFish()
+    public ItemScriptableObject GetRandomItem()
     {
         float randomNumber = Random.Range(0f, 100f);
         List<FishDrop> possibleDrops = new List<FishDrop>();
@@ -28,5 +28,10 @@ public class FishBoolManager : MonoBehaviour
             return null;
 
         return possibleDrops[Random.Range(0, possibleDrops.Count)].itemSO;
+    }
+
+    public int GetRandomItemAmount()
+    {
+        return Random.Range(1, 1);
     }
 }
