@@ -124,7 +124,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Player_Mining",
+                    "name": "Player_Interact",
                     "type": "Button",
                     "id": "b0826e6a-d72e-4452-83c9-fa59ff3a4a21",
                     "expectedControlType": "",
@@ -306,7 +306,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Player_Mining",
+                    "action": "Player_Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -344,7 +344,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UI_TakeFish",
+                    "name": "UI_TakeItem",
                     "type": "Button",
                     "id": "0a946985-3a46-4385-9d00-0ffd1042c1de",
                     "expectedControlType": "",
@@ -403,7 +403,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UI_TakeFish",
+                    "action": "UI_TakeItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

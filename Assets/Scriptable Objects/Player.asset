@@ -24,7 +24,8 @@ MonoBehaviour:
   holdingItemWalkSpeed: 2
   level: 1
   deathPenalty: 13
-  fishingXP: 24
+  fishingXPGain: 24
+  miningXPGain: 24
   itemDropRate: 0
   staminaRecoverRate: 4
   fishingTime: 14

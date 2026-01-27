@@ -111,13 +111,13 @@ public class GameInput : MonoBehaviour
         return false;
     }
 
-    public bool isTakeFishAction() {
-        return inputActions.UI.UI_TakeFish.IsPressed();
+    public bool isTakeItemAction() {
+        return inputActions.UI.UI_TakeItem.IsPressed();
     }
 
-    public bool isMiningAction()
+    public bool isInteractAction()
     {
-        return inputActions.Player.Player_Mining.WasPressedThisFrame();
+        return inputActions.Player.Player_Interact.WasPressedThisFrame();
     }
 
     public bool isCursorAction()

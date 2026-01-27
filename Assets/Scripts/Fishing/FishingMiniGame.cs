@@ -29,8 +29,6 @@ public class FishingMiniGame : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private FishingManager fm;
-    [SerializeField]
-    private InventoryScriptableObject inventory;
     public FishBoolManager currentFishBoolManager;
     private ItemScriptableObject fishSO;
     private Item pendingItem;
@@ -179,10 +177,9 @@ public class FishingMiniGame : MonoBehaviour
     private void HandleCatchFish()
     {
         if (!isWaitingForPlayerToCatch) return;
+        if (!GameInput.Instance.isTakeItemAction()) return;
 
-        if (!GameInput.Instance.isTakeFishAction()) return;
-
-        AddItemReturnCode addItemPermission = inventory.CheckAddItem(pendingItem, 1);
+        AddItemReturnCode addItemPermission = fm.inventory.CheckAddItem(pendingItem, itemAmount);
         switch (addItemPermission)
         {
             case AddItemReturnCode.NoEmptySlot:
@@ -194,7 +191,7 @@ public class FishingMiniGame : MonoBehaviour
             case AddItemReturnCode.Allow:
                 fm.AddFishToInventory(pendingItem, itemAmount);
                 HandleReleaseFish();
-                inventory.Save();
+                fm.inventory.Save();
                 break;
         }
     }

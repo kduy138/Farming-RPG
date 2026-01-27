@@ -8,8 +8,7 @@ public class FishingManager : MonoBehaviour
     private Player player;
     private FishBoolManager fishBoolManager;
     private FishingMiniGame miniGame;
-    [SerializeField]
-    private InventoryScriptableObject inventory;
+    public InventoryScriptableObject inventory;
 
     [Header("Flags")]
     public bool isFishing = false;
@@ -173,7 +172,7 @@ public class FishingManager : MonoBehaviour
 
     public void GiveFishingXPToPlayer()
     {
-        player.GainXP(player.runtimePlayerData.currentFishingXP);
+        player.GainXP(player.runtimePlayerData.currentFishingXPGain);
     }
 
     public void CancelCastOnTerrain()

@@ -19,7 +19,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (currentInteractable == null) return;
 
-        if (GameInput.Instance.isMiningAction())
+        if (GameInput.Instance.isInteractAction())
         {
             currentInteractable.Interact(GetComponent<Player>());
         }

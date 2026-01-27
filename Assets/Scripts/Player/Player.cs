@@ -370,7 +370,8 @@ public class Player : MonoBehaviour
         saveData.CurrentXP = runtimePlayerData.currentXP;
         saveData.CurrentDeathPenalty = runtimePlayerData.currentDeathPenalty;
 
-        saveData.CurrentFishingXP = runtimePlayerData.currentFishingXP;
+        saveData.CurrentFishingXPGain = runtimePlayerData.currentFishingXPGain;
+        saveData.CurrentMiningXPGain = runtimePlayerData.currentMiningXPGain;
 
         saveData.CurrentItemDropRate = runtimePlayerData.currentItemDropRate;
         saveData.CurrentStaminaRecoverRate = runtimePlayerData.currentStaminaRecoverRate;
@@ -416,7 +417,8 @@ public class Player : MonoBehaviour
         runtimePlayerData.currentXP = saveData.CurrentXP;
         runtimePlayerData.currentDeathPenalty = saveData.CurrentDeathPenalty;
 
-        runtimePlayerData.currentFishingXP = saveData.CurrentFishingXP;
+        runtimePlayerData.currentFishingXPGain = saveData.CurrentFishingXPGain;
+        runtimePlayerData.currentMiningXPGain = saveData.CurrentMiningXPGain;
 
         runtimePlayerData.currentItemDropRate = saveData.CurrentItemDropRate;
         runtimePlayerData.currentStaminaRecoverRate = saveData.CurrentStaminaRecoverRate;
@@ -453,7 +455,8 @@ public class PlayerSaveData
     public float CurrentXP;
     public float CurrentDeathPenalty;
 
-    public float CurrentFishingXP;
+    public float CurrentFishingXPGain;
+    public float CurrentMiningXPGain;
 
     public float CurrentItemDropRate;
     public float CurrentStaminaRecoverRate;

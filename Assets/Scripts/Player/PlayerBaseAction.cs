@@ -5,6 +5,7 @@ public abstract class PlayerBaseAction : IAction
     protected float duration;
     protected float currentTime;
     protected bool isFinished;
+    public bool itemTaken = false;
 
     public bool IsActionFinished => isFinished;
 
@@ -12,6 +13,7 @@ public abstract class PlayerBaseAction : IAction
     {
         currentTime = duration;
         isFinished = false;
+        itemTaken = false;
     }
 
     public virtual void ActionTick(Player player)

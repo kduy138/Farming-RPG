@@ -5,6 +5,8 @@ public class MiningManager : MonoBehaviour, IInteractable
     protected float cooldownTime = 10f;
     protected bool isOnCooldown;
     private IItemDrop itemDrop;
+    [SerializeField]
+    private InventoryScriptableObject inventory;
 
     public bool IsOnCooldown => isOnCooldown;
 
@@ -39,7 +41,8 @@ public class MiningManager : MonoBehaviour, IInteractable
         MiningAction action = new MiningAction(
             this.transform, 
             player.runtimePlayerData.currentMiningTime,
-            itemDrop
+            itemDrop,
+            inventory
         );
         player.GetComponent<PlayerActionController>().StartAction(action);
     }

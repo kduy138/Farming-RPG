@@ -25,7 +25,10 @@ public class PlayerActionController : MonoBehaviour
         if (currentAction.IsActionFinished)
         {
             currentAction.ActionStop(player);
-            currentAction = null;
+            if (currentAction.itemTaken)
+            {
+                currentAction = null;
+            }
         }
     }
 }

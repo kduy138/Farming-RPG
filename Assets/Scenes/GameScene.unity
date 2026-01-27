@@ -8180,7 +8180,6 @@ MonoBehaviour:
   keySequenceList: []
   KeySequenceContainer: {fileID: 188933456}
   fm: {fileID: 84597608}
-  inventory: {fileID: 11400000, guid: 82e090c0cbd79154584ac0ee256a17db, type: 2}
   currentFishBoolManager: {fileID: 0}
   isWaitingForPlayerToCatch: 0
 --- !u!4 &1436363341
@@ -9105,29 +9104,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1467974796861150, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1501328705118474, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1699149722176968, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1699149722176968, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      propertyPath: m_TagString
-      value: Mineral
-      objectReference: {fileID: 0}
     - target: {fileID: 1970564158491392, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
       propertyPath: m_Name
       value: Stone1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1970564158491392, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4651050137903364, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9169,68 +9148,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 816370171036372004, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778019749828347027, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      propertyPath: camera
-      value: 
-      objectReference: {fileID: 786750423}
-    - target: {fileID: 8043738900074378722, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8043738900074378722, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1677818385167169550, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1699149722176968, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1561777038}
-    - targetCorrespondingSourceObject: {fileID: 1699149722176968, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1561777045}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
---- !u!1 &1561777031 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1699149722176968, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-  m_PrefabInstance: {fileID: 1561777030}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1561777038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1561777031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b86e8b94812478042a0514d65929549f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MiningResourceManager
-  resources:
-  - itemSO: {fileID: 11400000, guid: 5481bf538a17e0f4a8d6534863b78f83, type: 2}
-    dropRate: 100
-  - itemSO: {fileID: 11400000, guid: e9f3e5fd115b84140b626daddbb1aef3, type: 2}
-    dropRate: 20
---- !u!114 &1561777045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1561777031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6c114d70edff3a4eafe7b33fac67be6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MiningManager
 --- !u!1 &1579930178
 GameObject:
   m_ObjectHideFlags: 0
@@ -11705,40 +11627,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &1960601034 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1699149722176968, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-  m_PrefabInstance: {fileID: 2114264429}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1960601036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960601034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6c114d70edff3a4eafe7b33fac67be6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MiningManager
---- !u!114 &1960601037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960601034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b86e8b94812478042a0514d65929549f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MiningResourceManager
-  resources:
-  - itemSO: {fileID: 11400000, guid: 5481bf538a17e0f4a8d6534863b78f83, type: 2}
-    dropRate: 100
-  - itemSO: {fileID: 11400000, guid: e9f3e5fd115b84140b626daddbb1aef3, type: 2}
-    dropRate: 20
 --- !u!1 &1969434283
 GameObject:
   m_ObjectHideFlags: 0
@@ -12875,13 +12763,7 @@ PrefabInstance:
     - {fileID: 1677818385167169550, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1699149722176968, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1960601037}
-    - targetCorrespondingSourceObject: {fileID: 1699149722176968, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1960601036}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
 --- !u!1 &2123590184
 GameObject:
