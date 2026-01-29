@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class MiningManager : MonoBehaviour, IInteractable
 {
-    protected float cooldownTime = 10f;
-    protected bool isOnCooldown;
     private IItemDrop itemDrop;
+
+    [Header("References")]
     [SerializeField]
     private InventoryScriptableObject inventory;
-
-    public bool IsOnCooldown => isOnCooldown;
+    private ResourceRespawnManager rrm;
 
     [Header("References")]
     private GameObject interactBillboard;
@@ -22,19 +22,26 @@ public class MiningManager : MonoBehaviour, IInteractable
         {
             interactBillboard.SetActive(false);
         }
+
+        if (rrm == null)
+        {
+            rrm = GetComponent<ResourceRespawnManager>();
+        }
     }
 
     public void Interact(Player player)
     {
+        if (rrm.IsDepleted()) return;
+
         if (player.IsInAction()) 
         {
-            Debug.Log("Đang trong một hành động khác!");
+            FloatingMessageManager.Instance.ShowMessage("Bạn đang thực hiện 1 hành động khác!", FloatingMessageType.Warning);
             return; 
         }
 
         if (player.GetCurrentMoveSpeed() > 0)
         {
-            Debug.Log("Không thể thực hiện hành động này hiện tại!");
+            FloatingMessageManager.Instance.ShowMessage("Không thể thực hiện hành động này hiện tại!", FloatingMessageType.Warning);
             return;
         }
 
@@ -42,16 +49,21 @@ public class MiningManager : MonoBehaviour, IInteractable
             this.transform, 
             player.runtimePlayerData.currentMiningTime,
             itemDrop,
-            inventory
+            inventory,
+            rrm,
+            interactBillboard
         );
         player.GetComponent<PlayerActionController>().StartAction(action);
     }
 
     public void OnFocus()
     {
+        if (rrm.IsDepleted()) return;
+
         if (interactBillboard != null)
         {
             interactBillboard.SetActive(true);
+            interactBillboard.GetComponentInChildren<TextMeshProUGUI>().text = "E (Khai thác)";
         }
     }
 
@@ -60,6 +72,7 @@ public class MiningManager : MonoBehaviour, IInteractable
         if (interactBillboard != null)
         {
             interactBillboard.SetActive(false);
+            interactBillboard.GetComponentInChildren<TextMeshProUGUI>().text = "";
         }
     }
 }

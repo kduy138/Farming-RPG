@@ -7,9 +7,9 @@ public class PlayerInteraction : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField]
-    private float interactDistance = 3f;
+    private float interactDistance = 0.5f;
     [SerializeField]
-    private float interactRadius = 3f;
+    private float interactRadius = 1f;
     [SerializeField]
     private LayerMask interactLayer;
 

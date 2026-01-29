@@ -51,6 +51,7 @@ public class GameUI : MonoBehaviour
     public GameObject removeItemBtn;
     public Button confirmRemoveBtn;
     public Button cancelDiscardBtn;
+    public Button getItemBtn;
 
     [Header("Texts")]
     public TextMeshProUGUI confirmRemoveText;

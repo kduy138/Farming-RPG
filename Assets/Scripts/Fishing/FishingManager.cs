@@ -132,7 +132,7 @@ public class FishingManager : MonoBehaviour
 
         if (!hitWater)
         {
-            Debug.Log("Không thể câu cá trên mặt đất!");
+            FloatingMessageManager.Instance.ShowMessage("Không thể câu cá trên mặt đất!", FloatingMessageType.Warning);
             CancelCastOnTerrain();
             player.events.TriggerOnCastEnded();
             return;
@@ -143,7 +143,7 @@ public class FishingManager : MonoBehaviour
             fishBoolManager = hit.collider.GetComponent<FishBoolManager>();
             if (fishBoolManager == null)
             {
-                Debug.Log("Không tìm thấy cá!");
+                FloatingMessageManager.Instance.ShowMessage("Không tìm thấy cá tại đây!", FloatingMessageType.Info);
             }
         }
 

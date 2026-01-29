@@ -9,22 +9,37 @@ public class MiningAction : PlayerBaseAction
     private Item pendingItem;
     private int pendingItemAmount;
 
+    [Header("References")]
     private InventoryScriptableObject inventory;
+    private ResourceRespawnManager rrm;
+    private GameObject interactBillboard;
 
+    [Header("Flags")]
     private bool itemDropped;
     private bool playerReset;
 
-    public MiningAction(Transform sourceTransform, float miningTime, IItemDrop itemDrop, InventoryScriptableObject inventory)
+    public MiningAction(
+            Transform sourceTransform, 
+            float miningTime, 
+            IItemDrop itemDrop, 
+            InventoryScriptableObject inventory, 
+            ResourceRespawnManager rrm,
+            GameObject interactBillboard
+        )
     {
         this.sourceTransform = sourceTransform;
         this.duration = miningTime;
         this.itemDrop = itemDrop;
         this.inventory = inventory;
+        this.rrm = rrm;
+        this.interactBillboard = interactBillboard;
     }
 
     public override void ActionStart(Player player)
     {
         base.ActionStart(player);
+
+        interactBillboard.SetActive(false);
 
         itemDropped = false;
         playerReset = false;
@@ -46,14 +61,20 @@ public class MiningAction : PlayerBaseAction
         currentTime = Mathf.Max(currentTime, 0f);
         GameUI.Instance.miningTimebar.fillAmount = currentTime / duration;
         GameUI.Instance.miningTimeTxt.text = $"{Mathf.CeilToInt(currentTime)} giây";
-        HandleOnMiningSuccess();
+        if (GameInput.Instance.isTakeItemAction())
+        {
+            ActionSuccess(player);
+        }
+        GameUI.Instance.getItemBtn.onClick.RemoveAllListeners();
+        GameUI.Instance.getItemBtn.onClick.AddListener(() => ActionSuccess(player));
     }
 
     public override void ActionStop(Player player)
     {
         base.ActionStop(player);
 
-        if (!isFinished) return;
+        rrm.DepleteResource();
+        interactBillboard.SetActive(false);
 
         if (!playerReset)
         {
@@ -83,14 +104,11 @@ public class MiningAction : PlayerBaseAction
         itemDropped = true;
     }
 
-    private void HandleOnMiningSuccess()
+    public override void ActionSuccess(Player player)
     {
+        base.ActionSuccess(player);
         if (pendingItem == null || pendingItemAmount == 0) return;
-        if (!isFinished) return;
-        if (!GameInput.Instance.isTakeItemAction()) return;
-
-        Debug.Log(inventory);
-        Debug.Log(pendingItem);
+       
         AddItemReturnCode addItemPermission = inventory.CheckAddItem(pendingItem, pendingItemAmount);
 
         switch (addItemPermission)

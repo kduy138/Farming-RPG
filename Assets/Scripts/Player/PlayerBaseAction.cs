@@ -29,6 +29,12 @@ public abstract class PlayerBaseAction : IAction
     public virtual void ActionStop(Player player)
     {
         isFinished = true;
+        if (!isFinished) return;
+    }
+
+    public virtual void ActionSuccess(Player player)
+    {
+        if (!isFinished) return;
     }
 
     protected virtual void Finish(Player player) {
