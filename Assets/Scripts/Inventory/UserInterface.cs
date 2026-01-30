@@ -29,6 +29,8 @@ public abstract class UserInterface : MonoBehaviour
 
     [SerializeField]
     private Sprite emptySlotSprite;
+    [SerializeField]
+    private Sprite lockedSlotSprite;
 
     public virtual void Start()
     {
@@ -94,6 +96,12 @@ public abstract class UserInterface : MonoBehaviour
             {
                 outline.effectColor = Color.black;
             }
+        }
+
+        if (!slot.isAvailable)
+        {
+            icon.sprite = lockedSlotSprite;
+            icon.color = new Color(1, 1, 1, 0.5f);
         }
     }
 

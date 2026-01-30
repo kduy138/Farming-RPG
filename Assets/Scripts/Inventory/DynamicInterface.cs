@@ -74,7 +74,7 @@ public class DynamicInterface : UserInterface
     {
         weightText.text = $"<color=#FFCD00>Trọng lượng:</color> {inventory.CurrentWeight}/{inventory.WeightLimit}";
         weightBar.fillAmount = inventory.CurrentWeight / inventory.WeightLimit;
-        slotText.text = $"<color=#FFCD00>Số ô đồ:</color> {inventory.GetCurrentSlotCount}/{inventory.MaxSlot}";
+        slotText.text = $"<color=#FFCD00>Số ô đồ:</color> {inventory.GetCurrentSlotCount}/{inventory.CurrentAvailableSlotCount}";
         slotBar.fillAmount = (float)inventory.CurrentSlotCount / inventory.MaxSlot;
     }
 

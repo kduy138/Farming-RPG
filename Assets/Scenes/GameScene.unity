@@ -6119,8 +6119,8 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 70, y: 70}
   m_Spacing: {x: 0, y: 0}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Constraint: 1
+  m_ConstraintCount: 6
 --- !u!114 &1015669393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6140,7 +6140,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 2.5
+  m_ScrollSensitivity: 5
   m_Viewport: {fileID: 696799732}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -12336,6 +12336,7 @@ MonoBehaviour:
   equipment: {fileID: 11400000, guid: cef7c5952149ea643871111396e0aa48, type: 2}
   inventoryScreen: {fileID: 1511142503}
   emptySlotSprite: {fileID: -8615945360752728150, guid: 1eea8ccf14d161c40abae68b0c772fe1, type: 3}
+  lockedSlotSprite: {fileID: 0}
   slots:
   - {fileID: 780943922}
   - {fileID: 1633038111}
@@ -12462,6 +12463,7 @@ MonoBehaviour:
   equipment: {fileID: 11400000, guid: cef7c5952149ea643871111396e0aa48, type: 2}
   inventoryScreen: {fileID: 1511142503}
   emptySlotSprite: {fileID: -8615945360752728150, guid: 1eea8ccf14d161c40abae68b0c772fe1, type: 3}
+  lockedSlotSprite: {fileID: -451869947, guid: a1ed37ad242a361429c65037325a9739, type: 3}
   itemContent: {fileID: 1015669391}
   inventoryItem: {fileID: 3665204325785673386, guid: b4784284a5486754e82584215ecbc4e6, type: 3}
   discardSlots: []

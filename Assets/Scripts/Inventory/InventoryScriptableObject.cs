@@ -21,6 +21,9 @@ public class InventoryScriptableObject : ScriptableObject
     private int currentSlotCount;
     public int CurrentSlotCount { get => currentSlotCount; private set => currentSlotCount = value; }
     [SerializeField]
+    private int currentAvailableSlotCount;
+    public int CurrentAvailableSlotCount { get => currentAvailableSlotCount; private set => currentAvailableSlotCount = value; }
+    [SerializeField]
     private int maxSlot;
     public int MaxSlot { get => maxSlot; private set => maxSlot = value; }
 
@@ -28,7 +31,15 @@ public class InventoryScriptableObject : ScriptableObject
     {
         if (container == null || container.slots == null || container.slots.Length != MaxSlot)
         {
-            container = new Inventory(MaxSlot);
+            container = new Inventory(MaxSlot, CurrentAvailableSlotCount);
+        }
+
+        foreach(var slot in container.slots)
+        {
+            if (slot.item == null)
+            {
+                slot.UpdateSlot(new Item(), 0);
+            }
         }
     }
 
@@ -167,6 +178,12 @@ public class InventoryScriptableObject : ScriptableObject
         saveData.quantities = new int[GetSlots.Length];
 
         for (int i = 0; i < GetSlots.Length; i++) {
+            if (GetSlots[i] == null || GetSlots[i].item == null)
+            {
+                saveData.itemIDs[i] = -1;
+                saveData.quantities[i] = 0;
+                continue;
+            }
             saveData.itemIDs[i] = GetSlots[i].item.ID;
             saveData.quantities[i] = GetSlots[i].quantity;
         }
@@ -208,12 +225,16 @@ public class Inventory
 {
     public InventorySlot[] slots;
 
-    public Inventory(int slotCount)
+    public Inventory(int slotCount, int availableSlotCount)
     {
         slots = new InventorySlot[slotCount];
         for (int i = 0; i < slots.Length; i++)
         {
             slots[i] = new InventorySlot();
+            if (i < availableSlotCount)
+            {
+                slots[i].isAvailable = true;
+            }
         }
     }
 
@@ -239,6 +260,7 @@ public class InventorySlot
     public Item item;
     public int quantity;
     public bool isSelected = false;
+    public bool isAvailable = false;
 
     [System.NonSerialized]
     public SlotUpdated OnBeforeUpdate;
@@ -269,6 +291,11 @@ public class InventorySlot
 
     public void UpdateSlot(Item _item, int _quantity)
     {
+        if (_item == null)
+        {
+            _item = new Item();
+        }
+
         if (OnBeforeUpdate != null)
         {
             OnBeforeUpdate.Invoke(this);

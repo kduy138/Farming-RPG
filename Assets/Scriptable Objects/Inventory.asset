@@ -18,244 +18,13 @@ MonoBehaviour:
     slots:
     - allowedItems: 
       item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
+        ID: -1
+        ItemName: 
         Attributes: []
         Effects: []
-      quantity: 1
+      quantity: 0
       isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 3
-        ItemName: "C\xE1 h\u1ED3i"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 3
-        ItemName: "C\xE1 h\u1ED3i"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 3
-        ItemName: "C\xE1 h\u1ED3i"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 3
-        ItemName: "C\xE1 h\u1ED3i"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 3
-        ItemName: "C\xE1 h\u1ED3i"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 2
-        ItemName: "C\xE1 tr\xEA"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 3
-        ItemName: "C\xE1 h\u1ED3i"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 3
-        ItemName: "C\xE1 h\u1ED3i"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
-    - allowedItems: 
-      item:
-        ID: 3
-        ItemName: "C\xE1 h\u1ED3i"
-        Attributes: []
-        Effects: []
-      quantity: 1
-      isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -264,6 +33,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -272,6 +42,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -280,6 +51,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -288,6 +60,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -296,6 +69,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -304,6 +78,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -312,6 +87,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -320,6 +96,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -328,6 +105,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -336,6 +114,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -344,6 +123,7 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
     - allowedItems: 
       item:
         ID: -1
@@ -352,5 +132,1042 @@ MonoBehaviour:
         Effects: []
       quantity: 0
       isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
+    - allowedItems: 
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 0
   weightLimit: 300
-  maxSlot: 32
+  currentAvailableSlotCount: 24
+  maxSlot: 128
