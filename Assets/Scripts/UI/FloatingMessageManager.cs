@@ -19,7 +19,10 @@ public class FloatingMessageManager : MonoBehaviour
     [SerializeField]
     private float fadeDuration = 0.5f;
     [SerializeField]
-    private float moveUpDistance = 20f;
+    private float moveUpDistance = 40f;
+    [SerializeField]
+    private float coolDown = 1.5f;
+    private float lastShowTime = -1f;
 
     private void Awake()
     {
@@ -28,6 +31,11 @@ public class FloatingMessageManager : MonoBehaviour
 
     public void ShowMessage(string message, FloatingMessageType type)
     {
+        if (Time.time - lastShowTime < coolDown)
+        {
+            return;
+        }
+        lastShowTime = Time.time;
         FloatingMessageUI ui = floatingMessageParent.GetComponent<FloatingMessageUI>();
         ui.SetupUI(message, type);
         GameObject floatingMessage = Instantiate(floatingMessagePrefab, floatingMessageParent);

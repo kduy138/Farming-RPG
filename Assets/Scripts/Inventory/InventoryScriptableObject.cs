@@ -31,8 +31,10 @@ public class InventoryScriptableObject : ScriptableObject
     {
         if (container == null || container.slots == null || container.slots.Length != MaxSlot)
         {
-            container = new Inventory(MaxSlot, CurrentAvailableSlotCount);
+            container = new Inventory(MaxSlot);
         }
+
+        SyncAvailableSlots();
 
         foreach(var slot in container.slots)
         {
@@ -40,6 +42,18 @@ public class InventoryScriptableObject : ScriptableObject
             {
                 slot.UpdateSlot(new Item(), 0);
             }
+        }
+    }
+
+    private void SyncAvailableSlots()
+    {
+        for (int i = 0; i < container.slots.Length; i++)
+        {
+            if (i < CurrentAvailableSlotCount)
+            {
+                container.slots[i].isAvailable = true;
+            }
+            container.slots[i].isAvailable = false;
         }
     }
 
@@ -101,7 +115,7 @@ public class InventoryScriptableObject : ScriptableObject
             int counter = 0;
             for (int i = 0; i < GetSlots.Length; i++)
             {
-                if (GetSlots[i].item.ID <= -1)
+                if (GetSlots[i].item.ID <= -1 && GetSlots[i].isAvailable)
                 {
                     counter++;
                 }
@@ -110,12 +124,19 @@ public class InventoryScriptableObject : ScriptableObject
         }
     }
 
-    public int GetCurrentSlotCount
+    public int GetHasItemSlotCount
     {
         get
         {
-            CurrentSlotCount = MaxSlot - GetEmptySlotCount;
-            return CurrentSlotCount;
+            int count = 0;
+            foreach (var slot in GetSlots)
+            {
+                if (slot.isAvailable && slot.item.ID >= 0)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
     }
 
@@ -225,16 +246,12 @@ public class Inventory
 {
     public InventorySlot[] slots;
 
-    public Inventory(int slotCount, int availableSlotCount)
+    public Inventory(int slotCount)
     {
         slots = new InventorySlot[slotCount];
         for (int i = 0; i < slots.Length; i++)
         {
             slots[i] = new InventorySlot();
-            if (i < availableSlotCount)
-            {
-                slots[i].isAvailable = true;
-            }
         }
     }
 
