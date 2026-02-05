@@ -18,7 +18,7 @@ MonoBehaviour:
   price: 45000
   icon: {fileID: 1114393073, guid: 1c3f704224c8acc4c8ff293bff34bbfb, type: 3}
   type: 18
-  colorGrade: 3
+  colorGrade: 1
   stackable: 0
   repairable: 0
   maxStack: 0

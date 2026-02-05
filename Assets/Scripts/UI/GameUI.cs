@@ -46,12 +46,16 @@ public class GameUI : MonoBehaviour
     public GameObject getItemPopUp;
     public GameObject playerDeadScreen;
     public GameObject miningScreen;
+    public GameObject combatEquipmentSlotsContainer;
+    public GameObject lifeSkillEquipmentSlotsContainer;
 
     [Header("Buttons")]
     public GameObject removeItemBtn;
     public Button confirmRemoveBtn;
     public Button cancelDiscardBtn;
     public Button getItemBtn;
+    public Button combatEquipmentSlotsContainerBtn;
+    public Button lifeSkillEquipmentSlotsContainerBtn;
 
     [Header("Texts")]
     public TextMeshProUGUI confirmRemoveText;

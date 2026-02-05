@@ -49,11 +49,11 @@ public class InventoryScriptableObject : ScriptableObject
     {
         for (int i = 0; i < container.slots.Length; i++)
         {
+            container.slots[i].isAvailable = false;
             if (i < CurrentAvailableSlotCount)
             {
                 container.slots[i].isAvailable = true;
             }
-            container.slots[i].isAvailable = false;
         }
     }
 
@@ -87,13 +87,13 @@ public class InventoryScriptableObject : ScriptableObject
         {
             SetItemToEmptySlot(_item, _quantity);
             currentWeight += itemDatabase.itemSO[_item.ID].Weight;
-            Debug.Log("Đã thêm Item: " + _item.ItemName + " - " + _quantity);
+            FloatingMessageManager.Instance.ShowMessage("Đã thêm Item: " + _item.ItemName + " - " + _quantity, FloatingMessageType.Info);
             return;
         }
 
         slotWithThisItem.AddQuantity(_quantity);
         currentWeight += itemDatabase.itemSO[_item.ID].Weight;
-        Debug.Log("Đã thêm Item: " + _item.ItemName + " với số lượng x" + _quantity);
+        FloatingMessageManager.Instance.ShowMessage("Đã thêm Item: " + _item.ItemName + " với số lượng x" + _quantity, FloatingMessageType.Info);
     }
 
     public InventorySlot FindItemOnInventory(Item _item)
@@ -167,6 +167,8 @@ public class InventoryScriptableObject : ScriptableObject
 
     public void SwapItemSlot(InventorySlot _itemSlot1, InventorySlot _itemSlot2)
     {
+        if (!_itemSlot1.isAvailable || !_itemSlot2.isAvailable) return;
+
         if (_itemSlot2.CanStoreInSlot(_itemSlot1.itemSO) && _itemSlot1.CanStoreInSlot(_itemSlot2.itemSO))
         {
             InventorySlot temp = new InventorySlot(_itemSlot2.item, _itemSlot2.quantity);
@@ -175,7 +177,7 @@ public class InventoryScriptableObject : ScriptableObject
         }
         else
         {
-            Debug.Log("Không thể di chuyển vật phẩm!!!");
+            FloatingMessageManager.Instance.ShowMessage("Không thể di chuyển vật phẩm!", FloatingMessageType.Warning);
         }
     }
 
@@ -269,7 +271,8 @@ public delegate void SlotUpdated(InventorySlot _slot);
 [System.Serializable]
 public class InventorySlot
 {
-    public ItemType[] allowedItems = new ItemType[0];
+    public InventoryScriptableObject inventory;
+    public ItemType slotType;
     [System.NonSerialized]
     public UserInterface parent;
     [System.NonSerialized]
@@ -290,7 +293,7 @@ public class InventorySlot
         {
             if (item.ID >= 0)
             {
-                return parent.inventory.itemDatabase.itemSO[item.ID];
+                return inventory.itemDatabase.itemSO[item.ID];
             }
             return null;
         }
@@ -349,17 +352,10 @@ public class InventorySlot
 
     public bool CanStoreInSlot(ItemScriptableObject _itemSO)
     {
-        if (allowedItems.Length <= 0 || _itemSO == null || _itemSO.data.ID < 0) return true;
+        if (_itemSO == null || _itemSO.data.ID < 0) return true;
+        if (slotType == ItemType.None) return true;
 
-        for (int i = 0; i < allowedItems.Length; i++)
-        {
-            if (_itemSO.Type == allowedItems[i])
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return _itemSO.Type == slotType;
     }
 }
 

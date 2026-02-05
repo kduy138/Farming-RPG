@@ -6,6 +6,18 @@ using UnityEngine.UI;
 
 public class DynamicInterface : UserInterface
 {
+    private InventoryScriptableObject Inventory
+    {
+        get
+        {
+            if (inventories == null || inventories.Count == 0)
+            {
+                Debug.Log("DynamicInterface không có inventory!");
+                return null;
+            }
+            return inventories[0];
+        }
+    }
     public Transform itemContent;
     public GameObject inventoryItem;
 
@@ -36,7 +48,7 @@ public class DynamicInterface : UserInterface
     {
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
+        for (int i = 0; i < Inventory.GetSlots.Length; i++)
         {
             var obj = Instantiate(inventoryItem, itemContent);
 
@@ -49,8 +61,8 @@ public class DynamicInterface : UserInterface
             AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnLMBDiscardClick(obj, (PointerEventData)data); });
             AddEvent(removeItemBtn, EventTriggerType.PointerClick, (data) => { OnRemoveRMBClick(removeItemBtn, (PointerEventData)data); });
 
-            inventory.GetSlots[i].slotDisplay = obj;
-            slotsOnInterface.Add(obj, inventory.GetSlots[i]);
+            Inventory.GetSlots[i].slotDisplay = obj;
+            slotsOnInterface.Add(obj, Inventory.GetSlots[i]);
         }
     }
 
@@ -72,10 +84,10 @@ public class DynamicInterface : UserInterface
 
     private void HandleWeightAndSlotBar()
     {
-        weightText.text = $"<color=#FFCD00>Trọng lượng:</color> {inventory.CurrentWeight}/{inventory.WeightLimit}";
-        weightBar.fillAmount = inventory.CurrentWeight / inventory.WeightLimit;
-        slotText.text = $"<color=#FFCD00>Số ô đồ:</color> {inventory.GetHasItemSlotCount}/{inventory.CurrentAvailableSlotCount}";
-        slotBar.fillAmount = (float)inventory.CurrentSlotCount / inventory.MaxSlot;
+        weightText.text = $"<color=#FFCD00>Trọng lượng:</color> {Inventory.CurrentWeight}/{Inventory.WeightLimit}";
+        weightBar.fillAmount = Inventory.CurrentWeight / Inventory.WeightLimit;
+        slotText.text = $"<color=#FFCD00>Số ô đồ:</color> {Inventory.GetHasItemSlotCount}/{Inventory.CurrentAvailableSlotCount}";
+        slotBar.fillAmount = (float)Inventory.CurrentSlotCount / Inventory.MaxSlot;
     }
 
     private void OnLMBDiscardClick(GameObject obj, PointerEventData data)
@@ -137,18 +149,18 @@ public class DynamicInterface : UserInterface
     {
         if (discardSlots.Count <= 0)
         {
-            Debug.Log("Không có vật phẩm cần xóa!");
+            FloatingMessageManager.Instance.ShowMessage("Không có vật phẩm cần xóa", FloatingMessageType.Info);
             return;
         }
 
         foreach (InventorySlot slot in discardSlots)
         {
             ResetDiscardSlot();
-            inventory.CurrentWeight -= slot.itemSO.Weight;
-            inventory.RemoveItem(slot.item);
+            Inventory.CurrentWeight -= slot.itemSO.Weight;
+            Inventory.RemoveItem(slot.item);
         }
         discardSlots.Clear();
-        inventory.Save();
+        Inventory.Save();
     }
 
     public void CancelItemsDiscard()
@@ -173,9 +185,4 @@ public class DynamicInterface : UserInterface
             weightAndSlotCountHolder.SetActive(false);
         }
     }
-
-    //private void OnApplicationQuit()
-    //{
-    //    inventory.container.slots = new InventorySlot[32];
-    //}
 }

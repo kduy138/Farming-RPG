@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -10,8 +9,10 @@ using UnityEngine.UI;
 
 public abstract class UserInterface : MonoBehaviour
 {
-    public InventoryScriptableObject inventory;
-    public InventoryScriptableObject equipment;
+    //public InventoryScriptableObject inventory;
+    //public InventoryScriptableObject equipment;
+    [Header("Inventories")]
+    public List<InventoryScriptableObject> inventories = new List<InventoryScriptableObject>();
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     [System.NonSerialized]
@@ -37,10 +38,9 @@ public abstract class UserInterface : MonoBehaviour
         removeItemBtn = GameUI.Instance.removeItemBtn;
         CreateSlots();
 
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
+        foreach(var inv  in inventories)
         {
-            inventory.GetSlots[i].parent = this;
-            inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
+            RegisterInventory(inv);
         }
 
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
@@ -52,14 +52,20 @@ public abstract class UserInterface : MonoBehaviour
 
     public virtual void Update()
     {
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
-        {
-            inventory.GetSlots[i].parent = this;
-        }
+        
+    }
 
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
+    protected void RegisterInventory(InventoryScriptableObject inv)
+    {
+        if (inv == null) return;
+
+        for (int i = 0; i < inv.GetSlots.Length; i++)
         {
-            OnSlotUpdate(inventory.GetSlots[i]);
+            var slot = inv.GetSlots[i];
+            slot.parent = this;
+            slot.inventory = inv;
+            //slot.OnAfterUpdate -= OnSlotUpdate;
+            slot.OnAfterUpdate += OnSlotUpdate;
         }
     }
 
@@ -184,27 +190,20 @@ public abstract class UserInterface : MonoBehaviour
 
         if (DraggingData.slotHoverOver)
         {
-            InventorySlot draggingItemHoverSlotData = DraggingData.ui.slotsOnInterface[DraggingData.slotHoverOver];
-            inventory.SwapItemSlot(slotsOnInterface[obj], draggingItemHoverSlotData);
-            if (dynamicInterface != null)
+            var sourceSlot = slotsOnInterface[obj];
+            var targetSlot = DraggingData.ui.slotsOnInterface[DraggingData.slotHoverOver];
+
+            var sourceInv = sourceSlot.inventory;
+            var targetInv = targetSlot.inventory;
+
+            sourceInv.SwapItemSlot(sourceSlot, targetSlot);
+
+            sourceInv.Save();
+
+            if (targetInv != sourceInv)
             {
-                DynamicInterface dynamicInv = FindAnyObjectByType<DynamicInterface>();
-
-                if (dynamicInv == null)
-                {
-                    Debug.LogError("Không tìm thấy DynamicInterface trong scene!!!");
-                    return;
-                }
-
-                InventoryScriptableObject inv = dynamicInv.inventory;
-
-                inv.Save();
+                targetInv.Save();
             }
-            else
-            {
-                inventory.Save();
-            }
-            equipment.Save();
         }
 
         if (DraggingData.slotHoverOverRemove && slotsOnInterface[obj].item.ID >= 0)
@@ -229,65 +228,67 @@ public abstract class UserInterface : MonoBehaviour
 
     public void OnRMBClick(GameObject obj, PointerEventData data)
     {
-        if (data.button == PointerEventData.InputButton.Right)
-        {
-            if (obj == null) return;
+        //if (data.button == PointerEventData.InputButton.Right)
+        //{
+        //    if (obj == null) return;
 
-            if (slotsOnInterface[obj].item.ID < 0) return;
+        //    if (slotsOnInterface[obj].item.ID < 0) return;
 
-            if (isDiscard) return;
+        //    if (isDiscard) return;
 
-            if (dynamicInterface != null)
-            {
-                for (int i = 0; i < equipment.GetSlots.Length; i++)
-                {
-                    if (equipment.GetSlots[i].allowedItems.Contains(slotsOnInterface[obj].itemSO.Type))
-                    {
-                        inventory.CurrentWeight -= slotsOnInterface[obj].itemSO.Weight;
-                        inventory.SwapItemSlot(slotsOnInterface[obj], equipment.GetSlots[i]);
-                        inventory.Save();
-                        equipment.Save();
-                        ItemToolTip.Instance.HideItemToolTip();
-                        return;
-                    }
-                }
-            }
-            else if (staticInterface != null)
-            {
-                DynamicInterface dynamicInv = FindAnyObjectByType<DynamicInterface>();
+        //    if (dynamicInterface != null)
+        //    {
+        //        for (int i = 0; i < equipment.GetSlots.Length; i++)
+        //        {
+        //            if (equipment.GetSlots[i].slotTypes.Contains(slotsOnInterface[obj].itemSO.Type))
+        //            {
+        //                inventory.CurrentWeight -= slotsOnInterface[obj].itemSO.Weight;
+        //                inventory.SwapItemSlot(slotsOnInterface[obj], equipment.GetSlots[i]);
+        //                inventory.Save();
+        //                equipment.Save();
+        //                ItemToolTip.Instance.HideItemToolTip();
+        //                return;
+        //            }
+        //        }
+        //    }
+        //    else if (staticInterface != null)
+        //    {
+        //        DynamicInterface dynamicInv = FindAnyObjectByType<DynamicInterface>();
 
-                if (dynamicInv == null)
-                {
-                    Debug.LogError("Không tìm thấy DynamicInterface trong scene!!!");
-                    return;
-                }
+        //        if (dynamicInv == null)
+        //        {
+        //            Debug.LogError("Không tìm thấy DynamicInterface trong scene!!!");
+        //            return;
+        //        }
 
-                InventoryScriptableObject inv = dynamicInv.inventory;
+        //        InventoryScriptableObject inv = dynamicInv.inventory;
 
-                InventorySlot emptySlot = inv.GetEmptySlot();
+        //        InventorySlot emptySlot = inv.GetEmptySlot();
 
-                if (emptySlot == null)
-                {
-                    Debug.Log("Kho đồ đã đầy, không thể bỏ vật phẩm vào!!!");
-                    return;
-                }
+        //        if (emptySlot == null)
+        //        {
+        //            Debug.Log("Kho đồ đã đầy, không thể bỏ vật phẩm vào!!!");
+        //            return;
+        //        }
 
-                inv.CurrentWeight += slotsOnInterface[obj].itemSO.Weight;
-                inv.SwapItemSlot(slotsOnInterface[obj], emptySlot);
-                inv.Save();
-                equipment.Save();
-                ItemToolTip.Instance.HideItemToolTip();
-            }
-        }
+        //        inv.CurrentWeight += slotsOnInterface[obj].itemSO.Weight;
+        //        inv.SwapItemSlot(slotsOnInterface[obj], emptySlot);
+        //        inv.Save();
+        //        equipment.Save();
+        //        ItemToolTip.Instance.HideItemToolTip();
+        //    }
+        //}
     }
 
     public void ConfirmRemove(GameObject obj)
     {
         if (slotsOnInterface.ContainsKey(obj))
         {
-            inventory.CurrentWeight -= slotsOnInterface[obj].itemSO.Weight;
-            inventory.RemoveItem(slotsOnInterface[obj].item);
-            inventory.Save();
+            var slot = slotsOnInterface[obj];
+            var inv = slot.inventory;
+            inv.CurrentWeight -= slot.itemSO.Weight;
+            inv.RemoveItem(slot.item);
+            inv.Save();
             GameUI.Instance.confirmRemoveScreen.SetActive(false);
         }
     }

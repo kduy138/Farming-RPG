@@ -6,35 +6,6 @@ public enum ColorGrade
     grey, green, blue, yellow, red, purple
 }
 
-public enum ItemType
-{
-    [DisplayName("Vũ khí chính")] MainWeapon, [DisplayName("Vũ khí phụ")] SubWeapon,
-    [DisplayName("Áo giáp")] Armor, [DisplayName("Khiên")] Shield,
-    [DisplayName("Mũ")] Helmet, [DisplayName("Khuyên tai")] Earrings,
-    [DisplayName("Cổ vật")] Artifact, [DisplayName("Giày")] Shoes,
-    [DisplayName("Đai lưng")] Belt, [DisplayName("Vòng cổ")] Necklace,
-    [DisplayName("Găng tay")] Gloves, [DisplayName("Nhẫn")] Ring,
-    [DisplayName("Ngọc bội")] PowerStone, [DisplayName("Dụng cụ")] Tool,
-    [DisplayName("Có thể sử dụng")] Consumable, [DisplayName("Nguyên liệu")] Material,
-    [DisplayName("Thông dụng")] General, [DisplayName("Đặc biệt")] Special,
-    [DisplayName("Trao đổi")] Trade,
-}
-
-public enum Attributes
-{
-    [DisplayName("Tấn công")] ATK, [DisplayName("Phòng thủ")] DEF,
-    [DisplayName("Né đòn")] Evasion, [DisplayName("Giảm sát thương")] DamageReduction,
-}
-
-public enum Effects
-{
-    [DisplayName("Tốc độ di chuyển")] MoveSpeed, [DisplayName("Thông dụng")] WeightLimit,
-    [DisplayName("Sinh lực tối đa")] MaxHP, [DisplayName("Tỉ lệ rơi vật phẩm")] ItemDropRate,
-    [DisplayName("Phục hồi sinh lực")] HPRestore, [DisplayName("Thời gian câu cá")] FishingTime,
-    [DisplayName("Thời gian thu hoạch")] GatheringTime, [DisplayName("Thời gian nấu ăn")] CookingTime,
-    [DisplayName("Thông thạo câu cá")] FishingMastery, [DisplayName("Thông thạo thu hoạch")] GatheringMastery, [DisplayName("Thông thạo nấu ăn")] CookingMastery, [DisplayName("Thông thạo giả kim")] AlchemyMastery,
-}
-
 [CreateAssetMenu(fileName = "ItemScriptableObject", menuName = "Scriptable Objects/Item")]
 public class ItemScriptableObject : ScriptableObject
 {
@@ -126,7 +97,7 @@ public class Item
 [System.Serializable]
 public class ItemAttribute
 {
-    public Attributes attribute;
+    public ItemAttributes attribute;
     public int Value;
 
     public ItemAttribute(int _value)
@@ -138,7 +109,7 @@ public class ItemAttribute
 [System.Serializable]
 public class ItemEffect
 {
-    public Effects effect;
+    public ItemEffects effect;
     public float Value;
     public bool isPercent;
     public bool isSecond;

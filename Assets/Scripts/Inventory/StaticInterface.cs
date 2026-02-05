@@ -1,28 +1,89 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 public class StaticInterface : UserInterface
 {
-    public GameObject[] slots;
+    public InventoryScriptableObject combatEquipmentInventory;
+    public InventoryScriptableObject lifeSkillEquipmentInventory;
+
+    public GameObject[] combatEquipmentSlots;
+    public GameObject[] lifeSkillEquipmentSlots;
+
+    private GameObject combatEquipmentContainer;
+    private GameObject lifeSkillEquipmentContainer;
+    private Button combatEquipmentBtn;
+    private Button lifeSkillEquipmentBtn;
+
+    public override void Start()
+    {
+        base.Start();
+        InitializeUI();
+        lifeSkillEquipmentContainer.SetActive(false);
+    }
 
     public override void CreateSlots()
     {
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
+        for (int i = 0; i < combatEquipmentSlots.Length; i++)
         {
-            var obj = slots[i];
-            AddEvent(obj, UnityEngine.EventSystems.EventTriggerType.PointerEnter, delegate { OnPointerEnter(obj); });
-            AddEvent(obj, EventTriggerType.PointerExit, delegate { OnPointerExit(obj); });
-            AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
-            AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
-            AddEvent(obj, EventTriggerType.Drag, (data) => { OnDrag(obj, (PointerEventData)data); });
-            AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnRMBClick(obj, (PointerEventData)data); });
+            var obj = combatEquipmentSlots[i];
+            SetupSlotEvents(obj);
 
-            inventory.GetSlots[i].slotDisplay = obj;
-            slotsOnInterface.Add(obj, inventory.GetSlots[i]);
+            var slot = combatEquipmentInventory.GetSlots[i];
+            slot.parent = this;
+            slot.slotDisplay = obj;
+            slotsOnInterface.Add(obj, slot);
         }
+
+        for (int i = 0; i < lifeSkillEquipmentSlots.Length; i++)
+        {
+            var obj = lifeSkillEquipmentSlots[i];
+            SetupSlotEvents(obj);
+
+            var slot = lifeSkillEquipmentInventory.GetSlots[i];
+            slot.parent = this;
+            slot.slotDisplay = obj;
+            slotsOnInterface.Add(obj, slot);
+        }
+    }
+
+    private void SetupSlotEvents(GameObject obj)
+    {
+        AddEvent(obj, UnityEngine.EventSystems.EventTriggerType.PointerEnter, delegate { OnPointerEnter(obj); });
+        AddEvent(obj, EventTriggerType.PointerExit, delegate { OnPointerExit(obj); });
+        AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
+        AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
+        AddEvent(obj, EventTriggerType.Drag, (data) => { OnDrag(obj, (PointerEventData)data); });
+        AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnRMBClick(obj, (PointerEventData)data); });
+    }
+
+    private void InitializeUI()
+    {
+        if (GameUI.Instance == null)
+        {
+            Debug.LogError("Không tìm thấy GameUI.Instance (Null)");
+            return;
+        }
+        var GUIInstance = GameUI.Instance;
+        combatEquipmentContainer = GUIInstance.combatEquipmentSlotsContainer;
+        lifeSkillEquipmentContainer = GUIInstance.lifeSkillEquipmentSlotsContainer;
+        combatEquipmentBtn = GUIInstance.combatEquipmentSlotsContainerBtn;
+        lifeSkillEquipmentBtn = GUIInstance.lifeSkillEquipmentSlotsContainerBtn;
+    }
+
+    public void SwitchToCombatSlotsContainer()
+    {
+        lifeSkillEquipmentContainer.SetActive(false);
+        combatEquipmentContainer.SetActive(true);
+    }
+
+    public void SwitchToLifeSkillSlotsContainer()
+    {
+        combatEquipmentContainer.SetActive(false);
+        lifeSkillEquipmentContainer.SetActive(true);
     }
 }
