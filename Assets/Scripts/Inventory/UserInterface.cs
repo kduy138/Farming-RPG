@@ -9,8 +9,6 @@ using UnityEngine.UI;
 
 public abstract class UserInterface : MonoBehaviour
 {
-    //public InventoryScriptableObject inventory;
-    //public InventoryScriptableObject equipment;
     [Header("Inventories")]
     public List<InventoryScriptableObject> inventories = new List<InventoryScriptableObject>();
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
@@ -36,6 +34,12 @@ public abstract class UserInterface : MonoBehaviour
     public virtual void Start()
     {
         removeItemBtn = GameUI.Instance.removeItemBtn;
+
+        if (inventories == null || inventories.Count == 0) {
+            Debug.LogError(name + " chưa gán inventory!");
+            return;
+        }
+
         CreateSlots();
 
         foreach(var inv  in inventories)
@@ -45,14 +49,8 @@ public abstract class UserInterface : MonoBehaviour
 
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
         AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
-
         AddEvent(removeItemBtn, EventTriggerType.PointerEnter, delegate { OnEnterRemove(removeItemBtn); });
         AddEvent(removeItemBtn, EventTriggerType.PointerExit, delegate { OnExitRemove(removeItemBtn); });
-    }
-
-    public virtual void Update()
-    {
-        
     }
 
     protected void RegisterInventory(InventoryScriptableObject inv)
@@ -64,8 +62,9 @@ public abstract class UserInterface : MonoBehaviour
             var slot = inv.GetSlots[i];
             slot.parent = this;
             slot.inventory = inv;
-            //slot.OnAfterUpdate -= OnSlotUpdate;
+            slot.OnAfterUpdate -= OnSlotUpdate;
             slot.OnAfterUpdate += OnSlotUpdate;
+            OnSlotUpdate(slot);
         }
     }
 
@@ -73,6 +72,12 @@ public abstract class UserInterface : MonoBehaviour
 
     private void OnSlotUpdate(InventorySlot slot)
     {
+        if (slot.slotDisplay == null)
+        {
+            Debug.Log("slotDisplay NULL!");
+            return;
+        }
+
         TextMeshProUGUI quantityText = slot.slotDisplay.transform.Find("Quantity")?.GetComponent<TextMeshProUGUI>();
         Outline outline = slot.slotDisplay.transform.Find("Outline")?.GetComponent<Outline>();
         Image icon = slot.slotDisplay.transform.Find("Icon")?.GetComponent<Image>();
@@ -198,12 +203,16 @@ public abstract class UserInterface : MonoBehaviour
 
             sourceInv.SwapItemSlot(sourceSlot, targetSlot);
 
-            sourceInv.Save();
-
             if (targetInv != sourceInv)
             {
+                sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
+                if (sourceInv.CurrentWeight < 0)
+                {
+                    sourceInv.CurrentWeight = 0;
+                }
                 targetInv.Save();
             }
+            sourceInv.Save();
         }
 
         if (DraggingData.slotHoverOverRemove && slotsOnInterface[obj].item.ID >= 0)
@@ -212,7 +221,6 @@ public abstract class UserInterface : MonoBehaviour
             GameUI.Instance.confirmRemoveText.text = "Hủy <color=" + slotsOnInterface[obj].itemSO.ColorGrade + ">" + slotsOnInterface[obj].item.ItemName + "</color> x" + slotsOnInterface[obj].quantity + "?";
             GameUI.Instance.itemIcon.sprite = slotsOnInterface[obj].itemSO.Icon;
             GameUI.Instance.itemIcon.color = new Color(1, 1, 1, 1);
-
             GameUI.Instance.confirmRemoveBtn.onClick.RemoveAllListeners();
             GameUI.Instance.confirmRemoveBtn.onClick.AddListener(() => ConfirmRemove(obj));
         }
@@ -226,58 +234,41 @@ public abstract class UserInterface : MonoBehaviour
         }
     }
 
-    public void OnRMBClick(GameObject obj, PointerEventData data)
+    public void OnRMBClick_SwapItem(GameObject obj, PointerEventData data)
     {
-        //if (data.button == PointerEventData.InputButton.Right)
-        //{
-        //    if (obj == null) return;
+        if (data.button == PointerEventData.InputButton.Right)
+        {
+            if (obj == null) return;
 
-        //    if (slotsOnInterface[obj].item.ID < 0) return;
+            if (slotsOnInterface[obj].item.ID < 0) return;
 
-        //    if (isDiscard) return;
+            if (isDiscard) return;
+            var sourceSlot = slotsOnInterface[obj];
+            var sourceInv = sourceSlot.inventory;
 
-        //    if (dynamicInterface != null)
-        //    {
-        //        for (int i = 0; i < equipment.GetSlots.Length; i++)
-        //        {
-        //            if (equipment.GetSlots[i].slotTypes.Contains(slotsOnInterface[obj].itemSO.Type))
-        //            {
-        //                inventory.CurrentWeight -= slotsOnInterface[obj].itemSO.Weight;
-        //                inventory.SwapItemSlot(slotsOnInterface[obj], equipment.GetSlots[i]);
-        //                inventory.Save();
-        //                equipment.Save();
-        //                ItemToolTip.Instance.HideItemToolTip();
-        //                return;
-        //            }
-        //        }
-        //    }
-        //    else if (staticInterface != null)
-        //    {
-        //        DynamicInterface dynamicInv = FindAnyObjectByType<DynamicInterface>();
+            var equipmentInv = GameUI.Instance.combatEquipmentSlotsContainer.activeInHierarchy ? inventories[1] : inventories[2];
 
-        //        if (dynamicInv == null)
-        //        {
-        //            Debug.LogError("Không tìm thấy DynamicInterface trong scene!!!");
-        //            return;
-        //        }
+            foreach (var slot in equipmentInv.GetSlots)
+            {
+                if (slot.slotType != sourceSlot.itemSO.Type) continue;
 
-        //        InventoryScriptableObject inv = dynamicInv.inventory;
+                var targetSlot = slot;
+                var targetInv = targetSlot.inventory;
 
-        //        InventorySlot emptySlot = inv.GetEmptySlot();
-
-        //        if (emptySlot == null)
-        //        {
-        //            Debug.Log("Kho đồ đã đầy, không thể bỏ vật phẩm vào!!!");
-        //            return;
-        //        }
-
-        //        inv.CurrentWeight += slotsOnInterface[obj].itemSO.Weight;
-        //        inv.SwapItemSlot(slotsOnInterface[obj], emptySlot);
-        //        inv.Save();
-        //        equipment.Save();
-        //        ItemToolTip.Instance.HideItemToolTip();
-        //    }
-        //}
+                targetSlot = slot;
+                targetInv = targetSlot.inventory;
+                sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
+                if (sourceInv.CurrentWeight < 0)
+                {
+                    sourceInv.CurrentWeight = 0;
+                }
+                sourceInv.SwapItemSlot(sourceSlot, targetSlot);
+                sourceInv.Save();
+                targetInv.Save();
+                ItemToolTip.Instance.HideItemToolTip();
+                return;
+            }
+        }
     }
 
     public void ConfirmRemove(GameObject obj)
@@ -331,17 +322,17 @@ public static class ExtensionMethods
         switch (grade)
         {
             case ColorGrade.grey:
-                return new Color(0.6f, 0.6f, 0.6f); // xám
+                return new Color(0.6f, 0.6f, 0.6f);
             case ColorGrade.green:
-                return new Color(0.1f, 0.9f, 0.1f); // xanh lá
+                return new Color(0.1f, 0.9f, 0.1f);
             case ColorGrade.blue:
-                return new Color(0.1f, 0.5f, 1f);   // xanh dương
+                return new Color(0.1f, 0.5f, 1f);
             case ColorGrade.yellow:
-                return new Color(1f, 0.85f, 0.2f);  // vàng
+                return new Color(1f, 0.85f, 0.2f);
             case ColorGrade.red:
-                return new Color(1f, 0.2f, 0.2f);   // đỏ
+                return new Color(1f, 0.2f, 0.2f);
             case ColorGrade.purple:
-                return new Color(0.7f, 0.3f, 1f);   // tím
+                return new Color(0.7f, 0.3f, 1f);
             default:
                 return Color.white;
         }

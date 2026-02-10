@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
 public class StaticInterface : UserInterface
 {
     public InventoryScriptableObject combatEquipmentInventory;
@@ -14,8 +13,6 @@ public class StaticInterface : UserInterface
 
     private GameObject combatEquipmentContainer;
     private GameObject lifeSkillEquipmentContainer;
-    private Button combatEquipmentBtn;
-    private Button lifeSkillEquipmentBtn;
 
     public override void Start()
     {
@@ -34,7 +31,7 @@ public class StaticInterface : UserInterface
             SetupSlotEvents(obj);
 
             var slot = combatEquipmentInventory.GetSlots[i];
-            slot.parent = this;
+            //slot.parent = this;
             slot.slotDisplay = obj;
             slotsOnInterface.Add(obj, slot);
         }
@@ -43,9 +40,8 @@ public class StaticInterface : UserInterface
         {
             var obj = lifeSkillEquipmentSlots[i];
             SetupSlotEvents(obj);
-
             var slot = lifeSkillEquipmentInventory.GetSlots[i];
-            slot.parent = this;
+            //slot.parent = this;
             slot.slotDisplay = obj;
             slotsOnInterface.Add(obj, slot);
         }
@@ -58,7 +54,7 @@ public class StaticInterface : UserInterface
         AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
         AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
         AddEvent(obj, EventTriggerType.Drag, (data) => { OnDrag(obj, (PointerEventData)data); });
-        AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnRMBClick(obj, (PointerEventData)data); });
+        AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnRMBClick_SwapItem(obj, (PointerEventData)data); });
     }
 
     private void InitializeUI()
@@ -71,8 +67,6 @@ public class StaticInterface : UserInterface
         var GUIInstance = GameUI.Instance;
         combatEquipmentContainer = GUIInstance.combatEquipmentSlotsContainer;
         lifeSkillEquipmentContainer = GUIInstance.lifeSkillEquipmentSlotsContainer;
-        combatEquipmentBtn = GUIInstance.combatEquipmentSlotsContainerBtn;
-        lifeSkillEquipmentBtn = GUIInstance.lifeSkillEquipmentSlotsContainerBtn;
     }
 
     public void SwitchToCombatSlotsContainer()

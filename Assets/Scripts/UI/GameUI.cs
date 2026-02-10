@@ -54,8 +54,6 @@ public class GameUI : MonoBehaviour
     public Button confirmRemoveBtn;
     public Button cancelDiscardBtn;
     public Button getItemBtn;
-    public Button combatEquipmentSlotsContainerBtn;
-    public Button lifeSkillEquipmentSlotsContainerBtn;
 
     [Header("Texts")]
     public TextMeshProUGUI confirmRemoveText;
@@ -80,7 +78,6 @@ public class GameUI : MonoBehaviour
     {
         Instance = this;
         DisableScreens();
-        DisableTexts();
         if (fishingScreen) fishingScreen.SetActive(false);
         if (minigameScreen) minigameScreen.SetActive(false);
     }
@@ -102,11 +99,6 @@ public class GameUI : MonoBehaviour
         if (getItemPopUp) getItemPopUp.SetActive(false);
         if (playerDeadScreen) playerDeadScreen.SetActive(false);
         if (miningScreen) miningScreen.SetActive(false);
-    }
-
-    private void DisableTexts()
-    {
-        //if (catchFishWarningTxt) catchFishWarningTxt.enabled = false;
     }
 
     private void ToggleInventoryScreen()
@@ -167,14 +159,6 @@ public class GameUI : MonoBehaviour
             minigameScreen.SetActive(true);
         }
     }
-
-    //private void ToggleMiningScreen(bool isMining)
-    //{
-    //    if(isMining)
-    //    {
-    //        miningScreen.SetActive(true);
-    //    }
-    //}
 
     private void CloseScreenWithEscape()
     {

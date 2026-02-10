@@ -141,17 +141,17 @@ public class ItemToolTip : MonoBehaviour
         switch (grade)
         {
             case ColorGrade.grey:
-                return new Color(0.85f, 0.85f, 0.85f); // xám
+                return new Color(0.85f, 0.85f, 0.85f);
             case ColorGrade.green:
-                return new Color(0.1f, 0.9f, 0.1f); // xanh lá
+                return new Color(0.1f, 0.9f, 0.1f);
             case ColorGrade.blue:
-                return new Color(0.1f, 0.5f, 1f);   // xanh dương
+                return new Color(0.1f, 0.5f, 1f);
             case ColorGrade.yellow:
-                return new Color(1f, 0.85f, 0.2f);  // vàng
+                return new Color(1f, 0.85f, 0.2f);
             case ColorGrade.red:
-                return new Color(1f, 0.2f, 0.2f);   // đỏ
+                return new Color(1f, 0.2f, 0.2f);
             case ColorGrade.purple:
-                return new Color(0.7f, 0.3f, 1f);   // tím
+                return new Color(0.7f, 0.3f, 1f);
             default:
                 return Color.white;
         }
@@ -162,17 +162,17 @@ public class ItemToolTip : MonoBehaviour
         switch (grade)
         {
             case ColorGrade.grey:
-                return "#bfbfbf"; // xám
+                return "#bfbfbf";
             case ColorGrade.green:
-                return "#02c708"; // xanh lá
+                return "#02c708";
             case ColorGrade.blue:
-                return "#3955f0ff";   // xanh dương
+                return "#3955f0ff";
             case ColorGrade.yellow:
-                return "#f0d000";  // vàng
+                return "#f0d000";
             case ColorGrade.red:
-                return "#e30202";   // đỏ
+                return "#e30202";
             case ColorGrade.purple:
-                return "#8802d1";   // tím
+                return "#8802d1";
             default:
                 return "#ffffff";
         }

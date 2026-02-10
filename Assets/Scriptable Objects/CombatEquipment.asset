@@ -16,7 +16,8 @@ MonoBehaviour:
   itemDatabase: {fileID: 11400000, guid: 689452490fcb2b34a9ff5dc8d38fc4dd, type: 2}
   container:
     slots:
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 5
       item:
         ID: -1
         ItemName: 
@@ -25,7 +26,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 10
       item:
         ID: -1
         ItemName: 
@@ -34,7 +36,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 6
       item:
         ID: -1
         ItemName: 
@@ -43,7 +46,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 6
       item:
         ID: -1
         ItemName: 
@@ -52,7 +56,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 12
       item:
         ID: -1
         ItemName: 
@@ -61,7 +66,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 12
       item:
         ID: -1
         ItemName: 
@@ -70,7 +76,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 3
       item:
         ID: -1
         ItemName: 
@@ -79,7 +86,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 9
       item:
         ID: -1
         ItemName: 
@@ -88,7 +96,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 11
       item:
         ID: -1
         ItemName: 
@@ -97,7 +106,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 1
       item:
         ID: -1
         ItemName: 
@@ -106,7 +116,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 2
       item:
         ID: -1
         ItemName: 
@@ -115,7 +126,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 4
       item:
         ID: -1
         ItemName: 
@@ -124,7 +136,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 8
       item:
         ID: -1
         ItemName: 
@@ -133,7 +146,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 7
       item:
         ID: -1
         ItemName: 
@@ -142,7 +156,8 @@ MonoBehaviour:
       quantity: 0
       isSelected: 0
       isAvailable: 1
-    - slotType: 0
+    - inventory: {fileID: 11400000}
+      slotType: 7
       item:
         ID: -1
         ItemName: 

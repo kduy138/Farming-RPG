@@ -1049,8 +1049,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+    m_SelectedColor: {r: 1, g: 0.6470588, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1535,8 +1535,6 @@ MonoBehaviour:
   confirmRemoveBtn: {fileID: 335303893}
   cancelDiscardBtn: {fileID: 1978211670}
   getItemBtn: {fileID: 679657169}
-  combatEquipmentSlotsContainerBtn: {fileID: 1671549083}
-  lifeSkillEquipmentSlotsContainerBtn: {fileID: 166399086}
   confirmRemoveText: {fileID: 524493921}
   silverCoinText: {fileID: 1840332110}
   castBtnText: {fileID: 1476099380}
@@ -11341,8 +11339,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+    m_SelectedColor: {r: 1, g: 0.6470588, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -14033,7 +14031,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb5db0e50cac4e4b9865a2ed5da5104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventories: []
+  inventories:
+  - {fileID: 11400000, guid: 82e090c0cbd79154584ac0ee256a17db, type: 2}
+  - {fileID: 11400000, guid: cef7c5952149ea643871111396e0aa48, type: 2}
+  - {fileID: 11400000, guid: 596fc1fd2656aa2478e15f8d561542c8, type: 2}
   inventoryScreen: {fileID: 1511142503}
   emptySlotSprite: {fileID: -8615945360752728150, guid: 1eea8ccf14d161c40abae68b0c772fe1, type: 3}
   lockedSlotSprite: {fileID: -451869947, guid: a1ed37ad242a361429c65037325a9739, type: 3}
