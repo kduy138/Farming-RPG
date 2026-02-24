@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using TMPro;
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 

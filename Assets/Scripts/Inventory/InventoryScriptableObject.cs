@@ -87,13 +87,13 @@ public class InventoryScriptableObject : ScriptableObject
         {
             SetItemToEmptySlot(_item, _quantity);
             currentWeight += itemDatabase.itemSO[_item.ID].Weight;
-            FloatingMessageManager.Instance.ShowMessage("Đã thêm Item: " + _item.ItemName + " - " + _quantity, FloatingMessageType.Info);
+            FloatingMessageManager.Instance.ShowMessage("Đã thêm " + _item.ItemName + " " + _quantity + "x" + " vào kho đồ", FloatingMessageType.Info);
             return;
         }
 
         slotWithThisItem.AddQuantity(_quantity);
         currentWeight += itemDatabase.itemSO[_item.ID].Weight;
-        FloatingMessageManager.Instance.ShowMessage("Đã thêm Item: " + _item.ItemName + " với số lượng x" + _quantity, FloatingMessageType.Info);
+        FloatingMessageManager.Instance.ShowMessage("Đã thêm " + _item.ItemName + " " + _quantity + "x" + " vào kho đồ", FloatingMessageType.Info);
     }
 
     public InventorySlot FindItemOnInventory(Item _item)
@@ -272,7 +272,7 @@ public delegate void SlotUpdated(InventorySlot _slot);
 public class InventorySlot
 {
     public InventoryScriptableObject inventory;
-    public ItemType slotType;
+    public ItemType slotType = ItemType.Universal;
     [System.NonSerialized]
     public UserInterface parent;
     [System.NonSerialized]
@@ -336,7 +336,7 @@ public class InventorySlot
         }
         else if (database == null)
         {
-            Debug.LogWarning("Database không tồn tại!!!");
+            Debug.LogWarning("Không tìm thấy cơ sở dữ liệu!");
         }
     }
 
@@ -353,7 +353,7 @@ public class InventorySlot
     public bool CanStoreInSlot(ItemScriptableObject _itemSO)
     {
         if (_itemSO == null || _itemSO.data.ID < 0) return true;
-        if (slotType == ItemType.None) return true;
+        if (slotType == ItemType.Universal) return true;
 
         return _itemSO.Type == slotType;
     }

@@ -131,6 +131,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Player_EnterCombat",
+                    "type": "Button",
+                    "id": "36e13e71-e19b-45b3-a6b9-94e372c48d4b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -307,6 +316,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Player_Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b38f489d-7255-47f7-bf8e-d000a3ecfc90",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player_EnterCombat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,6 +1,7 @@
 ﻿public enum ItemType
 {
     None,
+    Universal,
     [DisplayName("Vũ khí chính")] MainWeapon, [DisplayName("Vũ khí phụ")] SubWeapon,
     [DisplayName("Áo giáp")] Armor, [DisplayName("Khiên")] Shield,
     [DisplayName("Mũ")] Helmet, [DisplayName("Khuyên tai")] Earrings,
@@ -15,5 +16,4 @@
     [DisplayName("Súng săn")] HuntingRifle, [DisplayName("Lọ điều chế")] AlchemyFlask,
     [DisplayName("Muôi nấu ăn")] CookingPaddle, [DisplayName("Bình tưới nước")] WateringCan,
     [DisplayName("Bộ dụng cụ")] ProcessingKit, [DisplayName("Nông cụ")] GatheringTool
-    
 }

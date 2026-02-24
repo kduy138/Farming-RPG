@@ -24,6 +24,8 @@ public class PlayerAnimator : MonoBehaviour
         player.events.OnCastEnded += CancelCastAnimation;
         player.events.OnFishingStarted += SetFishingParameter;
         player.events.OnFishingEnded += SetFishingParameter;
+        player.events.OnCombatStarted += SetCombatParameter;
+        player.events.OnCombatEnded += SetCombatParameter;
     }
 
     private void Update()
@@ -72,5 +74,10 @@ public class PlayerAnimator : MonoBehaviour
     public void CancelMiningAnimation(object sender, EventArgs e)
     {
         animator.Play("Blend Tree Player Movement");
+    }
+
+    public void SetCombatParameter(object sender, EventArgs e)
+    {
+        animator.SetBool("Combat", player.GetPlayerCombat().IsInCombat());
     }
 }

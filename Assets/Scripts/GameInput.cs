@@ -124,4 +124,9 @@ public class GameInput : MonoBehaviour
     {
         return inputActions.UI.UI_Cursor.WasPressedThisFrame();
     }
+
+    public bool isCombatAction()
+    {
+        return inputActions.Player.Player_EnterCombat.WasPressedThisFrame();
+    }
 }

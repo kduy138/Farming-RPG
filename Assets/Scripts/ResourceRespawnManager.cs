@@ -5,7 +5,7 @@ public class ResourceRespawnManager : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField]
-    private float respawnTime = 120f;
+    private float respawnTime = 240f;
 
     [Header("References")]
     private IInteractable currentInteractable;

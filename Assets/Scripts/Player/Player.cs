@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     private PlayerScriptableObject baseData;
     public PlayerStats runtimePlayerData { get; private set; }
     private FishingManager currentFishingManager;
-    private MiningManager currentMiningManager;
+    private PlayerCombat playerCombat;
 
     [SerializeField]
     private string savePath;
@@ -56,6 +56,8 @@ public class Player : MonoBehaviour
 
         playerRigidbody = GetComponent<Rigidbody>();
         playerRigidbody.freezeRotation = true;
+
+        playerCombat = GetComponent<PlayerCombat>();
 
         moveSpeed = runtimePlayerData.currentRunSpeed;
         currentMoveSpeed = 0f;
@@ -342,6 +344,11 @@ public class Player : MonoBehaviour
     public FishingManager GetCurrentFishingManager()
     {
         return currentFishingManager;
+    }
+
+    public PlayerCombat GetPlayerCombat()
+    {
+        return playerCombat;
     }
 
     [ContextMenu("Save")]

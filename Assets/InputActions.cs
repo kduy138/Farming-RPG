@@ -217,6 +217,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Player_EnterCombat"",
+                    ""type"": ""Button"",
+                    ""id"": ""36e13e71-e19b-45b3-a6b9-94e372c48d4b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -395,6 +404,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Player_Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b38f489d-7255-47f7-bf8e-d000a3ecfc90"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Player_EnterCombat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -525,6 +545,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Player_FishingMinigame_Arrow_Down = m_Player.FindAction("Player_FishingMinigame_Arrow_Down", throwIfNotFound: true);
         m_Player_Player_FishingMinigame_Arrow_Left = m_Player.FindAction("Player_FishingMinigame_Arrow_Left", throwIfNotFound: true);
         m_Player_Player_Interact = m_Player.FindAction("Player_Interact", throwIfNotFound: true);
+        m_Player_Player_EnterCombat = m_Player.FindAction("Player_EnterCombat", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_UI_Inventory = m_UI.FindAction("UI_Inventory", throwIfNotFound: true);
@@ -627,6 +648,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Player_FishingMinigame_Arrow_Down;
     private readonly InputAction m_Player_Player_FishingMinigame_Arrow_Left;
     private readonly InputAction m_Player_Player_Interact;
+    private readonly InputAction m_Player_Player_EnterCombat;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -695,6 +717,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Player_Interact => m_Wrapper.m_Player_Player_Interact;
         /// <summary>
+        /// Provides access to the underlying input action "Player/Player_EnterCombat".
+        /// </summary>
+        public InputAction @Player_EnterCombat => m_Wrapper.m_Player_Player_EnterCombat;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -762,6 +788,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Player_Interact.started += instance.OnPlayer_Interact;
             @Player_Interact.performed += instance.OnPlayer_Interact;
             @Player_Interact.canceled += instance.OnPlayer_Interact;
+            @Player_EnterCombat.started += instance.OnPlayer_EnterCombat;
+            @Player_EnterCombat.performed += instance.OnPlayer_EnterCombat;
+            @Player_EnterCombat.canceled += instance.OnPlayer_EnterCombat;
         }
 
         /// <summary>
@@ -815,6 +844,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Player_Interact.started -= instance.OnPlayer_Interact;
             @Player_Interact.performed -= instance.OnPlayer_Interact;
             @Player_Interact.canceled -= instance.OnPlayer_Interact;
+            @Player_EnterCombat.started -= instance.OnPlayer_EnterCombat;
+            @Player_EnterCombat.performed -= instance.OnPlayer_EnterCombat;
+            @Player_EnterCombat.canceled -= instance.OnPlayer_EnterCombat;
         }
 
         /// <summary>
@@ -1093,6 +1125,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPlayer_Interact(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Player_EnterCombat" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPlayer_EnterCombat(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

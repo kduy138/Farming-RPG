@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -250,7 +249,7 @@ public abstract class UserInterface : MonoBehaviour
 
             foreach (var slot in equipmentInv.GetSlots)
             {
-                if (slot.slotType != sourceSlot.itemSO.Type) continue;
+                if (slot.slotType != sourceSlot.itemSO.Type && slot.slotType != ItemType.Universal) continue;
 
                 var targetSlot = slot;
                 var targetInv = targetSlot.inventory;
