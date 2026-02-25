@@ -26,6 +26,7 @@ public class PlayerAnimator : MonoBehaviour
         player.events.OnFishingEnded += SetFishingParameter;
         player.events.OnCombatStarted += SetCombatParameter;
         player.events.OnCombatEnded += SetCombatParameter;
+        player.events.OnNormalAttack += TriggerNormalAttack;
     }
 
     private void Update()
@@ -79,5 +80,13 @@ public class PlayerAnimator : MonoBehaviour
     public void SetCombatParameter(object sender, EventArgs e)
     {
         animator.SetBool("Combat", player.GetPlayerCombat().IsInCombat());
+    }
+
+    public void TriggerNormalAttack(object sender, EventArgs e)
+    {
+        Debug.Log(player.GetPlayerCombat().normalAtkCount);
+        animator.SetTrigger("Slash" + player.GetPlayerCombat().normalAtkCount);
+        animator.SetInteger("NormalAtkCount", player.GetPlayerCombat().normalAtkCount);
+        animator.SetBool("Attacking", false);
     }
 }

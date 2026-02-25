@@ -12,6 +12,7 @@ public class PlayerEvents
     public event EventHandler OnCastEnded;
     public event EventHandler OnCombatStarted;
     public event EventHandler OnCombatEnded;
+    public event EventHandler OnNormalAttack;
 
     public void TriggerOnDead() => OnDead?.Invoke(this, EventArgs.Empty);
     public void TriggerOnMiningStarted() => OnMiningStarted?.Invoke(this, EventArgs.Empty);
@@ -22,4 +23,5 @@ public class PlayerEvents
     public void TriggerOnCastEnded() => OnCastEnded?.Invoke(this, EventArgs.Empty);
     public void TriggerOnCombatStarted() => OnCombatStarted?.Invoke(this, EventArgs.Empty);
     public void TriggerOnCombatEnded() => OnCombatEnded?.Invoke(this, EventArgs.Empty);
+    public void TriggerOnNormalAttack() => OnNormalAttack?.Invoke(this, EventArgs.Empty);
 }

@@ -2,8 +2,17 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+    public int normalAtkCount = 1;
+
+    [Header("Settings")]
+    [SerializeField]
+    private float normalAtkCooldown = 0.1f;
+    private float lastNormalAtkTime;
+
     [Header("Flags")]
     private bool isInCombat = false;
+    [SerializeField]
+    private bool isAttacking = false;
 
     [Header("References")]
     private Player player;
@@ -26,6 +35,17 @@ public class PlayerCombat : MonoBehaviour
                 ExitCombatMode();
             }
         }
+
+        if (!isInCombat) return;
+
+        if (GameInput.Instance.isNormalAttackAction())
+        {
+            if (normalAtkCount > 3)
+            {
+                ResetNormalAtkCount();
+            }
+            NormalAttack();
+        }
     }
 
     private void EnterCombatMode()
@@ -42,8 +62,34 @@ public class PlayerCombat : MonoBehaviour
         player.SetIsInAction(false);
     }
 
+    private void NormalAttack()
+    {
+        if (Time.time - lastNormalAtkTime < normalAtkCooldown) return;
+        if (isAttacking) return;
+
+        lastNormalAtkTime = Time.time;
+        isAttacking = true;
+        player.events.TriggerOnNormalAttack();
+        normalAtkCount++;
+    }
+
+    public void EndAttack()
+    {
+        isAttacking = false;
+    }
+
+    private void ResetNormalAtkCount()
+    {
+        normalAtkCount = 1;
+    }
+
     public bool IsInCombat()
     {
         return isInCombat;
+    }
+
+    public bool IsAttacking()
+    {
+        return isAttacking;
     }
 }

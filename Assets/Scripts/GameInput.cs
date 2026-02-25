@@ -129,4 +129,9 @@ public class GameInput : MonoBehaviour
     {
         return inputActions.Player.Player_EnterCombat.WasPressedThisFrame();
     }
+
+    public bool isNormalAttackAction()
+    {
+        return inputActions.Player.Player_NormalAttack.WasPressedThisFrame();
+    }
 }
