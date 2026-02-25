@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -10,8 +8,8 @@ using UnityEngine.UI;
 
 public abstract class UserInterface : MonoBehaviour
 {
-    public InventoryScriptableObject inventory;
-    public InventoryScriptableObject equipment;
+    [Header("Inventories")]
+    public List<InventoryScriptableObject> inventories = new List<InventoryScriptableObject>();
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     [System.NonSerialized]
@@ -29,35 +27,43 @@ public abstract class UserInterface : MonoBehaviour
 
     [SerializeField]
     private Sprite emptySlotSprite;
+    [SerializeField]
+    private Sprite lockedSlotSprite;
 
     public virtual void Start()
     {
         removeItemBtn = GameUI.Instance.removeItemBtn;
+
+        if (inventories == null || inventories.Count == 0) {
+            Debug.LogError(name + " chưa gán inventory!");
+            return;
+        }
+
         CreateSlots();
 
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
+        foreach(var inv  in inventories)
         {
-            inventory.GetSlots[i].parent = this;
-            inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
+            RegisterInventory(inv);
         }
 
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
         AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
-
         AddEvent(removeItemBtn, EventTriggerType.PointerEnter, delegate { OnEnterRemove(removeItemBtn); });
         AddEvent(removeItemBtn, EventTriggerType.PointerExit, delegate { OnExitRemove(removeItemBtn); });
     }
 
-    public virtual void Update()
+    protected void RegisterInventory(InventoryScriptableObject inv)
     {
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
-        {
-            inventory.GetSlots[i].parent = this;
-        }
+        if (inv == null) return;
 
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
+        for (int i = 0; i < inv.GetSlots.Length; i++)
         {
-            OnSlotUpdate(inventory.GetSlots[i]);
+            var slot = inv.GetSlots[i];
+            slot.parent = this;
+            slot.inventory = inv;
+            slot.OnAfterUpdate -= OnSlotUpdate;
+            slot.OnAfterUpdate += OnSlotUpdate;
+            OnSlotUpdate(slot);
         }
     }
 
@@ -65,6 +71,12 @@ public abstract class UserInterface : MonoBehaviour
 
     private void OnSlotUpdate(InventorySlot slot)
     {
+        if (slot.slotDisplay == null)
+        {
+            Debug.Log("slotDisplay NULL!");
+            return;
+        }
+
         TextMeshProUGUI quantityText = slot.slotDisplay.transform.Find("Quantity")?.GetComponent<TextMeshProUGUI>();
         Outline outline = slot.slotDisplay.transform.Find("Outline")?.GetComponent<Outline>();
         Image icon = slot.slotDisplay.transform.Find("Icon")?.GetComponent<Image>();
@@ -94,6 +106,12 @@ public abstract class UserInterface : MonoBehaviour
             {
                 outline.effectColor = Color.black;
             }
+        }
+
+        if (!slot.isAvailable)
+        {
+            icon.sprite = lockedSlotSprite;
+            icon.color = new Color(1, 1, 1, 0.5f);
         }
     }
 
@@ -176,27 +194,24 @@ public abstract class UserInterface : MonoBehaviour
 
         if (DraggingData.slotHoverOver)
         {
-            InventorySlot draggingItemHoverSlotData = DraggingData.ui.slotsOnInterface[DraggingData.slotHoverOver];
-            inventory.SwapItemSlot(slotsOnInterface[obj], draggingItemHoverSlotData);
-            if (dynamicInterface != null)
-            {
-                DynamicInterface dynamicInv = FindAnyObjectByType<DynamicInterface>();
+            var sourceSlot = slotsOnInterface[obj];
+            var targetSlot = DraggingData.ui.slotsOnInterface[DraggingData.slotHoverOver];
 
-                if (dynamicInv == null)
+            var sourceInv = sourceSlot.inventory;
+            var targetInv = targetSlot.inventory;
+
+            sourceInv.SwapItemSlot(sourceSlot, targetSlot);
+
+            if (targetInv != sourceInv)
+            {
+                sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
+                if (sourceInv.CurrentWeight < 0)
                 {
-                    Debug.LogError("Không tìm thấy DynamicInterface trong scene!!!");
-                    return;
+                    sourceInv.CurrentWeight = 0;
                 }
-
-                InventoryScriptableObject inv = dynamicInv.inventory;
-
-                inv.Save();
+                targetInv.Save();
             }
-            else
-            {
-                inventory.Save();
-            }
-            equipment.Save();
+            sourceInv.Save();
         }
 
         if (DraggingData.slotHoverOverRemove && slotsOnInterface[obj].item.ID >= 0)
@@ -205,7 +220,6 @@ public abstract class UserInterface : MonoBehaviour
             GameUI.Instance.confirmRemoveText.text = "Hủy <color=" + slotsOnInterface[obj].itemSO.ColorGrade + ">" + slotsOnInterface[obj].item.ItemName + "</color> x" + slotsOnInterface[obj].quantity + "?";
             GameUI.Instance.itemIcon.sprite = slotsOnInterface[obj].itemSO.Icon;
             GameUI.Instance.itemIcon.color = new Color(1, 1, 1, 1);
-
             GameUI.Instance.confirmRemoveBtn.onClick.RemoveAllListeners();
             GameUI.Instance.confirmRemoveBtn.onClick.AddListener(() => ConfirmRemove(obj));
         }
@@ -219,7 +233,7 @@ public abstract class UserInterface : MonoBehaviour
         }
     }
 
-    public void OnRMBClick(GameObject obj, PointerEventData data)
+    public void OnRMBClick_SwapItem(GameObject obj, PointerEventData data)
     {
         if (data.button == PointerEventData.InputButton.Right)
         {
@@ -228,47 +242,30 @@ public abstract class UserInterface : MonoBehaviour
             if (slotsOnInterface[obj].item.ID < 0) return;
 
             if (isDiscard) return;
+            var sourceSlot = slotsOnInterface[obj];
+            var sourceInv = sourceSlot.inventory;
 
-            if (dynamicInterface != null)
+            var equipmentInv = GameUI.Instance.combatEquipmentSlotsContainer.activeInHierarchy ? inventories[1] : inventories[2];
+
+            foreach (var slot in equipmentInv.GetSlots)
             {
-                for (int i = 0; i < equipment.GetSlots.Length; i++)
+                if (slot.slotType != sourceSlot.itemSO.Type && slot.slotType != ItemType.Universal) continue;
+
+                var targetSlot = slot;
+                var targetInv = targetSlot.inventory;
+
+                targetSlot = slot;
+                targetInv = targetSlot.inventory;
+                sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
+                if (sourceInv.CurrentWeight < 0)
                 {
-                    if (equipment.GetSlots[i].allowedItems.Contains(slotsOnInterface[obj].itemSO.Type))
-                    {
-                        inventory.CurrentWeight -= slotsOnInterface[obj].itemSO.Weight;
-                        inventory.SwapItemSlot(slotsOnInterface[obj], equipment.GetSlots[i]);
-                        inventory.Save();
-                        equipment.Save();
-                        ItemToolTip.Instance.HideItemToolTip();
-                        return;
-                    }
+                    sourceInv.CurrentWeight = 0;
                 }
-            }
-            else if (staticInterface != null)
-            {
-                DynamicInterface dynamicInv = FindAnyObjectByType<DynamicInterface>();
-
-                if (dynamicInv == null)
-                {
-                    Debug.LogError("Không tìm thấy DynamicInterface trong scene!!!");
-                    return;
-                }
-
-                InventoryScriptableObject inv = dynamicInv.inventory;
-
-                InventorySlot emptySlot = inv.GetEmptySlot();
-
-                if (emptySlot == null)
-                {
-                    Debug.Log("Kho đồ đã đầy, không thể bỏ vật phẩm vào!!!");
-                    return;
-                }
-
-                inv.CurrentWeight += slotsOnInterface[obj].itemSO.Weight;
-                inv.SwapItemSlot(slotsOnInterface[obj], emptySlot);
-                inv.Save();
-                equipment.Save();
+                sourceInv.SwapItemSlot(sourceSlot, targetSlot);
+                sourceInv.Save();
+                targetInv.Save();
                 ItemToolTip.Instance.HideItemToolTip();
+                return;
             }
         }
     }
@@ -277,9 +274,11 @@ public abstract class UserInterface : MonoBehaviour
     {
         if (slotsOnInterface.ContainsKey(obj))
         {
-            inventory.CurrentWeight -= slotsOnInterface[obj].itemSO.Weight;
-            inventory.RemoveItem(slotsOnInterface[obj].item);
-            inventory.Save();
+            var slot = slotsOnInterface[obj];
+            var inv = slot.inventory;
+            inv.CurrentWeight -= slot.itemSO.Weight;
+            inv.RemoveItem(slot.item);
+            inv.Save();
             GameUI.Instance.confirmRemoveScreen.SetActive(false);
         }
     }
@@ -322,17 +321,17 @@ public static class ExtensionMethods
         switch (grade)
         {
             case ColorGrade.grey:
-                return new Color(0.6f, 0.6f, 0.6f); // xám
+                return new Color(0.6f, 0.6f, 0.6f);
             case ColorGrade.green:
-                return new Color(0.1f, 0.9f, 0.1f); // xanh lá
+                return new Color(0.1f, 0.9f, 0.1f);
             case ColorGrade.blue:
-                return new Color(0.1f, 0.5f, 1f);   // xanh dương
+                return new Color(0.1f, 0.5f, 1f);
             case ColorGrade.yellow:
-                return new Color(1f, 0.85f, 0.2f);  // vàng
+                return new Color(1f, 0.85f, 0.2f);
             case ColorGrade.red:
-                return new Color(1f, 0.2f, 0.2f);   // đỏ
+                return new Color(1f, 0.2f, 0.2f);
             case ColorGrade.purple:
-                return new Color(0.7f, 0.3f, 1f);   // tím
+                return new Color(0.7f, 0.3f, 1f);
             default:
                 return Color.white;
         }

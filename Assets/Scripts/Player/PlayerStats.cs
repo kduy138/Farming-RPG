@@ -24,12 +24,14 @@ public class PlayerStats
     public float MaxXP;
     public float currentDeathPenalty;
 
-    public float currentFishingXP;
+    public float currentFishingXPGain;
+    public float currentMiningXPGain;
 
     public float currentItemDropRate;
     public float currentStaminaRecoverRate;
 
     public float currentFishingTime;
+    public float currentMiningTime;
 
     public double currentSilverCoin;
 
@@ -57,12 +59,14 @@ public class PlayerStats
         MaxXP = 13034431f;
         currentDeathPenalty = baseData.DeathPenalty;
 
-        currentFishingXP = baseData.FishingXP;
+        currentFishingXPGain = baseData.FishingXPGain;
+        currentMiningXPGain = baseData.MiningXPGain;
 
         currentItemDropRate = baseData.ItemDropRate;
         currentStaminaRecoverRate = baseData.StaminaRecoverRate;
 
         currentFishingTime = baseData.FishingTime;
+        currentMiningTime = baseData.MiningTime;
 
         currentSilverCoin = 0;
     }

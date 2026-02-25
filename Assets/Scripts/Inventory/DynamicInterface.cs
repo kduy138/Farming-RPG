@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,16 +7,23 @@ using UnityEngine.UI;
 
 public class DynamicInterface : UserInterface
 {
+    private InventoryScriptableObject Inventory
+    {
+        get
+        {
+            if (inventories == null || inventories.Count == 0)
+            {
+                Debug.Log("DynamicInterface không có inventory!");
+                return null;
+            }
+            return inventories[0];
+        }
+    }
     public Transform itemContent;
     public GameObject inventoryItem;
 
     private GameObject discardOptionHolder;
     private GameObject weightAndSlotCountHolder;
-
-    private TextMeshProUGUI weightText;
-    private TextMeshProUGUI slotText;
-    private Image weightBar;
-    private Image slotBar;
 
     [SerializeField]
     private List<InventorySlot> discardSlots = new List<InventorySlot>();
@@ -23,59 +31,57 @@ public class DynamicInterface : UserInterface
     public override void Start()
     {
         base.Start();
-        InitializeUI();
     }
 
-    public override void Update()
-    {
-        base.Update();
-        HandleWeightAndSlotBar();
-    }
-
-    public override void CreateSlots()
-    {
-        slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
-
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
-        {
-            var obj = Instantiate(inventoryItem, itemContent);
-
-            AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnPointerEnter(obj); });
-            AddEvent(obj, EventTriggerType.PointerExit, delegate { OnPointerExit(obj); });
-            AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
-            AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
-            AddEvent(obj, EventTriggerType.Drag, (data) => { OnDrag(obj, (PointerEventData)data); });
-            AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnRMBClick(obj, (PointerEventData)data); });
-            AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnLMBDiscardClick(obj, (PointerEventData)data); });
-            AddEvent(removeItemBtn, EventTriggerType.PointerClick, (data) => { OnRemoveRMBClick(removeItemBtn, (PointerEventData)data); });
-
-            inventory.GetSlots[i].slotDisplay = obj;
-            slotsOnInterface.Add(obj, inventory.GetSlots[i]);
-        }
-    }
-
-    private void InitializeUI()
+    private void Update()
     {
         if (GameUI.Instance == null)
         {
             Debug.LogError("GameUI.Instance is NULL");
             return;
         }
-        var GUIInstance = GameUI.Instance;
-        discardOptionHolder = GUIInstance.discardOptionHolder;
-        weightAndSlotCountHolder = GUIInstance.weightAndSlotCountHolder;
-        weightBar = GUIInstance.weightBar;
-        slotBar = GUIInstance.slotBar;
-        weightText = GUIInstance.weightText;
-        slotText = GUIInstance.slotText;
+        HandleWeightAndSlotBar();
+    }
+
+    public override void CreateSlots()
+    {
+        if (Inventory == null)
+        {
+            Debug.Log("Inventory Null!");
+            return;
+        }
+
+        slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
+
+        for (int i = 0; i < Inventory.GetSlots.Length; i++)
+        {
+            var obj = Instantiate(inventoryItem, itemContent);
+            SetupSlotEvents(obj);
+            Inventory.GetSlots[i].slotDisplay = obj;
+            slotsOnInterface.Add(obj, Inventory.GetSlots[i]);
+        }
+    }
+
+    private void SetupSlotEvents(GameObject obj)
+    {
+        AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnPointerEnter(obj); });
+        AddEvent(obj, EventTriggerType.PointerExit, delegate { OnPointerExit(obj); });
+        AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
+        AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
+        AddEvent(obj, EventTriggerType.Drag, (data) => { OnDrag(obj, (PointerEventData)data); });
+        AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnRMBClick_SwapItem(obj, (PointerEventData)data); });
+        AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnLMBDiscardClick(obj, (PointerEventData)data); });
+        AddEvent(removeItemBtn, EventTriggerType.PointerClick, (data) => { OnRemoveRMBClick(removeItemBtn, (PointerEventData)data); });
     }
 
     private void HandleWeightAndSlotBar()
     {
-        weightText.text = $"<color=#FFCD00>Trọng lượng:</color> {inventory.CurrentWeight}/{inventory.WeightLimit}";
-        weightBar.fillAmount = inventory.CurrentWeight / inventory.WeightLimit;
-        slotText.text = $"<color=#FFCD00>Số ô đồ:</color> {inventory.GetCurrentSlotCount}/{inventory.MaxSlot}";
-        slotBar.fillAmount = (float)inventory.CurrentSlotCount / inventory.MaxSlot;
+        if (Inventory == null) return;
+
+        GameUI.Instance.weightText.text = $"<color=#FFCD00>Trọng lượng:</color> {Inventory.CurrentWeight}/{Inventory.WeightLimit}";
+        GameUI.Instance.weightBar.fillAmount = Inventory.CurrentWeight / Inventory.WeightLimit;
+        GameUI.Instance.slotText.text = $"<color=#FFCD00>Số ô đồ:</color> {Inventory.GetHasItemSlotCount}/{Inventory.CurrentAvailableSlotCount}";
+        GameUI.Instance.slotBar.fillAmount = (float)Inventory.CurrentSlotCount / Inventory.MaxSlot;
     }
 
     private void OnLMBDiscardClick(GameObject obj, PointerEventData data)
@@ -137,18 +143,18 @@ public class DynamicInterface : UserInterface
     {
         if (discardSlots.Count <= 0)
         {
-            Debug.Log("Không có vật phẩm cần xóa!");
+            FloatingMessageManager.Instance.ShowMessage("Không có vật phẩm cần xóa", FloatingMessageType.Info);
             return;
         }
 
         foreach (InventorySlot slot in discardSlots)
         {
             ResetDiscardSlot();
-            inventory.CurrentWeight -= slot.itemSO.Weight;
-            inventory.RemoveItem(slot.item);
+            Inventory.CurrentWeight -= slot.itemSO.Weight;
+            Inventory.RemoveItem(slot.item);
         }
         discardSlots.Clear();
-        inventory.Save();
+        Inventory.Save();
     }
 
     public void CancelItemsDiscard()
@@ -172,10 +178,5 @@ public class DynamicInterface : UserInterface
             discardOptionHolder.SetActive(true);
             weightAndSlotCountHolder.SetActive(false);
         }
-    }
-
-    private void OnApplicationQuit()
-    {
-        inventory.container.slots = new InventorySlot[32];
     }
 }

@@ -208,6 +208,33 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Player_Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""b0826e6a-d72e-4452-83c9-fa59ff3a4a21"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Player_EnterCombat"",
+                    ""type"": ""Button"",
+                    ""id"": ""36e13e71-e19b-45b3-a6b9-94e372c48d4b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Player_NormalAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""5a53b94c-56e0-4a1f-a2aa-09ecaebe3e93"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -375,6 +402,39 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Player_FishingMinigame_Arrow_Left"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f75d0c24-6057-42e8-a185-d456745f0eb8"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Player_Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b38f489d-7255-47f7-bf8e-d000a3ecfc90"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Player_EnterCombat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e69c87de-9be4-40c7-b49a-59b2f075380c"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Player_NormalAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -410,9 +470,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""UI_TakeFish"",
+                    ""name"": ""UI_TakeItem"",
                     ""type"": ""Button"",
                     ""id"": ""0a946985-3a46-4385-9d00-0ffd1042c1de"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UI_Cursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""7178fd05-a48c-4671-b1a3-09eb691a0f75"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -460,35 +529,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""UI_TakeFish"",
+                    ""action"": ""UI_TakeItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""AI_Test"",
-            ""id"": ""c5b42119-bc2e-43c8-9086-965c37ed77a0"",
-            ""actions"": [
-                {
-                    ""name"": ""LMB"",
-                    ""type"": ""Button"",
-                    ""id"": ""3f9ad731-bc85-43c2-a067-c60ce0b820c2"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""2dd8911b-bcb0-4d5f-b4cd-958419553cc4"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""76aafbc1-d9af-46a2-953c-d7867b92b483"",
+                    ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LMB"",
+                    ""action"": ""UI_Cursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -512,22 +564,22 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Player_FishingMinigame_Arrow_Right = m_Player.FindAction("Player_FishingMinigame_Arrow_Right", throwIfNotFound: true);
         m_Player_Player_FishingMinigame_Arrow_Down = m_Player.FindAction("Player_FishingMinigame_Arrow_Down", throwIfNotFound: true);
         m_Player_Player_FishingMinigame_Arrow_Left = m_Player.FindAction("Player_FishingMinigame_Arrow_Left", throwIfNotFound: true);
+        m_Player_Player_Interact = m_Player.FindAction("Player_Interact", throwIfNotFound: true);
+        m_Player_Player_EnterCombat = m_Player.FindAction("Player_EnterCombat", throwIfNotFound: true);
+        m_Player_Player_NormalAttack = m_Player.FindAction("Player_NormalAttack", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_UI_Inventory = m_UI.FindAction("UI_Inventory", throwIfNotFound: true);
         m_UI_UI_Close = m_UI.FindAction("UI_Close", throwIfNotFound: true);
         m_UI_UI_Fishing_Minigame = m_UI.FindAction("UI_Fishing_Minigame", throwIfNotFound: true);
-        m_UI_UI_TakeFish = m_UI.FindAction("UI_TakeFish", throwIfNotFound: true);
-        // AI_Test
-        m_AI_Test = asset.FindActionMap("AI_Test", throwIfNotFound: true);
-        m_AI_Test_LMB = m_AI_Test.FindAction("LMB", throwIfNotFound: true);
+        m_UI_UI_TakeItem = m_UI.FindAction("UI_TakeItem", throwIfNotFound: true);
+        m_UI_UI_Cursor = m_UI.FindAction("UI_Cursor", throwIfNotFound: true);
     }
 
     ~@InputActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputActions.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputActions.UI.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_AI_Test.enabled, "This will cause a leak and performance issues, InputActions.AI_Test.Disable() has not been called.");
     }
 
     /// <summary>
@@ -616,6 +668,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Player_FishingMinigame_Arrow_Right;
     private readonly InputAction m_Player_Player_FishingMinigame_Arrow_Down;
     private readonly InputAction m_Player_Player_FishingMinigame_Arrow_Left;
+    private readonly InputAction m_Player_Player_Interact;
+    private readonly InputAction m_Player_Player_EnterCombat;
+    private readonly InputAction m_Player_Player_NormalAttack;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -679,6 +734,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Player_FishingMinigame_Arrow_Left".
         /// </summary>
         public InputAction @Player_FishingMinigame_Arrow_Left => m_Wrapper.m_Player_Player_FishingMinigame_Arrow_Left;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Player_Interact".
+        /// </summary>
+        public InputAction @Player_Interact => m_Wrapper.m_Player_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Player_EnterCombat".
+        /// </summary>
+        public InputAction @Player_EnterCombat => m_Wrapper.m_Player_Player_EnterCombat;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Player_NormalAttack".
+        /// </summary>
+        public InputAction @Player_NormalAttack => m_Wrapper.m_Player_Player_NormalAttack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -744,6 +811,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Player_FishingMinigame_Arrow_Left.started += instance.OnPlayer_FishingMinigame_Arrow_Left;
             @Player_FishingMinigame_Arrow_Left.performed += instance.OnPlayer_FishingMinigame_Arrow_Left;
             @Player_FishingMinigame_Arrow_Left.canceled += instance.OnPlayer_FishingMinigame_Arrow_Left;
+            @Player_Interact.started += instance.OnPlayer_Interact;
+            @Player_Interact.performed += instance.OnPlayer_Interact;
+            @Player_Interact.canceled += instance.OnPlayer_Interact;
+            @Player_EnterCombat.started += instance.OnPlayer_EnterCombat;
+            @Player_EnterCombat.performed += instance.OnPlayer_EnterCombat;
+            @Player_EnterCombat.canceled += instance.OnPlayer_EnterCombat;
+            @Player_NormalAttack.started += instance.OnPlayer_NormalAttack;
+            @Player_NormalAttack.performed += instance.OnPlayer_NormalAttack;
+            @Player_NormalAttack.canceled += instance.OnPlayer_NormalAttack;
         }
 
         /// <summary>
@@ -794,6 +870,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Player_FishingMinigame_Arrow_Left.started -= instance.OnPlayer_FishingMinigame_Arrow_Left;
             @Player_FishingMinigame_Arrow_Left.performed -= instance.OnPlayer_FishingMinigame_Arrow_Left;
             @Player_FishingMinigame_Arrow_Left.canceled -= instance.OnPlayer_FishingMinigame_Arrow_Left;
+            @Player_Interact.started -= instance.OnPlayer_Interact;
+            @Player_Interact.performed -= instance.OnPlayer_Interact;
+            @Player_Interact.canceled -= instance.OnPlayer_Interact;
+            @Player_EnterCombat.started -= instance.OnPlayer_EnterCombat;
+            @Player_EnterCombat.performed -= instance.OnPlayer_EnterCombat;
+            @Player_EnterCombat.canceled -= instance.OnPlayer_EnterCombat;
+            @Player_NormalAttack.started -= instance.OnPlayer_NormalAttack;
+            @Player_NormalAttack.performed -= instance.OnPlayer_NormalAttack;
+            @Player_NormalAttack.canceled -= instance.OnPlayer_NormalAttack;
         }
 
         /// <summary>
@@ -834,7 +919,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_UI_Inventory;
     private readonly InputAction m_UI_UI_Close;
     private readonly InputAction m_UI_UI_Fishing_Minigame;
-    private readonly InputAction m_UI_UI_TakeFish;
+    private readonly InputAction m_UI_UI_TakeItem;
+    private readonly InputAction m_UI_UI_Cursor;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -859,9 +945,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @UI_Fishing_Minigame => m_Wrapper.m_UI_UI_Fishing_Minigame;
         /// <summary>
-        /// Provides access to the underlying input action "UI/UI_TakeFish".
+        /// Provides access to the underlying input action "UI/UI_TakeItem".
         /// </summary>
-        public InputAction @UI_TakeFish => m_Wrapper.m_UI_UI_TakeFish;
+        public InputAction @UI_TakeItem => m_Wrapper.m_UI_UI_TakeItem;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/UI_Cursor".
+        /// </summary>
+        public InputAction @UI_Cursor => m_Wrapper.m_UI_UI_Cursor;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -897,9 +987,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @UI_Fishing_Minigame.started += instance.OnUI_Fishing_Minigame;
             @UI_Fishing_Minigame.performed += instance.OnUI_Fishing_Minigame;
             @UI_Fishing_Minigame.canceled += instance.OnUI_Fishing_Minigame;
-            @UI_TakeFish.started += instance.OnUI_TakeFish;
-            @UI_TakeFish.performed += instance.OnUI_TakeFish;
-            @UI_TakeFish.canceled += instance.OnUI_TakeFish;
+            @UI_TakeItem.started += instance.OnUI_TakeItem;
+            @UI_TakeItem.performed += instance.OnUI_TakeItem;
+            @UI_TakeItem.canceled += instance.OnUI_TakeItem;
+            @UI_Cursor.started += instance.OnUI_Cursor;
+            @UI_Cursor.performed += instance.OnUI_Cursor;
+            @UI_Cursor.canceled += instance.OnUI_Cursor;
         }
 
         /// <summary>
@@ -920,9 +1013,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @UI_Fishing_Minigame.started -= instance.OnUI_Fishing_Minigame;
             @UI_Fishing_Minigame.performed -= instance.OnUI_Fishing_Minigame;
             @UI_Fishing_Minigame.canceled -= instance.OnUI_Fishing_Minigame;
-            @UI_TakeFish.started -= instance.OnUI_TakeFish;
-            @UI_TakeFish.performed -= instance.OnUI_TakeFish;
-            @UI_TakeFish.canceled -= instance.OnUI_TakeFish;
+            @UI_TakeItem.started -= instance.OnUI_TakeItem;
+            @UI_TakeItem.performed -= instance.OnUI_TakeItem;
+            @UI_TakeItem.canceled -= instance.OnUI_TakeItem;
+            @UI_Cursor.started -= instance.OnUI_Cursor;
+            @UI_Cursor.performed -= instance.OnUI_Cursor;
+            @UI_Cursor.canceled -= instance.OnUI_Cursor;
         }
 
         /// <summary>
@@ -956,102 +1052,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIActions" /> instance referencing this action map.
     /// </summary>
     public UIActions @UI => new UIActions(this);
-
-    // AI_Test
-    private readonly InputActionMap m_AI_Test;
-    private List<IAI_TestActions> m_AI_TestActionsCallbackInterfaces = new List<IAI_TestActions>();
-    private readonly InputAction m_AI_Test_LMB;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "AI_Test".
-    /// </summary>
-    public struct AI_TestActions
-    {
-        private @InputActions m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public AI_TestActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "AI_Test/LMB".
-        /// </summary>
-        public InputAction @LMB => m_Wrapper.m_AI_Test_LMB;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_AI_Test; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="AI_TestActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(AI_TestActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="AI_TestActions" />
-        public void AddCallbacks(IAI_TestActions instance)
-        {
-            if (instance == null || m_Wrapper.m_AI_TestActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_AI_TestActionsCallbackInterfaces.Add(instance);
-            @LMB.started += instance.OnLMB;
-            @LMB.performed += instance.OnLMB;
-            @LMB.canceled += instance.OnLMB;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="AI_TestActions" />
-        private void UnregisterCallbacks(IAI_TestActions instance)
-        {
-            @LMB.started -= instance.OnLMB;
-            @LMB.performed -= instance.OnLMB;
-            @LMB.canceled -= instance.OnLMB;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="AI_TestActions.UnregisterCallbacks(IAI_TestActions)" />.
-        /// </summary>
-        /// <seealso cref="AI_TestActions.UnregisterCallbacks(IAI_TestActions)" />
-        public void RemoveCallbacks(IAI_TestActions instance)
-        {
-            if (m_Wrapper.m_AI_TestActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="AI_TestActions.AddCallbacks(IAI_TestActions)" />
-        /// <seealso cref="AI_TestActions.RemoveCallbacks(IAI_TestActions)" />
-        /// <seealso cref="AI_TestActions.UnregisterCallbacks(IAI_TestActions)" />
-        public void SetCallbacks(IAI_TestActions instance)
-        {
-            foreach (var item in m_Wrapper.m_AI_TestActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_AI_TestActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="AI_TestActions" /> instance referencing this action map.
-    /// </summary>
-    public AI_TestActions @AI_Test => new AI_TestActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -1150,6 +1150,27 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPlayer_FishingMinigame_Arrow_Left(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Player_Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPlayer_Interact(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Player_EnterCombat" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPlayer_EnterCombat(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Player_NormalAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPlayer_NormalAttack(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
@@ -1180,26 +1201,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUI_Fishing_Minigame(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "UI_TakeFish" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "UI_TakeItem" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnUI_TakeFish(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AI_Test" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="AI_TestActions.AddCallbacks(IAI_TestActions)" />
-    /// <seealso cref="AI_TestActions.RemoveCallbacks(IAI_TestActions)" />
-    public interface IAI_TestActions
-    {
+        void OnUI_TakeItem(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "LMB" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "UI_Cursor" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLMB(InputAction.CallbackContext context);
+        void OnUI_Cursor(InputAction.CallbackContext context);
     }
 }

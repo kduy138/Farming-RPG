@@ -49,8 +49,11 @@ public class PlayerScriptableObject : ScriptableObject
 
     [Header("XPs Gain")]
     [SerializeField]
-    private float fishingXP;
-    public float FishingXP { get => fishingXP; private set => fishingXP = value;}
+    private float fishingXPGain;
+    public float FishingXPGain { get => fishingXPGain; private set => fishingXPGain = value;}
+    [SerializeField]
+    private float miningXPGain;
+    public float MiningXPGain { get => miningXPGain; private set => miningXPGain = value; }
 
     [Header("Rates")]
     [SerializeField]
@@ -64,4 +67,7 @@ public class PlayerScriptableObject : ScriptableObject
     [SerializeField]
     private float fishingTime;
     public float FishingTime { get => fishingTime; private set => fishingTime = value;}
+    [SerializeField]
+    private float miningTime;
+    public float MiningTime { get => miningTime; private set => miningTime = value; }
 }

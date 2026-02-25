@@ -29,8 +29,6 @@ public class FishingMiniGame : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private FishingManager fm;
-    [SerializeField]
-    private InventoryScriptableObject inventory;
     public FishBoolManager currentFishBoolManager;
     private ItemScriptableObject fishSO;
     private Item pendingItem;
@@ -38,8 +36,10 @@ public class FishingMiniGame : MonoBehaviour
     private int currentInputActionID;
     private int currentKeyIndex = 0;
 
+    [Header("Settings")]
     private const float MiniGameTime = 7.0f;
     private float currentMiniGameTime;
+    private int itemAmount;
 
     [Header("Flags")]
     [SerializeField]
@@ -65,7 +65,8 @@ public class FishingMiniGame : MonoBehaviour
 
         if (currentFishBoolManager == null) return;
 
-        fishSO = currentFishBoolManager.GetRandomFish();
+        fishSO = currentFishBoolManager.GetRandomItem();
+        itemAmount = currentFishBoolManager.GetRandomItemAmount();
         SpawnKeySequence();
     }
 
@@ -131,7 +132,7 @@ public class FishingMiniGame : MonoBehaviour
             GameUI.Instance.miniGameTimeBar.fillAmount = currentMiniGameTime / MiniGameTime;
 
             GameUI.Instance.miniGameTimeTxt.text =
-                "Còn lại " + Mathf.CeilToInt(currentMiniGameTime) + " giây";
+                $"Còn lại {Mathf.CeilToInt(currentMiniGameTime)} giây";
         }
 
         int maxKeyIndex = keySequenceLength - 1;
@@ -162,37 +163,35 @@ public class FishingMiniGame : MonoBehaviour
     private void OnFishingSuccess()
     {
         StartCoroutine(ResetMinigame());
-        GameUI.Instance.ToggleFishingPopUp();
+        GameUI.Instance.ToggleGetItemPopUp();
 
         if (fishSO == null) return;
 
         pendingItem = new Item(fishSO);
         isWaitingForPlayerToCatch = true;
 
-        SetUI(pendingItem, 1);
+        SetUI(pendingItem, itemAmount);
         fm.GiveFishingXPToPlayer();
     }
 
     private void HandleCatchFish()
     {
         if (!isWaitingForPlayerToCatch) return;
+        if (!GameInput.Instance.isTakeItemAction()) return;
 
-        if (!GameInput.Instance.isTakeFishAction()) return;
-
-        AddItemReturnCode addItemPermission = inventory.CheckAddItem(pendingItem, 1);
-        Debug.Log(addItemPermission);
+        AddItemReturnCode addItemPermission = fm.inventory.CheckAddItem(pendingItem, itemAmount);
         switch (addItemPermission)
         {
             case AddItemReturnCode.NoEmptySlot:
-                GameUI.Instance.catchFishWarningTxt.text = "Kho đồ đã đầy!";
+                GameUI.Instance.getItemWarningTxt.text = "Kho đồ đã đầy!";
                 break;
             case AddItemReturnCode.TooHeavy:
-                GameUI.Instance.catchFishWarningTxt.text = "Kho đồ quá nặng!";
+                GameUI.Instance.getItemWarningTxt.text = "Kho đồ quá nặng!";
                 break;
             case AddItemReturnCode.Allow:
-                fm.AddFishToInventory(pendingItem, 1);
+                fm.AddFishToInventory(pendingItem, itemAmount);
                 HandleReleaseFish();
-                inventory.Save();
+                fm.inventory.Save();
                 break;
         }
     }
@@ -201,7 +200,7 @@ public class FishingMiniGame : MonoBehaviour
     {
         pendingItem = null;
         isWaitingForPlayerToCatch = false;
-        GameUI.Instance.fishingPopUp.SetActive(false);
+        GameUI.Instance.getItemPopUp.SetActive(false);
     }
 
     private void SpawnKeySequence()
@@ -222,10 +221,10 @@ public class FishingMiniGame : MonoBehaviour
 
     private void SetUI(Item item, int quantity)
     {
-        GameUI.Instance.fishingPopUpTxt.text = "Đã bắt được " + item.ItemName + " x" + quantity;
-        GameUI.Instance.fishingPopUpIcon.transform.Find("Icon").GetComponent<Image>().sprite = fishSO.Icon;
-        GameUI.Instance.fishingPopUpIcon.transform.Find("Icon").GetComponent<Image>().color = new Color(1, 1, 1, 1);
-        GameUI.Instance.fishingPopUpIcon.transform.Find("Outline").GetComponent<Outline>().effectColor = ExtensionMethods.GetColorByGrade(fishSO.ColorGrade);
+        GameUI.Instance.getItemPopUpTxt.text = "Đã bắt được " + item.ItemName + " x" + quantity;
+        GameUI.Instance.itemPopUpIcon.transform.Find("Icon").GetComponent<Image>().sprite = fishSO.Icon;
+        GameUI.Instance.itemPopUpIcon.transform.Find("Icon").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        GameUI.Instance.itemPopUpIcon.transform.Find("Outline").GetComponent<Outline>().effectColor = ExtensionMethods.GetColorByGrade(fishSO.ColorGrade);
     }
 
     private IEnumerator ResetMinigame()
@@ -236,7 +235,7 @@ public class FishingMiniGame : MonoBehaviour
         int timeBeforeReset = 1;
         yield return new WaitForSeconds(timeBeforeReset);
         isResetting = false;
-        fm.CancelCastAnimation();
+        fm.GetPlayer().events.TriggerOnCastEnded();
         fm.CancelCastOnTerrain();
         fm.ResetIsPlayingMinigame();
         currentKeyIndex = 0;

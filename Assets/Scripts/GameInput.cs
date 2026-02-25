@@ -111,7 +111,27 @@ public class GameInput : MonoBehaviour
         return false;
     }
 
-    public bool isTakeFishAction() {
-        return inputActions.UI.UI_TakeFish.IsPressed();
+    public bool isTakeItemAction() {
+        return inputActions.UI.UI_TakeItem.IsPressed();
+    }
+
+    public bool isInteractAction()
+    {
+        return inputActions.Player.Player_Interact.WasPressedThisFrame();
+    }
+
+    public bool isCursorAction()
+    {
+        return inputActions.UI.UI_Cursor.WasPressedThisFrame();
+    }
+
+    public bool isCombatAction()
+    {
+        return inputActions.Player.Player_EnterCombat.WasPressedThisFrame();
+    }
+
+    public bool isNormalAttackAction()
+    {
+        return inputActions.Player.Player_NormalAttack.WasPressedThisFrame();
     }
 }

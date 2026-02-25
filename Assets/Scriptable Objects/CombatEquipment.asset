@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4f7733a5e623a4b9077be8a3f3859c, type: 3}
+  m_Name: CombatEquipment
+  m_EditorClassIdentifier: 
+  savePath: /CombatEquipmentData
+  itemDatabase: {fileID: 11400000, guid: 689452490fcb2b34a9ff5dc8d38fc4dd, type: 2}
+  container:
+    slots:
+    - inventory: {fileID: 11400000}
+      slotType: 5
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 10
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 6
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 6
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 12
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 12
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 3
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 9
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 11
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 1
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 2
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 4
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 8
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 7
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 7
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+  weightLimit: 0
+  currentAvailableSlotCount: 15
+  maxSlot: 15

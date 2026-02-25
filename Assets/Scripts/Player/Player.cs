@@ -8,24 +8,24 @@ public class Player : MonoBehaviour
 {
     private Vector3 moveDirection;
     private Vector3 lastMoveDirection;
-    [SerializeField]
     private float currentMoveSpeed = 0f;
     private float moveSpeed;
-
-    public event EventHandler OnDead;
 
     [Header("Flags")]
     private bool isWalking = false;
     [SerializeField]
     private bool isDead = false;
+    private bool isMovementLocked = false;
+    private bool isInAction = false;
 
     [Header("References")]
+    public PlayerEvents events { get; private set; } 
     private Rigidbody playerRigidbody;
     [SerializeField]
     private PlayerScriptableObject baseData;
     public PlayerStats runtimePlayerData { get; private set; }
-    [SerializeField]
-    private FishingManager fm;
+    private FishingManager currentFishingManager;
+    private PlayerCombat playerCombat;
 
     [SerializeField]
     private string savePath;
@@ -50,11 +50,14 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        events = new PlayerEvents();
         runtimePlayerData = new PlayerStats();
         runtimePlayerData.InitFrom(baseData);
 
         playerRigidbody = GetComponent<Rigidbody>();
         playerRigidbody.freezeRotation = true;
+
+        playerCombat = GetComponent<PlayerCombat>();
 
         moveSpeed = runtimePlayerData.currentRunSpeed;
         currentMoveSpeed = 0f;
@@ -67,6 +70,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (isDead) return;
+
         ToggleWalking();
         DisplayPlayerUI();
         HandlePlayerFillBar();
@@ -137,7 +142,7 @@ public class Player : MonoBehaviour
 
     private void HandlePlayerMovement()
     {
-        if (fm.IsWaitingToCatch() == true || isDead)
+        if (isMovementLocked)
         {
             return;
         }
@@ -182,6 +187,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void MovementLock()
+    {
+        isMovementLocked = true;
+        currentMoveSpeed = 0f;
+    }
+
+    public void MovementUnlock()
+    {
+        isMovementLocked = false;
+    }
+
     private void DisplayPlayerSilverCoin()
     {
         GameUI.Instance.silverCoinText.text = runtimePlayerData.currentSilverCoin.ToString("n0");
@@ -212,8 +228,9 @@ public class Player : MonoBehaviour
         if (runtimePlayerData.currentHealth <= 0f && !isDead)
         {
             isDead = true;
+            MovementLock();
             runtimePlayerData.currentHealth = 0f;
-            OnDead?.Invoke(this, EventArgs.Empty);
+            events.TriggerOnDead();
             GameUI.Instance.playerDeadScreen.SetActive(true);
         }
     }
@@ -309,6 +326,31 @@ public class Player : MonoBehaviour
         isDead = false;
     }
 
+    public void SetIsInAction(bool value)
+    {
+        isInAction = value;
+    }
+
+    public bool IsInAction()
+    {
+        return isInAction;
+    }
+
+    public void SetCurrentFishingManager(FishingManager fm)
+    {
+        currentFishingManager = fm;
+    }
+
+    public FishingManager GetCurrentFishingManager()
+    {
+        return currentFishingManager;
+    }
+
+    public PlayerCombat GetPlayerCombat()
+    {
+        return playerCombat;
+    }
+
     [ContextMenu("Save")]
     public void SavePlayerData()
     {
@@ -335,12 +377,14 @@ public class Player : MonoBehaviour
         saveData.CurrentXP = runtimePlayerData.currentXP;
         saveData.CurrentDeathPenalty = runtimePlayerData.currentDeathPenalty;
 
-        saveData.CurrentFishingXP = runtimePlayerData.currentFishingXP;
+        saveData.CurrentFishingXPGain = runtimePlayerData.currentFishingXPGain;
+        saveData.CurrentMiningXPGain = runtimePlayerData.currentMiningXPGain;
 
         saveData.CurrentItemDropRate = runtimePlayerData.currentItemDropRate;
         saveData.CurrentStaminaRecoverRate = runtimePlayerData.currentStaminaRecoverRate;
 
         saveData.CurrentFishingTime = runtimePlayerData.currentFishingTime;
+        saveData.CurrentMiningTime = runtimePlayerData.currentMiningTime;
 
         saveData.CurrentSilverCoin = runtimePlayerData.currentSilverCoin;
 
@@ -380,12 +424,14 @@ public class Player : MonoBehaviour
         runtimePlayerData.currentXP = saveData.CurrentXP;
         runtimePlayerData.currentDeathPenalty = saveData.CurrentDeathPenalty;
 
-        runtimePlayerData.currentFishingXP = saveData.CurrentFishingXP;
+        runtimePlayerData.currentFishingXPGain = saveData.CurrentFishingXPGain;
+        runtimePlayerData.currentMiningXPGain = saveData.CurrentMiningXPGain;
 
         runtimePlayerData.currentItemDropRate = saveData.CurrentItemDropRate;
         runtimePlayerData.currentStaminaRecoverRate = saveData.CurrentStaminaRecoverRate;
 
         runtimePlayerData.currentFishingTime = saveData.CurrentFishingTime;
+        runtimePlayerData.currentMiningTime = saveData.CurrentMiningTime;
 
         runtimePlayerData.currentSilverCoin = saveData.CurrentSilverCoin;
 
@@ -416,12 +462,14 @@ public class PlayerSaveData
     public float CurrentXP;
     public float CurrentDeathPenalty;
 
-    public float CurrentFishingXP;
+    public float CurrentFishingXPGain;
+    public float CurrentMiningXPGain;
 
     public float CurrentItemDropRate;
     public float CurrentStaminaRecoverRate;
 
     public float CurrentFishingTime;
+    public float CurrentMiningTime;
 
     public double CurrentSilverCoin;
 }

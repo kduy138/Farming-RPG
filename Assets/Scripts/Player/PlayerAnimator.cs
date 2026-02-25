@@ -6,23 +6,33 @@ public class PlayerAnimator : MonoBehaviour
 {
     private Animator animator;
     private Player player;
-    [SerializeField]
-    private FishingManager fm;
 
-    private void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         player = GetComponent<Player>();
+    }
 
-        player.OnDead += TriggerDead;
+    private void Start()
+    {
+        if (player == null) return;
+
+        player.events.OnDead += TriggerDead;
+        player.events.OnMiningStarted += TriggerMining;
+        player.events.OnMiningEnded += CancelMiningAnimation;
+        player.events.OnCastStarted += TriggerCast;
+        player.events.OnCastEnded += CancelCastAnimation;
+        player.events.OnFishingStarted += SetFishingParameter;
+        player.events.OnFishingEnded += SetFishingParameter;
+        player.events.OnCombatStarted += SetCombatParameter;
+        player.events.OnCombatEnded += SetCombatParameter;
+        player.events.OnNormalAttack += TriggerNormalAttack;
     }
 
     private void Update()
     {
         SetSpeedParameter();
         SetHoldingItemSpeedParameter();
-        SetFishingParameter();
-        TriggerCast();
     }
 
     private void SetSpeedParameter()
@@ -35,21 +45,19 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetFloat("HoldingItemSpeed", player.GetBlendSpeed());
     }
 
-    private void SetFishingParameter()
+    private void SetFishingParameter(object sender, EventArgs e)
     {
-        animator.SetBool("Fishing", fm.IsFishing());
+        animator.SetBool("Fishing", player.GetCurrentFishingManager().IsFishing());
     }
 
-    private void TriggerCast()
+    private void TriggerCast(object sender, EventArgs e)
     {
-        if(fm.IsCast())
-        {
-            animator.SetTrigger("Cast");
-            fm.ResetCast();
-        }
+        FishingManager fm = player.GetCurrentFishingManager();
+        animator.SetTrigger("Cast");
+        fm.ResetCast();
     }
 
-    public void CancelCastAnimation()
+    public void CancelCastAnimation(object sender, EventArgs e)
     {
         animator.Play("Blend Tree Fishing", 0, 0f);
     }
@@ -57,5 +65,28 @@ public class PlayerAnimator : MonoBehaviour
     private void TriggerDead(object sender, EventArgs e)
     {
         animator.SetTrigger("Dead");
+    }
+
+    private void TriggerMining(object sender, EventArgs e)
+    {
+        animator.SetTrigger("Mining");
+    }
+
+    public void CancelMiningAnimation(object sender, EventArgs e)
+    {
+        animator.Play("Blend Tree Player Movement");
+    }
+
+    public void SetCombatParameter(object sender, EventArgs e)
+    {
+        animator.SetBool("Combat", player.GetPlayerCombat().IsInCombat());
+    }
+
+    public void TriggerNormalAttack(object sender, EventArgs e)
+    {
+        Debug.Log(player.GetPlayerCombat().normalAtkCount);
+        animator.SetTrigger("Slash" + player.GetPlayerCombat().normalAtkCount);
+        animator.SetInteger("NormalAtkCount", player.GetPlayerCombat().normalAtkCount);
+        animator.SetBool("Attacking", false);
     }
 }

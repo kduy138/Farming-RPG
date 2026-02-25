@@ -122,6 +122,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Player_Interact",
+                    "type": "Button",
+                    "id": "b0826e6a-d72e-4452-83c9-fa59ff3a4a21",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Player_EnterCombat",
+                    "type": "Button",
+                    "id": "36e13e71-e19b-45b3-a6b9-94e372c48d4b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Player_NormalAttack",
+                    "type": "Button",
+                    "id": "5a53b94c-56e0-4a1f-a2aa-09ecaebe3e93",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -289,6 +316,39 @@
                     "action": "Player_FishingMinigame_Arrow_Left",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f75d0c24-6057-42e8-a185-d456745f0eb8",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player_Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b38f489d-7255-47f7-bf8e-d000a3ecfc90",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player_EnterCombat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e69c87de-9be4-40c7-b49a-59b2f075380c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player_NormalAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -324,9 +384,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UI_TakeFish",
+                    "name": "UI_TakeItem",
                     "type": "Button",
                     "id": "0a946985-3a46-4385-9d00-0ffd1042c1de",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UI_Cursor",
+                    "type": "Button",
+                    "id": "7178fd05-a48c-4671-b1a3-09eb691a0f75",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -374,35 +443,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UI_TakeFish",
+                    "action": "UI_TakeItem",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "AI_Test",
-            "id": "c5b42119-bc2e-43c8-9086-965c37ed77a0",
-            "actions": [
-                {
-                    "name": "LMB",
-                    "type": "Button",
-                    "id": "3f9ad731-bc85-43c2-a067-c60ce0b820c2",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
+                },
                 {
                     "name": "",
-                    "id": "2dd8911b-bcb0-4d5f-b4cd-958419553cc4",
-                    "path": "<Mouse>/leftButton",
+                    "id": "76aafbc1-d9af-46a2-953c-d7867b92b483",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LMB",
+                    "action": "UI_Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
