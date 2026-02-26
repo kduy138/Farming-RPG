@@ -44,7 +44,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 ResetNormalAtkCount();
             }
-            NormalAttack();
+            NormalAttack("Sword_Normal_Attack_");
         }
     }
 
@@ -62,14 +62,14 @@ public class PlayerCombat : MonoBehaviour
         player.SetIsInAction(false);
     }
 
-    private void NormalAttack()
+    private void NormalAttack(string animation)
     {
         if (Time.time - lastNormalAtkTime < normalAtkCooldown) return;
         if (isAttacking) return;
 
         lastNormalAtkTime = Time.time;
         isAttacking = true;
-        player.events.TriggerOnNormalAttack();
+        player.events.TriggerOnNormalAttack(animation);
         normalAtkCount++;
     }
 

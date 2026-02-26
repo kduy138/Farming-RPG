@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using static PlayerEvents;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -82,10 +83,10 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool("Combat", player.GetPlayerCombat().IsInCombat());
     }
 
-    public void TriggerNormalAttack(object sender, EventArgs e)
+    public void TriggerNormalAttack(object sender, NormalAtkEventArgs e)
     {
         Debug.Log(player.GetPlayerCombat().normalAtkCount);
-        animator.SetTrigger("Slash" + player.GetPlayerCombat().normalAtkCount);
+        animator.SetTrigger(e.animationName + player.GetPlayerCombat().normalAtkCount);
         animator.SetInteger("NormalAtkCount", player.GetPlayerCombat().normalAtkCount);
         animator.SetBool("Attacking", false);
     }
