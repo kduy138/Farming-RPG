@@ -86,8 +86,13 @@ public class PlayerAnimator : MonoBehaviour
     public void TriggerNormalAttack(object sender, NormalAtkEventArgs e)
     {
         Debug.Log(player.GetPlayerCombat().normalAtkCount);
-        animator.SetTrigger(e.animationName + player.GetPlayerCombat().normalAtkCount);
+        animator.SetTrigger("Normal_Attack_" + player.GetPlayerCombat().normalAtkCount);
         animator.SetInteger("NormalAtkCount", player.GetPlayerCombat().normalAtkCount);
         animator.SetBool("Attacking", false);
+    }
+
+    public void EquipWeapon(AnimatorOverrideController weaponOverride)
+    {
+        animator.runtimeAnimatorController = weaponOverride;
     }
 }

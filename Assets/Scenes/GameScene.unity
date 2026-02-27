@@ -15022,6 +15022,10 @@ PrefabInstance:
       propertyPath: normalAtkCooldown
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 3416994728609354064, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 67aeb8ce20a406042af115ed4014352c, type: 2}
     - target: {fileID: 4717451757950685388, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 88.24
@@ -15070,6 +15074,14 @@ PrefabInstance:
       propertyPath: cinemachineCamera
       value: 
       objectReference: {fileID: 786750424}
+    - target: {fileID: 6777283392839804314, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
+      propertyPath: combatEquipmentInventory
+      value: 
+      objectReference: {fileID: 11400000, guid: cef7c5952149ea643871111396e0aa48, type: 2}
+    - target: {fileID: 6777283392839804314, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
+      propertyPath: lifeSkillEquipmentInventory
+      value: 
+      objectReference: {fileID: 11400000, guid: 596fc1fd2656aa2478e15f8d561542c8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

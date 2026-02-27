@@ -27,6 +27,12 @@ public class Player : MonoBehaviour
     private FishingManager currentFishingManager;
     private PlayerCombat playerCombat;
 
+    [Header("Inventories")]
+    [SerializeField]
+    private InventoryScriptableObject combatEquipmentInventory;
+    [SerializeField]
+    private InventoryScriptableObject lifeSkillEquipmentInventory;
+
     [SerializeField]
     private string savePath;
 
@@ -46,7 +52,6 @@ public class Player : MonoBehaviour
     private TextMeshProUGUI hpTxt;
     private Image manaBar;
     private TextMeshProUGUI manaTxt;
-
 
     private void Awake()
     {
@@ -138,6 +143,11 @@ public class Player : MonoBehaviour
     public void SetPlayerMoveSpeed(float speed)
     {
         moveSpeed = speed;
+    }
+
+    private void OnEquipmentChanged(InventorySlot slot)
+    {
+
     }
 
     private void HandlePlayerMovement()
@@ -351,6 +361,16 @@ public class Player : MonoBehaviour
         return playerCombat;
     }
 
+    public InventoryScriptableObject GetPlayerCombatEquipmentInventory()
+    {
+        return combatEquipmentInventory;
+    }
+
+    public InventoryScriptableObject GetPlayerLifeSkillEquipmentInventory()
+    {
+        return lifeSkillEquipmentInventory;
+    }
+
     [ContextMenu("Save")]
     public void SavePlayerData()
     {
@@ -436,6 +456,18 @@ public class Player : MonoBehaviour
         runtimePlayerData.currentSilverCoin = saveData.CurrentSilverCoin;
 
         Debug.Log("Đã tải dữ liệu nhân vật được lưu tại: " + fullSavePath);
+    }
+
+    private void OnEnable()
+    {
+        combatEquipmentInventory.OnEquipmentChanged += OnEquipmentChanged;
+        lifeSkillEquipmentInventory.OnEquipmentChanged += OnEquipmentChanged;
+    }
+
+    private void OnDisable()
+    {
+        combatEquipmentInventory.OnEquipmentChanged -= OnEquipmentChanged;
+        lifeSkillEquipmentInventory.OnEquipmentChanged -= OnEquipmentChanged;
     }
 }
 

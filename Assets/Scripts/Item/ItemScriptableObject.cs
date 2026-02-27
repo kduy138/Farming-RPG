@@ -9,6 +9,10 @@ public enum ColorGrade
 [CreateAssetMenu(fileName = "ItemScriptableObject", menuName = "Scriptable Objects/Item")]
 public class ItemScriptableObject : ScriptableObject
 {
+    [Header("AOC")]
+    [SerializeField]
+    private AnimatorOverrideController itemAnimatorOverrideController;
+    public AnimatorOverrideController ItemAnimatorOverrideController { get =>  itemAnimatorOverrideController; private set => itemAnimatorOverrideController = value; }
     [Header("Basic Infos")]
     [SerializeField]
     private string itemName;

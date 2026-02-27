@@ -1,3 +1,4 @@
+﻿using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
@@ -16,10 +17,13 @@ public class PlayerCombat : MonoBehaviour
 
     [Header("References")]
     private Player player;
+    private PlayerAnimator playerAnimator;
+    private AnimatorOverrideController animatorOverride;
 
     private void Awake()
     {
         player = GetComponent<Player>();
+        playerAnimator = GetComponent<PlayerAnimator>();
     }
 
     private void Update()
@@ -50,6 +54,21 @@ public class PlayerCombat : MonoBehaviour
 
     private void EnterCombatMode()
     {
+        var combatEquipmentInv = player.GetPlayerCombatEquipmentInventory();
+        foreach(var slot in combatEquipmentInv.GetSlots)
+        {
+            if (slot.slotType == ItemType.MainWeapon)
+            {
+                if (slot.item.ID <= -1)
+                {
+                    FloatingMessageManager.Instance.ShowMessage("Bạn chưa trang bị vũ khí chính!", FloatingMessageType.Warning);
+                    return;
+                }
+
+                animatorOverride = slot.itemSO.ItemAnimatorOverrideController;
+                playerAnimator.EquipWeapon(animatorOverride);
+            }
+        }
         isInCombat = true;
         player.events.TriggerOnCombatStarted();
         player.SetIsInAction(true);

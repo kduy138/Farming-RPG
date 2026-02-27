@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8720ac11de46ed54a884ba20026c1487, type: 3}
   m_Name: Salmon
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
+  itemAnimatorOverrideController: {fileID: 0}
   itemName: "C\xE1 h\u1ED3i"
   description: "Lo\xE0i c\xE1 \u0111\u01B0\u1EE3c \u0111\xE1nh b\u1EAFt ph\u1ED5
     bi\u1EBFn b\u1EDFi c\xE1c ng\u01B0 d\xE2n."
