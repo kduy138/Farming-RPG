@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -9,16 +8,22 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField]
     private float normalAtkCooldown = 0.1f;
     private float lastNormalAtkTime;
+    private float lastInputTime;
+    private float comboResetTime = 1.2f;
 
     [Header("Flags")]
     private bool isInCombat = false;
     [SerializeField]
     private bool isAttacking = false;
+    private bool canQueueNextAttack;
+    private bool attackBuffered;
 
     [Header("References")]
     private Player player;
     private PlayerAnimator playerAnimator;
-    private AnimatorOverrideController animatorOverride;
+    private AnimatorOverrideController itemAOC;
+    [SerializeField]
+    private AnimatorOverrideController defaultAOC;
 
     private void Awake()
     {
@@ -44,16 +49,14 @@ public class PlayerCombat : MonoBehaviour
 
         if (GameInput.Instance.isNormalAttackAction())
         {
-            if (normalAtkCount > 3)
-            {
-                ResetNormalAtkCount();
-            }
-            NormalAttack("Sword_Normal_Attack_");
+            HandleAttackInput();
         }
     }
 
     private void EnterCombatMode()
     {
+        isInCombat = true;
+
         var combatEquipmentInv = player.GetPlayerCombatEquipmentInventory();
         foreach(var slot in combatEquipmentInv.GetSlots)
         {
@@ -65,13 +68,13 @@ public class PlayerCombat : MonoBehaviour
                     return;
                 }
 
-                animatorOverride = slot.itemSO.ItemAnimatorOverrideController;
-                playerAnimator.EquipWeapon(animatorOverride);
+                itemAOC = slot.itemSO.ItemAnimatorOverrideController;
+                playerAnimator.EquipWeapon(itemAOC);
+                player.events.TriggerOnCombatStarted();
+                player.SetIsInAction(true);
+                return;
             }
         }
-        isInCombat = true;
-        player.events.TriggerOnCombatStarted();
-        player.SetIsInAction(true);
     }
 
     private void ExitCombatMode()
@@ -79,22 +82,57 @@ public class PlayerCombat : MonoBehaviour
         isInCombat = false;
         player.events.TriggerOnCombatEnded();
         player.SetIsInAction(false);
+        playerAnimator.EquipWeapon(defaultAOC);
     }
 
-    private void NormalAttack(string animation)
+    private void HandleAttackInput()
     {
-        if (Time.time - lastNormalAtkTime < normalAtkCooldown) return;
-        if (isAttacking) return;
+        if (!isAttacking)
+        {
+            StartAttack();
+            return;
+        }
 
-        lastNormalAtkTime = Time.time;
+        if (canQueueNextAttack)
+        {
+            attackBuffered = true;
+        }
+    }
+
+    private void StartAttack()
+    {
         isAttacking = true;
-        player.events.TriggerOnNormalAttack(animation);
+        player.events.TriggerOnNormalAttack();
         normalAtkCount++;
+        if (normalAtkCount > 3)
+        {
+            normalAtkCount = 1;
+        }
+    }
+
+    public void OpenComboWindow()
+    {
+        canQueueNextAttack = true;
+    }
+
+    public void CloseComboWindow()
+    {
+        canQueueNextAttack = false;
     }
 
     public void EndAttack()
     {
         isAttacking = false;
+
+        if (attackBuffered)
+        {
+            attackBuffered = false;
+            StartAttack();
+        }
+        //else
+        //{
+        //    ResetNormalAtkCount();
+        //}
     }
 
     private void ResetNormalAtkCount()

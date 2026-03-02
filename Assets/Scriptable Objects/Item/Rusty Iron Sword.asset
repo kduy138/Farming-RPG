@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8720ac11de46ed54a884ba20026c1487, type: 3}
   m_Name: Rusty Iron Sword
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
-  itemAnimatorOverrideController: {fileID: 22100000, guid: 22e256ee2cb3a9a40b5e12c560652ccf, type: 2}
+  itemAnimatorOverrideController: {fileID: 0}
   itemName: "Ki\u1EBFm s\u1EAFt g\u1EC9 s\xE9t"
   description: "Thanh ki\u1EBFm \u0111\xE3 g\u1EC9 s\xE9t nh\u01B0ng v\u1EABn c\xF3
     th\u1EC3 s\u1EED d\u1EE5ng t\u1ED1t."

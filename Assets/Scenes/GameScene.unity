@@ -15015,6 +15015,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 691301213467370339, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
+      propertyPath: defaultAOC
+      value: 
+      objectReference: {fileID: 22100000, guid: 5bfb520ed28a95a40919a25afdf4ef9b, type: 2}
+    - target: {fileID: 691301213467370339, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
       propertyPath: normalAtkCount
       value: 1
       objectReference: {fileID: 0}

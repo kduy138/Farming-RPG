@@ -152,7 +152,7 @@ public class Player : MonoBehaviour
 
     private void HandlePlayerMovement()
     {
-        if (isMovementLocked)
+        if (isMovementLocked || GetPlayerCombat().IsAttacking())
         {
             return;
         }
