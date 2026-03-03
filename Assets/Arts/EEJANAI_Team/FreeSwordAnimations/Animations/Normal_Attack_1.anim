@@ -11600,14 +11600,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0
-    functionName: MovementLock
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.36666667
+  - time: 0.4
     functionName: OpenComboWindow
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -11616,13 +11609,6 @@ AnimationClip:
     messageOptions: 0
   - time: 0.53333336
     functionName: CloseComboWindow
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5833333
-    functionName: MovementUnlock
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

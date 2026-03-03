@@ -7,9 +7,7 @@ public class PlayerCombat : MonoBehaviour
     [Header("Settings")]
     [SerializeField]
     private float normalAtkCooldown = 0.1f;
-    private float lastNormalAtkTime;
-    private float lastInputTime;
-    private float comboResetTime = 1.2f;
+    private float comboResetTime = 1f;
 
     [Header("Flags")]
     private bool isInCombat = false;
@@ -24,6 +22,9 @@ public class PlayerCombat : MonoBehaviour
     private AnimatorOverrideController itemAOC;
     [SerializeField]
     private AnimatorOverrideController defaultAOC;
+    [SerializeField]
+    private GameObject weaponHolder;
+    private GameObject currentWeaponInstance;
 
     private void Awake()
     {
@@ -68,8 +69,18 @@ public class PlayerCombat : MonoBehaviour
                     return;
                 }
 
+                if (currentWeaponInstance != null)
+                {
+                    Destroy(currentWeaponInstance.gameObject);
+                }
+
+                currentWeaponInstance = Instantiate(slot.itemSO.ItemPrefab, weaponHolder.transform);
+                currentWeaponInstance.transform.localPosition = Vector3.zero;
+                currentWeaponInstance.transform.localRotation = Quaternion.identity;
+
                 itemAOC = slot.itemSO.ItemAnimatorOverrideController;
                 playerAnimator.EquipWeapon(itemAOC);
+
                 player.events.TriggerOnCombatStarted();
                 player.SetIsInAction(true);
                 return;
@@ -83,6 +94,7 @@ public class PlayerCombat : MonoBehaviour
         player.events.TriggerOnCombatEnded();
         player.SetIsInAction(false);
         playerAnimator.EquipWeapon(defaultAOC);
+        currentWeaponInstance.gameObject.SetActive(false);
     }
 
     private void HandleAttackInput()
@@ -93,6 +105,7 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
+        //canQueueNextAttack = true;
         if (canQueueNextAttack)
         {
             attackBuffered = true;
@@ -102,21 +115,20 @@ public class PlayerCombat : MonoBehaviour
     private void StartAttack()
     {
         isAttacking = true;
+        attackBuffered = false;
+        canQueueNextAttack = false;
         player.events.TriggerOnNormalAttack();
-        normalAtkCount++;
-        if (normalAtkCount > 3)
-        {
-            normalAtkCount = 1;
-        }
     }
 
     public void OpenComboWindow()
     {
+        Debug.Log("OPEN WINDOW!");
         canQueueNextAttack = true;
     }
 
     public void CloseComboWindow()
     {
+        Debug.Log("CLOSE WINDOW!");
         canQueueNextAttack = false;
     }
 
@@ -127,12 +139,24 @@ public class PlayerCombat : MonoBehaviour
         if (attackBuffered)
         {
             attackBuffered = false;
+
+            normalAtkCount++;
+            if (normalAtkCount > 3)
+            {
+                normalAtkCount = 1;
+            }
             StartAttack();
         }
-        //else
-        //{
-        //    ResetNormalAtkCount();
-        //}
+        else
+        {
+            ResetNormalAtkCount();
+        }
+        Debug.Log("END ATTACK!");
+    }
+
+    private void DisableWeaponCollider()
+    {
+
     }
 
     private void ResetNormalAtkCount()

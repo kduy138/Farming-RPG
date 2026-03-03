@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8720ac11de46ed54a884ba20026c1487, type: 3}
   m_Name: Coal Ore
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
+  itemPrefab: {fileID: 0}
   itemAnimatorOverrideController: {fileID: 0}
   itemName: "Qu\u1EB7ng than"
   description: "Lo\u1EA1i than th\xF4 \u0111\u01B0\u1EE3c khai th\xE1c t\u1EEB l\xF2ng
