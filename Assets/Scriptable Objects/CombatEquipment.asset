@@ -17,77 +17,7 @@ MonoBehaviour:
   container:
     slots:
     - inventory: {fileID: 11400000}
-      slotType: 5
-      item:
-        ID: -1
-        ItemName: 
-        Attributes: []
-        Effects: []
-      quantity: 0
-      isSelected: 0
-      isAvailable: 1
-    - inventory: {fileID: 11400000}
-      slotType: 10
-      item:
-        ID: -1
-        ItemName: 
-        Attributes: []
-        Effects: []
-      quantity: 0
-      isSelected: 0
-      isAvailable: 1
-    - inventory: {fileID: 11400000}
       slotType: 6
-      item:
-        ID: -1
-        ItemName: 
-        Attributes: []
-        Effects: []
-      quantity: 0
-      isSelected: 0
-      isAvailable: 1
-    - inventory: {fileID: 11400000}
-      slotType: 6
-      item:
-        ID: -1
-        ItemName: 
-        Attributes: []
-        Effects: []
-      quantity: 0
-      isSelected: 0
-      isAvailable: 1
-    - inventory: {fileID: 11400000}
-      slotType: 12
-      item:
-        ID: -1
-        ItemName: 
-        Attributes: []
-        Effects: []
-      quantity: 0
-      isSelected: 0
-      isAvailable: 1
-    - inventory: {fileID: 11400000}
-      slotType: 12
-      item:
-        ID: -1
-        ItemName: 
-        Attributes: []
-        Effects: []
-      quantity: 0
-      isSelected: 0
-      isAvailable: 1
-    - inventory: {fileID: 11400000}
-      slotType: 3
-      item:
-        ID: -1
-        ItemName: 
-        Attributes: []
-        Effects: []
-      quantity: 0
-      isSelected: 0
-      isAvailable: 1
-    - inventory: {fileID: 11400000}
-      slotType: 9
       item:
         ID: -1
         ItemName: 
@@ -107,7 +37,7 @@ MonoBehaviour:
       isSelected: 0
       isAvailable: 1
     - inventory: {fileID: 11400000}
-      slotType: 1
+      slotType: 7
       item:
         ID: -1
         ItemName: 
@@ -117,7 +47,27 @@ MonoBehaviour:
       isSelected: 0
       isAvailable: 1
     - inventory: {fileID: 11400000}
-      slotType: 2
+      slotType: 7
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 13
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 13
       item:
         ID: -1
         ItemName: 
@@ -137,6 +87,66 @@ MonoBehaviour:
       isSelected: 0
       isAvailable: 1
     - inventory: {fileID: 11400000}
+      slotType: 10
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 12
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 2
+      item:
+        ID: 5
+        ItemName: "\u0110\xE1 th\xF4"
+        Attributes: []
+        Effects: []
+      quantity: 40
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 3
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 5
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
+      slotType: 9
+      item:
+        ID: -1
+        ItemName: 
+        Attributes: []
+        Effects: []
+      quantity: 0
+      isSelected: 0
+      isAvailable: 1
+    - inventory: {fileID: 11400000}
       slotType: 8
       item:
         ID: -1
@@ -147,17 +157,7 @@ MonoBehaviour:
       isSelected: 0
       isAvailable: 1
     - inventory: {fileID: 11400000}
-      slotType: 7
-      item:
-        ID: -1
-        ItemName: 
-        Attributes: []
-        Effects: []
-      quantity: 0
-      isSelected: 0
-      isAvailable: 1
-    - inventory: {fileID: 11400000}
-      slotType: 7
+      slotType: 8
       item:
         ID: -1
         ItemName: 

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8720ac11de46ed54a884ba20026c1487, type: 3}
+  m_Name: Long Iron Spear
+  m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
+  itemPrefab: {fileID: 2484403876821090793, guid: f89cddc8aa489994687aa75d45b7b049, type: 3}
+  itemAnimatorOverrideController: {fileID: 22100000, guid: 22e256ee2cb3a9a40b5e12c560652ccf, type: 2}
+  itemName: "Gi\xE1o s\u1EAFt"
+  description: "Lo\u1EA1i v\u0169 kh\xED \u0111\u01B0\u1EE3c trang b\u1ECB ph\u1ED5
+    bi\u1EBFn trong qu\xE2n \u0111\u1ED9i v\u1EDBi t\u1ED1c \u0111\u1ED9 ra \u0111\xF2n
+    nhanh."
+  price: 230000
+  icon: {fileID: 12515465, guid: f89b3ae83cdef504b81d1c7934df3e25, type: 3}
+  type: 2
+  colorGrade: 1
+  stackable: 0
+  repairable: 1
+  maxStack: 0
+  weight: 2
+  data:
+    ID: 7
+    ItemName: 
+    Attributes:
+    - attribute: 0
+      Value: 23
+    Effects: []

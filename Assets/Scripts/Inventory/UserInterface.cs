@@ -204,7 +204,7 @@ public abstract class UserInterface : MonoBehaviour
 
             if (targetInv != sourceInv)
             {
-                sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
+                //sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
                 if (sourceInv.CurrentWeight < 0)
                 {
                     sourceInv.CurrentWeight = 0;

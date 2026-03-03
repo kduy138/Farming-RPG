@@ -10,6 +10,8 @@ public class InventoryScriptableObject : ScriptableObject
     public Inventory container;
     public InventorySlot[] GetSlots { get { return container.slots; } }
 
+    public System.Action<InventorySlot> OnEquipmentChanged;
+
     [Header("Weight")]
     private float currentWeight;
     public float CurrentWeight { get => currentWeight; set => currentWeight = value; }
@@ -190,6 +192,11 @@ public class InventoryScriptableObject : ScriptableObject
                 GetSlots[i].RemoveItem();
             }
         }
+    }
+
+    public void OnSlotChanged(InventorySlot slot)
+    {
+        OnEquipmentChanged?.Invoke(slot);
     }
 
     [ContextMenu("Save")]

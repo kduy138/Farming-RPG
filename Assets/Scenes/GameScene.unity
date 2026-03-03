@@ -10362,6 +10362,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e8f8660f45621a4a804df622b985183, type: 3}
+--- !u!1 &1579365648 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9210961882091808046, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
+  m_PrefabInstance: {fileID: 8918730825790101701}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1579930178
 GameObject:
   m_ObjectHideFlags: 0
@@ -15015,13 +15020,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 691301213467370339, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
-      propertyPath: normalAtkCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 691301213467370339, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
-      propertyPath: normalAtkCooldown
-      value: 0.1
-      objectReference: {fileID: 0}
+      propertyPath: weaponHolder
+      value: 
+      objectReference: {fileID: 1579365648}
     - target: {fileID: 4717451757950685388, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 88.24
@@ -15071,7 +15072,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 786750424}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8107029380210167691, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5046d5557667df14bb854ba6e20987e2, type: 3}

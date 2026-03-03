@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 
 public class PlayerEvents
 {
@@ -12,6 +11,7 @@ public class PlayerEvents
     public event EventHandler OnCastEnded;
     public event EventHandler OnCombatStarted;
     public event EventHandler OnCombatEnded;
+    public event EventHandler OnDrawWeapon;
     public event EventHandler OnNormalAttack;
 
     public void TriggerOnDead() => OnDead?.Invoke(this, EventArgs.Empty);
@@ -24,4 +24,5 @@ public class PlayerEvents
     public void TriggerOnCombatStarted() => OnCombatStarted?.Invoke(this, EventArgs.Empty);
     public void TriggerOnCombatEnded() => OnCombatEnded?.Invoke(this, EventArgs.Empty);
     public void TriggerOnNormalAttack() => OnNormalAttack?.Invoke(this, EventArgs.Empty);
+    public void TriggerOnDrawWeapon() => OnDrawWeapon?.Invoke(this, EventArgs.Empty);
 }

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8720ac11de46ed54a884ba20026c1487, type: 3}
   m_Name: Mudfish
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
+  itemPrefab: {fileID: 0}
+  itemAnimatorOverrideController: {fileID: 0}
   itemName: "C\xE1 tr\xEA"
   description: "Lo\xE0i c\xE1 s\u1ED1ng trong b\xF9n \u0111\u01B0\u1EE3c t\xECm th\u1EA5y
     nhi\u1EC1u \u1EDF c\xE1c ao h\u1ED3."

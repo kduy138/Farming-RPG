@@ -1,6 +1,6 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
+using static PlayerEvents;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -27,6 +27,7 @@ public class PlayerAnimator : MonoBehaviour
         player.events.OnCombatStarted += SetCombatParameter;
         player.events.OnCombatEnded += SetCombatParameter;
         player.events.OnNormalAttack += TriggerNormalAttack;
+        player.events.OnDrawWeapon += TriggerOnDrawWeapon;
     }
 
     private void Update()
@@ -84,9 +85,17 @@ public class PlayerAnimator : MonoBehaviour
 
     public void TriggerNormalAttack(object sender, EventArgs e)
     {
-        Debug.Log(player.GetPlayerCombat().normalAtkCount);
-        animator.SetTrigger("Slash" + player.GetPlayerCombat().normalAtkCount);
-        animator.SetInteger("NormalAtkCount", player.GetPlayerCombat().normalAtkCount);
-        animator.SetBool("Attacking", false);
+        int normalAtkCount = player.GetPlayerCombat().normalAtkCount;
+        animator.SetTrigger("Normal_Attack_" + normalAtkCount);
+    }
+
+    public void EquipWeapon(AnimatorOverrideController weaponOverride)
+    {
+        animator.runtimeAnimatorController = weaponOverride;
+    }
+
+    public void TriggerOnDrawWeapon(object sender, EventArgs e)
+    {
+        animator.SetTrigger("DrawWeapon");
     }
 }
