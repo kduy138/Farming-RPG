@@ -20,7 +20,7 @@ MonoBehaviour:
     ho\u1EB7c s\u1EED d\u1EE5ng trong Ch\u1EBF T\u1EA1o v\xE0 Gi\u1EA3 Kim"
   price: 4500
   icon: {fileID: 673687248, guid: 1c3f704224c8acc4c8ff293bff34bbfb, type: 3}
-  type: 24
+  type: 17
   colorGrade: 0
   stackable: 1
   repairable: 0

@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8720ac11de46ed54a884ba20026c1487, type: 3}
-  m_Name: Salmon
+  m_Name: Pink Dolphin
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
   itemPrefab: {fileID: 0}
   itemAnimatorOverrideController: {fileID: 0}
-  itemName: "C\xE1 h\u1ED3i"
-  description: "Lo\xE0i c\xE1 \u0111\u01B0\u1EE3c \u0111\xE1nh b\u1EAFt ph\u1ED5
-    bi\u1EBFn b\u1EDFi c\xE1c ng\u01B0 d\xE2n."
-  price: 45000
-  icon: {fileID: -899409143, guid: 7b054c7344b53de4d9285ed531fde9af, type: 3}
+  itemName: "C\xE1 heo h\u1ED3ng"
+  description: "Lo\xE0i c\xE1 heo c\u1EF1c k\u1EF3 hi\u1EBFm g\u1EB7p. Ch\u1EC9 nh\u1EEFng
+    th\u1EE3 c\xE2u c\xE1 l\xE3o luy\u1EC7n m\u1EDBi c\xF3 th\u1EC3 m\u01A1 \u0111\u1EBFn
+    vi\u1EC7c b\u1EAFt \u0111\u01B0\u1EE3c n\xF3."
+  price: 2500000000
+  icon: {fileID: -643867326, guid: c131d12830f8e5742842692d459add77, type: 3}
   type: 18
-  colorGrade: 1
+  colorGrade: 4
   stackable: 0
   repairable: 0
   maxStack: 0
   weight: 1
   data:
-    ID: 3
+    ID: 9
     ItemName: 
     Attributes: []
     Effects: []

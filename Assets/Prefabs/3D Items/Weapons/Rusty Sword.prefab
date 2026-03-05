@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3293730309073662314}
   - component: {fileID: 8677901891421446861}
   m_Layer: 0
-  m_Name: RustySword
+  m_Name: Rusty Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

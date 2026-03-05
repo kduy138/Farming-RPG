@@ -75,8 +75,8 @@ public class PlayerCombat : MonoBehaviour
                 }
 
                 currentWeaponInstance = Instantiate(slot.itemSO.ItemPrefab, weaponHolder.transform);
-                currentWeaponInstance.transform.localPosition = Vector3.zero;
-                currentWeaponInstance.transform.localRotation = Quaternion.identity;
+                //currentWeaponInstance.transform.localPosition = Vector3.zero;
+                //currentWeaponInstance.transform.localRotation = Quaternion.identity;
 
                 itemAOC = slot.itemSO.ItemAnimatorOverrideController;
                 playerAnimator.EquipWeapon(itemAOC);
@@ -105,7 +105,6 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
-        //canQueueNextAttack = true;
         if (canQueueNextAttack)
         {
             attackBuffered = true;

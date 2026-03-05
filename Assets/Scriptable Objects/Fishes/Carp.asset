@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8720ac11de46ed54a884ba20026c1487, type: 3}
-  m_Name: Salmon
+  m_Name: Carp
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
   itemPrefab: {fileID: 0}
   itemAnimatorOverrideController: {fileID: 0}
-  itemName: "C\xE1 h\u1ED3i"
-  description: "Lo\xE0i c\xE1 \u0111\u01B0\u1EE3c \u0111\xE1nh b\u1EAFt ph\u1ED5
-    bi\u1EBFn b\u1EDFi c\xE1c ng\u01B0 d\xE2n."
-  price: 45000
-  icon: {fileID: -899409143, guid: 7b054c7344b53de4d9285ed531fde9af, type: 3}
+  itemName: "C\xE1 ch\xE9p"
+  description: "Lo\xE0i c\xE1 ph\u1ED5 bi\u1EBFn th\u01B0\u1EDDng s\u1ED1ng \u1EDF
+    c\xE1c ao h\u1ED3. \u0110\u01B0\u1EE3c nu\xF4i l\xE0m th\u1EF1c ph\u1EA9m do
+    c\xF3 gi\xE1 tr\u1ECB dinh d\u01B0\u1EE1ng cao. "
+  price: 245000
+  icon: {fileID: -1571723604, guid: e900408039a594d43ac20ee865a5132d, type: 3}
   type: 18
-  colorGrade: 1
+  colorGrade: 2
   stackable: 0
   repairable: 0
   maxStack: 0
   weight: 1
   data:
-    ID: 3
+    ID: 11
     ItemName: 
     Attributes: []
     Effects: []
