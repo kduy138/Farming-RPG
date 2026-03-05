@@ -28,6 +28,12 @@ public class DynamicInterface : UserInterface
     [SerializeField]
     private List<InventorySlot> discardSlots = new List<InventorySlot>();
 
+    private void Awake()
+    {
+        discardOptionHolder = GameUI.Instance.discardOptionHolder;
+        weightAndSlotCountHolder = GameUI.Instance.weightAndSlotCountHolder;
+    }
+
     public override void Start()
     {
         base.Start();

@@ -7244,6 +7244,10 @@ MonoBehaviour:
     dropRate: 100
   - itemSO: {fileID: 11400000, guid: f3102980ae7345441b139feeb1f80402, type: 2}
     dropRate: 100
+  - itemSO: {fileID: 11400000, guid: ed1731e7caba6c64aa35287da4df0a96, type: 2}
+    dropRate: 30
+  - itemSO: {fileID: 11400000, guid: 43655bfa9c4805546b7ba182b4c371ec, type: 2}
+    dropRate: 0.001
 --- !u!1 &1138860508
 GameObject:
   m_ObjectHideFlags: 0

@@ -183,6 +183,41 @@ public class InventoryScriptableObject : ScriptableObject
         }
     }
 
+    public void CombineItemAmount(InventorySlot _itemSlot1, InventorySlot _itemSlot2)
+    {
+        if (!_itemSlot1.itemSO.Stackable || !_itemSlot2.itemSO.Stackable) return;
+
+        int combineQuantity = 0;
+        if (_itemSlot1.quantity + _itemSlot2.quantity > _itemSlot1.itemSO.MaxStack)
+        {
+            combineQuantity += _itemSlot1.itemSO.MaxStack - _itemSlot1.quantity;
+            _itemSlot1.UpdateSlot(_itemSlot1.item, combineQuantity);
+            _itemSlot2.quantity -= combineQuantity;
+            if (_itemSlot2.quantity <= 0)
+            {
+                _itemSlot2.UpdateSlot(new Item(), 0);
+            }
+            _itemSlot2.UpdateSlot(_itemSlot2.item, _itemSlot2.quantity);
+            return;
+        }
+        combineQuantity = _itemSlot1.quantity + _itemSlot2.quantity;
+        _itemSlot1.UpdateSlot(_itemSlot1.item, combineQuantity);
+        _itemSlot2.UpdateSlot(new Item(), 0);
+    }
+
+    public void SplitItemByAmount(int splitAmount, InventorySlot _itemSlot1, InventorySlot _itemSlot2)
+    {
+        if (!_itemSlot2.isAvailable || _itemSlot2.item.ID >= 0) return;
+        if (_itemSlot1.quantity <= 1) return;
+        if (splitAmount >= _itemSlot1.quantity || splitAmount < 1) 
+        {
+            FloatingMessageManager.Instance.ShowMessage("Số lượng không hợp lệ!", FloatingMessageType.Warning);
+            return;
+        }
+        _itemSlot1.UpdateSlot(_itemSlot1.item, _itemSlot1.quantity - splitAmount);
+        _itemSlot2.UpdateSlot(_itemSlot1.item, splitAmount);
+    }
+
     public void RemoveItem(Item _item)
     {
         for (int i = 0; i < GetSlots.Length; i++)

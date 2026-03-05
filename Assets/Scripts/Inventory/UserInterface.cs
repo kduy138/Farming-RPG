@@ -200,8 +200,15 @@ public abstract class UserInterface : MonoBehaviour
             var sourceInv = sourceSlot.inventory;
             var targetInv = targetSlot.inventory;
 
-            sourceInv.SwapItemSlot(sourceSlot, targetSlot);
-
+            if (sourceSlot.item.ItemName == targetSlot.item.ItemName)
+            {
+                sourceInv.CombineItemAmount(targetSlot, sourceSlot);
+            }
+            else
+            {
+                sourceInv.SwapItemSlot(sourceSlot, targetSlot);
+            }
+               
             if (targetInv != sourceInv)
             {
                 //sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
@@ -235,38 +242,54 @@ public abstract class UserInterface : MonoBehaviour
 
     public void OnRMBClick_SwapItem(GameObject obj, PointerEventData data)
     {
-        if (data.button == PointerEventData.InputButton.Right)
+        if (data.button != PointerEventData.InputButton.Right) return;
+        if (obj == null) return;
+        if (slotsOnInterface[obj].item.ID < 0) return;
+        if (isDiscard) return;
+
+        var sourceSlot = slotsOnInterface[obj];
+        var sourceInv = sourceSlot.inventory;
+
+        var equipmentInv = GameUI.Instance.combatEquipmentSlotsContainer.activeInHierarchy ? inventories[1] : inventories[2];
+
+        InventoryScriptableObject targetInventory;
+
+        if (sourceInv == equipmentInv)
         {
-            if (obj == null) return;
+            targetInventory = inventories[0];
+        }
+        else
+        {
+            targetInventory = equipmentInv;
+        }
 
-            if (slotsOnInterface[obj].item.ID < 0) return;
+        foreach (var slot in targetInventory.GetSlots)
+        {
+            if (
+                (slot.slotType != sourceSlot.itemSO.Type && 
+                slot.slotType != ItemType.Universal) ||
+                slot.item.ID >= 0
+                ) 
+                continue;
 
-            if (isDiscard) return;
-            var sourceSlot = slotsOnInterface[obj];
-            var sourceInv = sourceSlot.inventory;
+            var targetSlot = slot;
+            var targetInv = targetSlot.inventory;
 
-            var equipmentInv = GameUI.Instance.combatEquipmentSlotsContainer.activeInHierarchy ? inventories[1] : inventories[2];
+            Debug.Log(slot.item.ItemName);
+            Debug.Log(slot.slotType);
+            Debug.Log(targetSlot.inventory.name);
 
-            foreach (var slot in equipmentInv.GetSlots)
+            sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
+            if (sourceInv.CurrentWeight < 0)
             {
-                if (slot.slotType != sourceSlot.itemSO.Type && slot.slotType != ItemType.Universal) continue;
-
-                var targetSlot = slot;
-                var targetInv = targetSlot.inventory;
-
-                targetSlot = slot;
-                targetInv = targetSlot.inventory;
-                sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
-                if (sourceInv.CurrentWeight < 0)
-                {
-                    sourceInv.CurrentWeight = 0;
-                }
-                sourceInv.SwapItemSlot(sourceSlot, targetSlot);
-                sourceInv.Save();
-                targetInv.Save();
-                ItemToolTip.Instance.HideItemToolTip();
-                return;
+                sourceInv.CurrentWeight = 0;
             }
+            sourceInv.SwapItemSlot(sourceSlot, targetSlot);
+            sourceInv.Save();
+            targetInv.Save();
+            ItemToolTip.Instance.HideItemToolTip();
+            Debug.Log("Đã swap item!");
+            return;
         }
     }
 
