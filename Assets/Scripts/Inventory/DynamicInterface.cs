@@ -76,6 +76,7 @@ public class DynamicInterface : UserInterface
         AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
         AddEvent(obj, EventTriggerType.Drag, (data) => { OnDrag(obj, (PointerEventData)data); });
         AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnRMBClick_SwapItem(obj, (PointerEventData)data); });
+        AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnRMBClick_ContextMenu(obj, (PointerEventData)data); });
         AddEvent(obj, EventTriggerType.PointerClick, (data) => { OnLMBDiscardClick(obj, (PointerEventData)data); });
         AddEvent(removeItemBtn, EventTriggerType.PointerClick, (data) => { OnRemoveRMBClick(removeItemBtn, (PointerEventData)data); });
     }

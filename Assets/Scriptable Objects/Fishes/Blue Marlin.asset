@@ -23,6 +23,7 @@ MonoBehaviour:
   colorGrade: 3
   stackable: 0
   repairable: 0
+  equipable: 0
   maxStack: 0
   weight: 1
   data:

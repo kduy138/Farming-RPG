@@ -1,4 +1,6 @@
-﻿public enum ItemType
+﻿using System.Collections.Generic;
+
+public enum ItemType
 {
     None,
     Universal,

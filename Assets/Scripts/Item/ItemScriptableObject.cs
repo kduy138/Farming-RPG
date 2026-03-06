@@ -45,6 +45,9 @@ public class ItemScriptableObject : ScriptableObject
     private bool repairable;
     public bool Repairable { get => repairable; private set => repairable = value; }
     [SerializeField]
+    private bool equipable;
+    public bool Equipable { get => equipable; private set => equipable = value; }
+    [SerializeField]
     private int maxStack;
     public int MaxStack { get => maxStack; private set => maxStack = value; }
 

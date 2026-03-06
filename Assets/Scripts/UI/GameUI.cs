@@ -31,6 +31,7 @@ public class GameUI : MonoBehaviour
     public Image hpBar;
     public Image manaBar;
     public Image miningTimebar;
+    public GameObject invContextMenu;
 
     [Header("Screens")]
     [SerializeField]
@@ -54,6 +55,8 @@ public class GameUI : MonoBehaviour
     public Button confirmRemoveBtn;
     public Button cancelDiscardBtn;
     public Button getItemBtn;
+    public Button useItemBtn;
+    public Button splitItemBtn;
 
     [Header("Texts")]
     public TextMeshProUGUI confirmRemoveText;
@@ -99,6 +102,7 @@ public class GameUI : MonoBehaviour
         if (getItemPopUp) getItemPopUp.SetActive(false);
         if (playerDeadScreen) playerDeadScreen.SetActive(false);
         if (miningScreen) miningScreen.SetActive(false);
+        if (invContextMenu) invContextMenu.SetActive(false);
     }
 
     private void ToggleInventoryScreen()

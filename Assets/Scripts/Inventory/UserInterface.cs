@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public abstract class UserInterface : MonoBehaviour
@@ -250,6 +251,8 @@ public abstract class UserInterface : MonoBehaviour
         var sourceSlot = slotsOnInterface[obj];
         var sourceInv = sourceSlot.inventory;
 
+        if (!sourceSlot.itemSO.Equipable) return;
+
         var equipmentInv = GameUI.Instance.combatEquipmentSlotsContainer.activeInHierarchy ? inventories[1] : inventories[2];
 
         InventoryScriptableObject targetInventory;
@@ -275,10 +278,6 @@ public abstract class UserInterface : MonoBehaviour
             var targetSlot = slot;
             var targetInv = targetSlot.inventory;
 
-            Debug.Log(slot.item.ItemName);
-            Debug.Log(slot.slotType);
-            Debug.Log(targetSlot.inventory.name);
-
             sourceInv.CurrentWeight -= sourceSlot.itemSO.Weight * sourceSlot.quantity;
             if (sourceInv.CurrentWeight < 0)
             {
@@ -288,9 +287,23 @@ public abstract class UserInterface : MonoBehaviour
             sourceInv.Save();
             targetInv.Save();
             ItemToolTip.Instance.HideItemToolTip();
-            Debug.Log("Đã swap item!");
             return;
         }
+    }
+
+    public void OnRMBClick_ContextMenu(GameObject obj, PointerEventData data)
+    {
+        if (data.button != PointerEventData.InputButton.Right) return;
+        if (obj == null) return;
+        if (isDiscard) return;
+
+        var slot = slotsOnInterface[obj];
+        if (slot.item.ID < 0) return;
+        if (slot.itemSO.Equipable) return;
+
+        GameObject contextMenu = GameUI.Instance.invContextMenu;
+        contextMenu.SetActive(true);
+        contextMenu.transform.position = Mouse.current.position.ReadValue();
     }
 
     public void ConfirmRemove(GameObject obj)
@@ -327,6 +340,14 @@ public abstract class UserInterface : MonoBehaviour
             }
         }
     }
+
+    private static readonly HashSet<ItemType> equipdableTypes = new HashSet<ItemType>
+    {
+        ItemType.MainWeapon, ItemType.SubWeapon, ItemType.Shield, ItemType.Armor, ItemType.Helmet,
+        ItemType.HuntingRifle, ItemType.AlchemyFlask, ItemType.CookingPaddle, ItemType.FishingRod,
+        ItemType.Ring, ItemType.Earrings, ItemType.Belt, ItemType.Artifact, ItemType.MiningPickaxe,
+        ItemType.LumberingAxe, ItemType.Tool, ItemType.GatheringTool, ItemType.Gloves, ItemType.Necklace,
+    };
 }
 
 public static class DraggingData
