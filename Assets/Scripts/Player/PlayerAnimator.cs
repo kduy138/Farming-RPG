@@ -55,7 +55,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         FishingManager fm = player.GetCurrentFishingManager();
         animator.SetTrigger("Cast");
-        fm.ResetCast();
+        //fm.ResetCast();
     }
 
     public void CancelCastAnimation(object sender, EventArgs e)

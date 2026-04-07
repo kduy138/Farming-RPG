@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class FishingManager : MonoBehaviour
 {
+    public enum State { 
+        Idle,
+        Cast,
+        WaitingToCatch,
+        Minigame,
+    }
+
+    private State state;
+
     [Header("References")]
     private Player player;
     private FishBoolManager fishBoolManager;
@@ -11,40 +20,87 @@ public class FishingManager : MonoBehaviour
 
     [Header("Flags")]
     public bool isFishing = false;
-    public bool isCast = false;
-    public bool isWaitingToCatch = false;
-    public bool isPlayingMinigame = false;
 
     [Header("Game Objects")]
     [SerializeField]
-    private GameObject fishingRod;
+    private Transform fishingRod;
     [SerializeField]
     private GameObject fishingBait;
     [System.NonSerialized]
     public GameObject spawnedBait;
 
+    [Header("Settings")]
+    private float baitSpawnTimer;
+    private float baitSpawnTimerMax = 2f;
+    private float fishingTimer;
+    private float fishingTimerMax;
+
     private void Awake()
     {
         player = GetComponentInParent<Player>();
         miniGame = FindAnyObjectByType<FishingMiniGame>();
-        fishingRod.SetActive(false);
+        fishingRod.gameObject.SetActive(false);
+        state = State.Idle;
     }
 
     private void Update()
     {
-        ChangeFishingState();
-        TriggerCast();
+        ToggleFishingMode();
+
+        if (!isFishing) return;
+
+        switch(state)
+        {
+            default:
+            case State.Idle:
+                if (GameInput.Instance.isTriggerCast())
+                {
+                    state = State.Cast;
+                }
+                break;
+            case State.Cast:
+                miniGame.HandleReleaseFish();
+                player.MovementLock();
+                player.events.TriggerOnCastStarted();
+
+                state = State.WaitingToCatch;
+                break;
+            case State.WaitingToCatch:
+                baitSpawnTimer += Time.deltaTime;
+                if (baitSpawnTimer > baitSpawnTimerMax)
+                {
+                    baitSpawnTimer = 0f;
+                    SpawnFishingBait();
+                }
+
+                fishingTimerMax = player.runtimePlayerData.currentFishingTime;
+                fishingTimer += Time.deltaTime;
+                
+                if (fishingTimer > fishingTimerMax)
+                {
+                    fishingTimer = 0f;
+                    state = State.Minigame;
+
+                    if (fishBoolManager == null) return;
+                    if (miniGame == null) return;
+
+                    miniGame.BeginMinigame(fishBoolManager);
+                }
+                break;
+            case State.Minigame:
+                break;
+        }
         CancelWaitingToCatch();
     }
 
-    private void ChangeFishingState()
+    private void ToggleFishingMode()
     {
         if (GameInput.Instance.isToggleFishing())
         {
             var playerData = player.runtimePlayerData;
             if (player.GetCurrentMoveSpeed() > 0)
             {
-                Debug.Log("Không thể thực hiện hành động này hiện tại!");
+                FloatingMessageManager.Instance.ShowMessage("Hiện tại không thể thực hiện hành động này!", FloatingMessageType.Warning);
                 return;
             }
 
@@ -55,7 +111,7 @@ public class FishingManager : MonoBehaviour
                 player.SetCurrentFishingManager(this);
                 player.events.TriggerOnFishingStarted();
                 player.SetPlayerMoveSpeed(playerData.currentHoldingItemWalkSpeed);
-                fishingRod.SetActive(true);
+                fishingRod.gameObject.SetActive(true);
             }
             else
             {
@@ -64,13 +120,12 @@ public class FishingManager : MonoBehaviour
                 player.events.TriggerOnFishingEnded();
                 player.SetCurrentFishingManager(null);
                 player.MovementUnlock();
-                if (isWaitingToCatch)
+                if (state == State.WaitingToCatch)
                 {
                     player.events.TriggerOnCastEnded();
                 }
-                isCast = false;
-                fishingRod.SetActive(false);
-                isWaitingToCatch = false;
+                state = State.Idle;
+                fishingRod.gameObject.SetActive(false);
                 if (player.IsWalking())
                 {
                     player.SetPlayerMoveSpeed(playerData.currentWalkSpeed);
@@ -88,32 +143,10 @@ public class FishingManager : MonoBehaviour
         }
     }
 
-    private void TriggerCast()
-    {
-        if(GameInput.Instance.isTriggerCast())
-        {
-            if (!isFishing) return;
-
-            if (isWaitingToCatch || isCast || isPlayingMinigame) return;
-
-            isCast = true;
-            isWaitingToCatch = true;
-            player.MovementLock();
-            player.events.TriggerOnCastStarted();
-            miniGame.HandleReleaseFish();
-            StartCoroutine(WaitToSpawnFishingBait());
-        }
-    }
-
-    private IEnumerator WaitToSpawnFishingBait()
-    {
-        float waitingTime = 2f;
-        yield return new WaitForSeconds(waitingTime);
-        SpawnFishingBait();
-    }
-
     private void SpawnFishingBait()
     {
+        if (spawnedBait != null) return;
+
         Vector3 playerPos = player.transform.position;
         float spawnDistance = 10f;
         float heightOffset = 1f;
@@ -149,24 +182,6 @@ public class FishingManager : MonoBehaviour
         player.SetCurrentFishingManager(this);
         spawnedBait = Instantiate(fishingBait, hit.point, Quaternion.identity);
         FindAnyObjectByType<FishingLineRenderer>().SetBait(spawnedBait.transform);
-        StartCoroutine(WaitToCatch());
-    }
-
-    private IEnumerator WaitToCatch()
-    {
-        yield return new WaitForSeconds(player.runtimePlayerData.currentFishingTime);
-        isWaitingToCatch = false;
-        EnterFishingMinigame();
-    }
-
-    private void EnterFishingMinigame() {
-        if (!isFishing) return;
-        if(fishBoolManager == null) return;
-        if (miniGame == null) return;
-
-        isPlayingMinigame = true;
-
-        miniGame.BeginMinigame(fishBoolManager);
     }
 
     public void GiveFishingXPToPlayer()
@@ -176,32 +191,25 @@ public class FishingManager : MonoBehaviour
 
     public void CancelCastOnTerrain()
     {
-        isCast = false;
-        isWaitingToCatch = false;
+        state = State.Idle;
         player.MovementUnlock();
 
         if (spawnedBait != null)
         {
             Destroy(spawnedBait.gameObject);
         }
-
-        StopAllCoroutines();
     }
 
     public void CancelWaitingToCatch()
     {
         if (spawnedBait == null) return;
 
-        if (!isFishing) return;
-
         if(GameInput.Instance.isMovement())
         {
-            if (!isWaitingToCatch) return;
+            if (state != State.WaitingToCatch) return;
 
             player.MovementUnlock();
-            isWaitingToCatch = false;
-            isCast = false;
-            StopAllCoroutines();
+            state = State.Idle;
             Destroy(spawnedBait.gameObject);
             player.events.TriggerOnCastEnded();
         }
@@ -210,21 +218,6 @@ public class FishingManager : MonoBehaviour
     public void AddFishToInventory(Item item, int quantity)
     {
         inventory.AddItem(item, quantity);
-    }
-
-    public void ResetCast()
-    {
-        isCast = false;
-    }
-
-    public void ResetIsPlayingMinigame()
-    {
-        isPlayingMinigame = false;
-    }
-
-    public void ResetWaiting()
-    {
-        isWaitingToCatch = false;
     }
 
     public Player GetPlayer()
@@ -237,17 +230,13 @@ public class FishingManager : MonoBehaviour
         return isFishing;
     }
 
-    public bool IsCast() {
-        return isCast;
+    public State GetState()
+    {
+        return state;
     }
 
-    public bool IsWaitingToCatch()
+    public void SetState(State state)
     {
-        return isWaitingToCatch;
-    }
-
-    public bool IsPlayingMinigame()
-    {
-        return isPlayingMinigame;
+        this.state = state;
     }
 }

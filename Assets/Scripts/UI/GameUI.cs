@@ -13,7 +13,7 @@ public class GameUI : MonoBehaviour
 
     [Header("References")]
     [SerializeField]
-    private FishingManager fm;
+    private FishingManager fishingManager;
 
     [Header("Settings")]
     [SerializeField] 
@@ -126,7 +126,7 @@ public class GameUI : MonoBehaviour
 
     private void ToggleFishingScreen()
     {
-        if(fm.IsFishing() == true)
+        if(fishingManager.IsFishing())
         {
             fishingScreen.SetActive(true);
             StartCoroutine(FadeInOutCastBtnText());
@@ -140,12 +140,12 @@ public class GameUI : MonoBehaviour
 
     private void ToggleCastButton()
     {
-        if(!fm.IsWaitingToCatch() && !fm.IsPlayingMinigame())
+        if(fishingManager.GetState() != FishingManager.State.WaitingToCatch && fishingManager.GetState() != FishingManager.State.Minigame)
         {
             castBtnText.enabled = true;
             castBtnText.text = "NHẤN SPACE ĐỂ THẢ MỒI";
         }
-        else if (fm.IsPlayingMinigame() && !minigameScreen.activeInHierarchy)
+        else if (fishingManager.GetState() == FishingManager.State.Minigame && !minigameScreen.activeInHierarchy)
         {
             castBtnText.enabled = true;
             castBtnText.text = "NHẤN SPACE ĐỂ BẮT CÁ";
@@ -158,7 +158,7 @@ public class GameUI : MonoBehaviour
 
     private void ToggleMinigameScreen()
     {
-        if (fm.IsPlayingMinigame() && GameInput.Instance.isTriggerFishingMinigame())
+        if (fishingManager.GetState() == FishingManager.State.Minigame && GameInput.Instance.isTriggerFishingMinigame())
         {
             minigameScreen.SetActive(true);
         }

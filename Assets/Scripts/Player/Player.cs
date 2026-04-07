@@ -301,6 +301,7 @@ public class Player : MonoBehaviour
         }
 
         runtimePlayerData.currentLevel += 1;
+        runtimePlayerData.currentXP = 0f;
     }
 
     public float GetNormalizedSpeed()
@@ -331,7 +332,7 @@ public class Player : MonoBehaviour
         return isDead;
     }
 
-    public void ResetDeadFlag()
+    public void ResetIsDead()
     {
         isDead = false;
     }

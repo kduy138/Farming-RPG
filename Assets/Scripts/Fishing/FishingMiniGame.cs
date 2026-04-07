@@ -28,7 +28,7 @@ public class FishingMiniGame : MonoBehaviour
 
     [Header("References")]
     [SerializeField]
-    private FishingManager fm;
+    private FishingManager fishingManager;
     public FishBoolManager currentFishBoolManager;
     private ItemScriptableObject fishSO;
     private Item pendingItem;
@@ -171,7 +171,8 @@ public class FishingMiniGame : MonoBehaviour
         isWaitingForPlayerToCatch = true;
 
         SetUI(pendingItem, itemAmount);
-        fm.GiveFishingXPToPlayer();
+        fishingManager.GiveFishingXPToPlayer();
+        fishingManager.SetState(FishingManager.State.Idle);
     }
 
     private void HandleCatchFish()
@@ -179,7 +180,7 @@ public class FishingMiniGame : MonoBehaviour
         if (!isWaitingForPlayerToCatch) return;
         if (!GameInput.Instance.isTakeItemAction()) return;
 
-        AddItemReturnCode addItemPermission = fm.inventory.CheckAddItem(pendingItem, itemAmount);
+        AddItemReturnCode addItemPermission = fishingManager.inventory.CheckAddItem(pendingItem, itemAmount);
         switch (addItemPermission)
         {
             case AddItemReturnCode.NoEmptySlot:
@@ -189,9 +190,9 @@ public class FishingMiniGame : MonoBehaviour
                 GameUI.Instance.getItemWarningTxt.text = "Kho đồ quá nặng!";
                 break;
             case AddItemReturnCode.Allow:
-                fm.AddFishToInventory(pendingItem, itemAmount);
+                fishingManager.AddFishToInventory(pendingItem, itemAmount);
                 HandleReleaseFish();
-                fm.inventory.Save();
+                fishingManager.inventory.Save();
                 break;
         }
     }
@@ -235,9 +236,9 @@ public class FishingMiniGame : MonoBehaviour
         int timeBeforeReset = 1;
         yield return new WaitForSeconds(timeBeforeReset);
         isResetting = false;
-        fm.GetPlayer().events.TriggerOnCastEnded();
-        fm.CancelCastOnTerrain();
-        fm.ResetIsPlayingMinigame();
+        fishingManager.GetPlayer().events.TriggerOnCastEnded();
+        fishingManager.CancelCastOnTerrain();
+        fishingManager.SetState(FishingManager.State.Idle);
         currentKeyIndex = 0;
         keySequenceList.Clear();
         DestroyAllChildren(KeySequenceContainer.transform);
